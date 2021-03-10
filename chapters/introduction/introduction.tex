@@ -1,0 +1,47 @@
+\chapter{Introduction}   %% ... or Innledning or Innleiing
+
+
+\section{Motivation}
+%None
+%hvorfor gjør vi dette?
+%%accessing a remote data centre can take so and so milliseconds
+If you are in Oslo and ping Washington University in Seattle, which is over 7000km away,  you will get an average of 185 milliseconds(ms) in round-trip time. 185 ms is does not feel like a long time for a human, but it is an eternity for a computer. Even though computers are getting stronger and faster every year, that round-trip time has remained almost the same. This is because the speed of the signal are limited by the slow speed of light. Almost nothing can make that signal go faster. Therefore, the slow speed of light will always be a bottleneck. In the era of Internet of Things (Iot), we also want to make things smaller and more efficient, which leads to low processing power at the edge. The concept of Near-Far Computing has been proposed to mitigate the latency and resource problems caused by the slow speed of light and the poor resources available at the edge of the cloud. However, there exists very little research about Near-Far computing, and no overview.
+
+
+
+\section{Problem statement}         %% thesis question
+Cloud Computing is used as way to offload work to from a thin to a thick client. However, some programs require fast response times. Due to the slow speed of light, the latency of offloading work to a thick client that is far away is sometimes too much. We then have a program that requires too much resources to be run locally and at the same time require such low response time, that it is not feasible to send the workload to a data centre in another country. The Near-Far computing model was introduced as solution to mitigate the latency and resource problem. However, there exists little research surrounding the model in general. Also, there exists no research to show if the Near-Far computing model gives significant improvement in relationship with overcoming latency and resource problems in cloud computing.
+%% much overlap between Motivation and problemstatement (and generally)
+%% can use of the near far model give significant improvement in relationship with overcoming latency problems.
+
+
+\section{Goal}
+The goal of this thesis is to investigate the Near-Far computing model, as well as contributing to the small research pool surrounding it. Additionally we want to give an introduction to Near-Far computing and show that it is a viable solution for overcoming latency and resource problems in cloud computing.
+
+\section{Approach}
+The approach is divided into a theory part and an empirical part. Firstly we studied literature on cloud computing, edge computing, fog computing, etc, to get an overview of what exists already. Then we developed several programs to test and analyze/benchmark the different architectures, and to show their viability to tackle latency and resource problems. The programs are written in Emerald and tested on PlanetLab.
+
+
+\section{Work done}
+We have research different models that falls under the Near-Far computing model and given an overview of them. We have also created some programs, using Emerald and PlanetLab, to show that it is a feasible solution to the latency problem. We have given an introduction to what the Near-Far computing model has to offer.
+
+\section{Evaluation Criteria}
+This thesis is a success if we have given an overview and an introduction to the Near-Far computing model and have shown that it is a viable solution to the latency and resource problem.
+
+\section{Contribution}
+We have created an introduction for Near-Far computing model, as well as contributed to its research pool. We have also provided x small programs to test and benchmark different architectures that falls under the Near-Far computing model.
+
+\section{Results}
+TBD
+
+\section{Limitations}
+There will be a limitation of how strong hardware that will be available. Some of the models/architectures are made for specific devices. We do not have access to these devices so we have to emulate them.
+
+
+\section{structure}
+This thesis is divided into x chapters, including this chapter. 
+In \textbf{chapter 2 (Background)} we will provide som background for the thesis. We will talk about different forms of cloud computing and distributed systems and generally lay a foundation of the knowledge needed for Near-Far computing. We will also give a short introduction to the Emerald programming language and PlanetLab.
+In \textbf{chapter 3 (Architectures)} we talk about some different architectures. Each section will lay a theoretical foundation of how it works, then we will show an implementation. Essentially, we will show a small selection of what is already out there of architectures that falls under the Near-Far computing model.
+In \textbf{chapter 4 (Evaluation)} we will compare the different models by testing and benchmarking them. We will also talk about how each of them relates to the Near-Far Computing Model.
+In \textbf{chapter 5 (Conclusion)} we will summarize what we have found, and also conclude with an overview of the Near-Far Computing Model.
+

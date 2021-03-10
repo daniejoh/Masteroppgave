@@ -1,0 +1,367 @@
+\chapter{Background}
+
+
+\section{Distributed Systems}
+In the start of their book, Steen and Tanenbaum\cite{steen_distributed_2017} defines distributed systems loosely: 
+\say{A distributed system is a collection of autonomous computing elements that appears to its users as a single coherent system.}
+
+This definition describes two important characteristics of distributed systems. Firstly, we can think of a distributed system as several computers or programs that work independently. They share workload and storage between, but they are independent in the same sense as processes. The different programs or computers are referred to as Nodes. Each node in the system will work concurrently. This is one of the great benefits of a distributed system. This is because you can share heavy computational tasks across the system to make it distribute the load. A computer can have several nodes, but usually we think of different computers as different nodes. The other characteristic it describes, is that the users should only see a single coherent system. That means that the user should not notice that the application is running on a distributed system, unlike an application running on a single computer.
+
+Distributed systems have no shared clock. This is because having a shared clock is almost impossible, as even atomic clocks is not accurate enough. Therefore, you have to utilize other methods to ensure synchronization. EDIT THIS LATER, NEEDS AN EXAMPLE. Each node will therefore have an independent notion of time, and the system as a whole will not have a global clock\cite{steen_distributed_2017}. This is also important because even though the nodes work with each other, they should always be loosely coupled and as independent as possible.
+
+The systems will exchange information, but they don’t have shared memory. This again(AGAIN?) is because of loose coupling. In some systems it is also important because the nodes in the system can be heterogeneous. Two nodes can have quite different environments, such as different OS, processing power, network, memory and hardware, but still work together in a distributed system. Having a loosely coupled system will ensure that the system is robust and that you don't need specific hardware to run it, but can rather focus on the other layers. The system is also dynamic, which means that nodes may leave or join the system at any time. This is useful for scaling. It also raises the issue that a node might disappear while doing a task, and that needs to be handled. SKRIV OM HELE DETTE AVSNITTET
+
+
+Distribution transparency is important but raises a few issues. It has to handle changes in the system without the clients noticing it. See 
+%~\ref{fig:transparencyTable} 
+for examples. To make the system seem coherent we use Remote Procedure Calls(RPC) or Remote Method Invocations(RMI). This thesis will focus mostly on RMI as we use the Emerald Programming language as a basis. RMI is about allowing the user to do an RMI without it explicitly knowing where the object is or how it calls. The interface makes it look like a normal method. We will cover this more later in the Emerald chapter.
+
+
+%\begin{figure}[t]
+%    \centering
+%    \textbf{Table of distribution transparencies in Distributed Computing}\par\medskip
+%    \includegraphics[width=12.5cm]{parts/background/transparency_table.png}
+%    \caption{Table from \cite{steen_distributed_2017} showing different Distribution Transparencies that Steen and Tanenbaum discusses in their book. }
+%    \label{fig:transparencyTable}
+%\end{figure}
+
+\subsection{Distribution Transparency}
+To make a distributed system seem like one system, is called Distribution Transparency. You don't want the user to know that it is interacting with a distributed system. Steen and Tanenbaum brings up several types of transparency that helps achieve distribution transparency. Here is a brief description of them.
+
+\subsubsection{Access Transparency}
+Access Transparency is about hiding differences in machine architectures. The nodes need to agree on how to represent data. This helps the application use local and remote resources as the same. 
+
+\subsubsection{Location Transparency}
+Location Transparency is about not letting the user tell where an object is physically located in the system. It should seemingly be local, but might be on a different computer.
+
+\subsubsection{Relocation Transparency}
+Relocation Transparency is about hiding when an object is moved from one node to another while it is in use. The application should still be usable and the user should not notice that the object has moved.
+
+\subsubsection{Migration Transparency}
+Migration Transparency is about offering the mobility of resources to the users. The users can in other words change the location of objects, without it disrupting the program. In other words relocation transparency is about being moved, while migration transparency is about letting the users move the objects.
+
+\subsubsection{Replication Transparency}
+Replication transparency is about hiding when an object is replicated. It can be hard to keep all replicas up to date, but the users should not know which replica it is accessing.
+
+\subsubsection{Concurrency Transparency}
+Concurrency Transparency is about not letting users know that they are accessing the same objects at the same time. For example, if several users are accessing the same database, they should not notice that other users are also querying the same database.
+
+\subsubsection{Failure Transparency}
+Failure Transparency is about hiding a object or node failure from a user. One should not assume that a node will  never crash or become unreachable. The system should be able to recover and handle fails without the user noticing.
+
+
+\subsection{Advantages}
+Some of the advantages of distributed systems are scalability, reliability, fault tolerance and increased performance. Each of the characteristics is on its own very good to have, but the sum of them is what makes distributed systems incredibly good to solve problems. %% Her må du fikse setningen.
+
+\subsubsection{Scalability}
+Scalability is about being able to scale up to meet demand. As more and more computation and storage move to the cloud, this is very important. Scalability can be measures in three different dimensions, namely \textbf{Size, Geographical and Administrative scalability}.
+
+\textbf{Size scalability} is about being able to add more resources and clients to the system without loss of performance \cite{steen_distributed_2017}. Scaling is challenging as there is many factors that can act as a bottleneck. For instance, it does not matter how big you data centre is, if the bandwidth  is too small to handle all the users. Another example is that the hardware might not be fast enough. To ensure that the system is able to handle a continuously increasing amount of users and requests, you have to handle these kind of bottlenecks. Most of the problems does come from lack of resources on the servers. To fix this you can upgrade the hardware, which is referred to as scaling up, or deploy more servers, which is referred to as scaling out.
+
+\textbf{Geographical Scalability} is about having nodes (most likely servers) that are far from the client, but the delay from communicating with them is hardly noticed. In a wide-area system, we might have nodes on different continents. The delay of sending messages between them is then too high to not be noticed in some situation. Also, because the packets are traveling through so many switches and routers, it is much less reliable. Some stretches might also have limited bandwidth, which might be a bottleneck for the system. You also cant just put a distributed system designed for a local-area network(LAN) on a wide-area network(WAN). For example, if your system relies on broadcasting. Broadcasting will work fine on a LAN but will probably work pretty terrible on a WAN. To mitigate latency issues, you can try to minimize waiting for a result. You do this by using asynchronous communication, which means that you avoid waiting for a result from others as much as possible. In applications where this is not possible, for example with Augmented Reality, we have to either reduce the amount of communication or move the server closer to the client.
+
+\textbf{Administrative Scalability} is about scaling a distributed system across several independent administrative domains \cite{steen_distributed_2017}. This can be hard, as the domains can use different rules and conventions for communication, payment, resource usage, read-write privileges and etc. There is also a security aspect of it, as the domains might have different views on security, that might be conflicting. 
+
+\subsubsection{Reliability}
+\subsubsection{Fault Tolerance}
+\subsubsection{Performance}
+
+\subsection{Pitfalls}
+Steen and Tanenbaum \cite{steen_distributed_2017} brings up several pitfalls that you should avoid when making a distributed system:
+\begin{itemize}
+    \item The network is reliable
+    \item The network is secure
+    \item The network is homogeneous
+    \item The topology does not change
+    \item Latency is zero
+    \item Bandwidth is infinite
+    \item Transport cost is zero
+    \item There is one administrator
+\end{itemize}
+All of these are important to have in mind while creating a distributed system. However we will mostly focus on \textbf{The network is homogeneous, The topology does not change, Latency is zero, Bandwidth is infinite} in this thesis. 
+
+\textbf{The network is homogeneous}
+In IoT we are dealing with a very heterogeneous network. Most of the devices do not use the same architecture or hardware.
+
+\textbf{The topology does not change}
+This is not true at all in the era of IoT. There is tons of mobile devices, like cellphones, that move around all the time, and changes the topology of the network. When going any further out than a LAN, we are also using hardware that we do not have control over. This means that they can move or disappear at any time.
+
+\textbf{Latency is zero}
+In a wide-area distributed system, the latency can be quite high. If you assume the latency is zero, then we can run into problems that will affect the client quite a bit. Since the results can take some time to come back we get a lot of waiting time, that is not taken into account. The user is then affected by this, as it has to wait for the client. 
+
+\textbf{Bandwidth is infinite}
+When you have a case where you need to use a lot of bandwidth to use the application, it is important to have enough bandwidth. If you need to send more data than one part of the link between the nodes can handle, then you will probably get a substantial loss of quality on the client. 
+
+
+
+
+\subsection{Types of Distributed systems}
+% on example of a cluster computing system is PlanetLab, which we will talk about later.
+Distributed systems can generally be divided into two types: \textbf{Cluster computing and Grid computing}.
+
+\subsubsection{Cluster computing}
+Cluster computing is a collection of computers that usually has homogeneous architecture and hardware, as well as being in about the same place geographically. These computers usually run the same OS and are used to effectively distribute (and therefore parallelize) heavy computational tasks. They are able to easily communicate because of the small latency and high reliability of LAN's. Data centres are an example of Cluster computing. 
+
+\subsubsection{Grid computing}
+Grid computing is when you have several nodes spread across different domains, and usually not geographically close. In Grid computing there is more heterogeneity. Each node might have different hardware and different OS. Grid computing networks are often brought together in a virtual organization. An example of this is PlanetLab, which we will talk about later. 
+
+
+
+
+% ---------------------------------------------------------------
+
+
+
+
+\section{Cloud computing}
+There are several definitions of cloud computing. Many of them are similar, but one that sums them up is this one defined by NIST\cite{mell_nist_nodate}:
+\say{Cloud computing is a model for enabling ubiquitous, convenient, on-demand network access to a shared pool of configurable computing resources (e.g., networks, servers, storage, applications, and services) that can be rapidly provisioned and released with minimal management effort or service provider interaction…}
+
+
+\begin{figure}[t]
+    \centering
+    \textbf{Simplified Cloud Computing}\par\medskip
+    \includegraphics[scale=0.7]{chapters/background/Simplified_cloud.png}
+    \caption{A Simplified diagram of Cloud Computing}
+    \label{fig:SimplifiedCloudDiagram}
+\end{figure}
+
+At a very high level, Cloud Computing is where you offload your work to the usually distant cloud. As shown on the simplified figure ~\ref{fig:SimplifiedCloudDiagram}, a laptop or any other device can communicate with the cloud, and let the cloud provide storage and computation. The Cloud is a distributed system which is usually built as a Grid Computing system in a data centre. When working with the cloud, we typically have thin clients and thick clients. For traditional cloud computing the thin client is for example your laptop or cell phone, while the thick client is the server or servers in the distant data centre.
+
+However, in today's society it has of course become much more advanced. You have an increasing number of cloud service providers that offer Infrastructure as a Service(IaaS), Platform as a Service(PaaS) and Software as a Service(SaaS), like Amazon Web Services(AWS), Digital Ocean, Alibaba Cloud, Microsoft Azure and Google Cloud Platform(GCP) just to name a few. The biggest of them all is AWS, which holds almost half of the market share\cite{noauthor_cloud_2019}. The Cloud market made 129 billion dollars in 2020 alone\cite{noauthor_cloud_nodate}.
+
+Big firms will most likely benefit from building their own data centres. However most companies are not in the Fortune 500 with big wallets and millions of clients. Most firms, which have significantly less clients, can save a lot of money and time by outsourcing to cloud providers instead. It makes scaling easy and you can have infrastructure set up in just a few minutes, so you can focus on actually developing your service. You don't need to hire technicians to maintain the servers. If you have clients all over the world, you can choose to set up servers near them, instead of being limited to the office or headquarters. You can easily scale up by requesting stronger hardware, or you can easily scale out by replicating or starting more servers. In other words, it is just really convenient for most modern companies.
+
+Even though the largest cloud providers have established themselves in many places, it still might not be close enough geographically to the client. In latency aware applications you need to minimize the physical distance between the client and the server. Therefore you can use local cloud providers, or firms like Akamai which specializes in having server as close, and as few as possible hops away from the end users.
+
+
+
+
+
+% ----------------------------------------------
+
+
+
+
+
+\section{Fog Computing}
+
+Vaquero and Rodero-Merino\cite{vaquero_finding_2014}, defines fog computing like this: 
+“Fog computing is a scenario where a huge number of heterogeneous (wireless and sometimes autonomous) ubiquitous and decentralised devices communicate and potentially cooperate among them and with the network to perform storage and processing tasks without the intervention of third parties. These tasks can be for supporting basic network functions or new services and applications that run in a sandboxed environment. Users leasing part of their devices to host these services get incentives for doing so.”
+
+As in other fields, there is no de-facto definition and the definition is debatable. Since Fog Computing is a relatively new concept, different definitions will be used depending on the field they are in.
+
+Fog computing is an extension of the Cloud Computing paradigm. You have some nodes, like servers or desktops, that you offload the computation and storage to. The difference is that in Fog computing the fog nodes are located close in proximity to the user\cite{msftadmin_concept_2020}, as shown in figure ~\ref{fig:FogDiagram}. The distant cloud has way more resources that the nodes in the fog layer, but since the fog nodes are closer, they are great at doing latency sensitive work. The Fog nodes is usually defined as being on the same LAN, but some argue that you can put them further away to, at least geographically speaking. 
+
+An example is if an ISP has some Fog nodes at the base of cell towers. This will enable cell phones, or other SIM-card enabled devices, to offload storage and computation easily through the cell network. The introduction of 5G for the mainstream could benefit a lot from this. The latency for 5g will most likely be the same, but since the devices using it are so close to the 5G tower, it does not matter that much. The increased bandwidth of 5G is what will help a lot, as you can offload bigger workloads. We will talk about this in the Mobile Edge Computing chapter later. 
+
+In Fog computing you would like as few jumps as possible to the node. A jump is when you move from one network node to another, for example from a cellphone to an Access Point. If the nodes are on the same LAN, the number of jumps are predictable and low in frequency, at least compared to the number of jumps to a distant data centre. 
+
+
+For comparison, a Traceroute\cite{noauthor_traceroute68_nodate} from Oslo, Norway to a PlanetLab server in Rostock, Germany had at least 11 hops. With each hop adding latency because of processing, it’s easy to conclude that it is beneficial to keep hops at a minimum.
+
+\begin{figure}[t]
+    \centering
+    \textbf{Fog Computing}\par\medskip
+    \includegraphics[scale=0.7]{chapters/background/Fog.png}
+    \caption{Diagram of Fog Computing}
+    \label{fig:FogDiagram}
+\end{figure}
+
+\subsection{Cisco}
+Cisco\cite{bonomi_fog_nodate} and Bonovi was the first to coin the term, and defines Fog Computing as \say{...a highly virtualized platform that provides compute, storage, and networking services between end devices and traditional Cloud Computing Data Centers, typically, but not exclusively located at the edge of network.}  The characteristics of Fog Computing is that it is located at the edge, has location awareness, low latency, easily geographically distributed, heterogeneity, support for mobility and some others. All these as a sum help with providing a service that is needed in some modern applications, for example Augmented Reality, and in general with IoT.
+
+A Fog node is \textbf{located at the edge} in the sense that it is close to the end user or client. Because of this, the Fog node will have \textbf{location awareness} and \textbf{low latency}. Since they are not big servers, the Fog nodes are also easily \textbf{geographically distributed}, in the sense that it should be easy to install and maintain. This also helps them be \textbf{mobile}. Most likely the Fog nodes do not have the same hardware or software, which gives us the \textbf{heterogeneity} characteristic. 
+
+\subsection{A survey of Fog Computing}
+The goal of Fog Computing is to improve Quality of service(QoS) with computation and storage offloading. Yi, Li, and Li, in ‘A Survey of Fog Computing’\cite{yi_survey_2015} argues that QoS can be divided into four aspects: Connectivity, reliability, capacity and delay.
+
+Connectivity in a fog network can be improved by network relaying, partitioning and clustering. They can be used to reduce cost, trim data and expand connectivity. Connectivity is of course important, because if you lose connection with the node, then you cannot offload work to it. 
+
+Reliability is very difficult to provide in Fog computing. The methods used in traditional distributed systems like checkpointing and replication can be used. However since devices are more mobile, and nodes dynamic, this can be hard to implement. It also implies that Fog nodes are connected to each other, which is not given in all architectures. 
+
+For capacity you need enough storage and good bandwidth. It does not matter how much storage you have, if it is slow to transfer it. To achieve good utilization of storage and bandwidth, it is important to analyse user patterns to know where data is most used. It’s difficult to know where to store data when it may need to be stored across several fog nodes. It is also hard to know when to send storage further to the distant cloud with bigger capacity at the cost of delay. 
+
+Lastly, Fog focuses a lot on delay. It’s a good solution for “latency-sensitive” applications. There are several proposed solutions to minimize delay. We will talk about Cloudlets as a solution later.
+
+\subsection{Fog architectures}
+Naha et al.\cite{naha_fog_2018}, reviewed a couple of architectures that arguably falls under the Fog computing paradigm. We have focused on the ones that also fall under the Near-Far computing model, in that they have a Near node and a Far node. These architectures focus on offloading from an IoT device, to assist with computation, energy and storage. We will talk about IoT in a later chapter. 
+
+\subsubsection{Mobile Cloud Computing(MCC)}
+MCC offloads by sending the work to a nearby lightweight server. An example of such a server is a Cloudlet. We will talk about Cloudlets later. The servers are on the edge of the network, and will act as the access point of the devices. The device will then directly communicate with the server and use it to offload computation and storage, and therefore save energy. It focuses on the fact that the device is mobile, such as a smartphone. It will provide functionality and storage facility much like the distant cloud, but additionally ensure that this works while being mobile. It uses the same pay-per-use as is normally used by cloud providers. We can think of this as using a traditional Cloud Service provider, but instead uses servers at the edge such that the devices only have one hop and minimal latency.
+
+\subsubsection{Mobile Edge Computing(MEC)}
+Mobile Edge Computing is about putting servers at the base of cell towers. The server is called an MEC server. This enables smartphones to communicate with a server for computation and storage offloading with just two hops. This is especially interesting with the rise of 5G, as the bandwidth is big enough to offload significant work fast and reliably. Since the servers are just two hops away and relatively close, we get an architecture that will be reachable for a lot of devices with very little latency.
+
+\subsubsection{Fog-Dew Computing (FD)}
+One drawback of Cloud computing is that you need to be always connected to the internet. 
+Fog-Dew Computing aims to provide IoT devices with cloud computing without being connected to the internet to reduce this issue. Depending on the application it might not need connection to the internet at all, while others can work temporarily offline but need to eventually connect to the internet. Fog-Dew Computing solves this by having an edge community server providing the needed cloud services. 
+
+\subsection{Cloudlet //MOVE THIS TO ARCHITECTURES?}
+Satyanarayanan et al., proposed in their paper “The Case for VM-Based Cloudlets in Mobile Computing”\cite{satyanarayanan_case_2009} a solution to resource poverty of mobile devices and for the long latency in the Wide-Area Network(WAN). They raise the issue that humans will not tolerate significant delays when using applications. E.g. using a remote photo editing software. It does not matter how good the bandwidth is, the latency will hurt the interactive performance. Since WAN latency is unlikely to improve, we should rather move the thick client closer to the thin client. 
+
+The proposed solution to this is Cloudlets, which are nearby resource-rich thick-clients. Since they are nearby they are one-hop, high bandwidth, low latency wirelessly accessible computers. The goal is to do all significant computation on a nearby cloudlet instead of doing so on the cell phone. Since the cloudlet is near and resource rich, you can get fast and predictable results, when you offload the work to it. Offloading helps the device get results faster, and use less power. A Cloudlet is essentially a data center in a box. To let different devices use it seamlessly, it uses VM’s that runs on top of the OS. A device can send a specification of a VM to the Cloudlet, and let it spin up. It also allows for migration of the VM, as we can expect the mobile device to move closer to another Cloudlet.
+
+
+%----------------------------------
+
+
+\section{Edge Computing}
+Edge Computing is about utilizing processing power at the edge of the internet, instead of using data centers. The edge of the internet are the devices that are closest to the users and clients. It's very relevant for IoT, because IoT end devices generate a lot of data close to the users but far from the data centres. This makes it very inefficient to send the data all the way to the distant cloud. Since IoT often requires real time processing of data, it is better to move the processing to the edge, closer to the devices, to minimize the latency\cite{shi_edge_2016}.
+A router, switch or Cloudlet are examples of an edge device. They can be utilized by the IoT devices to offload their computation to save time and energy.
+
+\subsection{Content Delivery Networks (CDN)}
+There are of course different levels of closeness to the edge. Content Delivery Networks are distributed systems that have servers geographically closer to the users. Akamai is a CDN company that specializes in bringing edge computing as close to the edge as possible. It has become widely popular, and a significant portion of the web moves through an Akamai device. They will have servers directly at the ISP’s so clients are just one “network hop” away from their servers. Akamai\cite{noauthor_exceptional_nodate} claims \say{85\% of the world’s Internet users are within a single “network hop” of an Akamai edge server.}. They also claim to handle 15-30\% of the world's web traffic. They help Netflix and similar companies to cache videos closer to the users so that they don't need to waste bandwidth across continents. They also help websites load faster and be more responsive, as the latency for getting the webpages are now minimal.
+
+
+%% ----------------------------------------------------------------------
+
+\begin{figure}[t]
+    \centering
+    \textbf{The Near-Far spectrum}\par\medskip
+    \includegraphics[scale=0.6]{chapters/background/Near-far-spectrum.png}
+    \caption{REMOVE ALL THIS, TALK ABOUT IT IN THE TEXT INSTEAD.Illustrates the Near-Far spectrum. The fat arrow illustrates the Near-Far spectrum, which goes all the way from the edge to the far data centre.  The arrows between the nodes illustrate communication between them. The right one of them has dots to show that there is a long physical distance between them.}
+    \label{fig:nearFarSimple}
+\end{figure}
+
+\section{The Near-Far computing model}
+The Near-Far computing model is a cloud architecture that consists of a thin client that is connected to thick clients, which again is connected to even thicker clients. The Near-Far computing model covers a spectrum with nodes that are very close to you, like a cellphone in your pocket, and a node that is near you, like a desktop in the same room, as well as a distant data centre like AWS that is far away, most likely in another country. The spectrum covers distances from centimeters to several thousands of kilometers. Figure ~\ref{fig:nearFarSimple} shows a pretty simple Near-Far setup, as well as the spectrum. In the Near-Far computing model you take the proximity of the Near server into consideration. You want the Near server to be as close as possible to the user. It can be a Cloudlet, for example.Optimally it is only one hop away, but considering cost and practicality, it can be more. The point is to minimize latency, but getting as close to the thin client as one hop is not feasible in every situation, especially on a tight budget.
+%% HOW DOES NEAR FAR DIFFER FROM FOG?
+
+
+%%---------------------------------------------------------------------
+
+\section{Speed of light}
+
+
+%% ----------------------------------------------------------------------------
+
+\section{Emerald}\label{Emerald}
+Emerald is a programming language created in ... by .... It has several features that is important in distributed programming, and therefore eases the development process.
+
+\subsection{Types}
+
+\subsubsection{Classes}
+Emerald does not really have classes....
+
+\subsection{Object mobility}
+One of the key features of Emerald is Object Mobility. It has the tools needed to easily move objects around in a distributed system. To move an object to a different node is as easy is this:
+\begin{lstlisting}[language=emerald]
+% x is created and resides on A
+move x to B
+% x now might reside on B
+\end{lstlisting}
+However, the move keyword is more of a hint to the Emerald VM that the object should be moved over. In Emerald you can use \verb|fix| to tell the VM that it has to move the object, instead of it just being a hint. It has the same syntax as move:
+\begin{lstlisting}[language=emerald]
+% x is created and resides on A
+fix x at B
+% x now resides on B, and will not move until unfixed.
+\end{lstlisting}
+To move the object again, we now have to unfix it, which is done by using \verb|unfix|:
+\begin{lstlisting}[language=emerald]
+unfix x
+\end{lstlisting}
+The object can now be moved or fixed on a different location. To make this procedure easier we have the \verb|refix| keyword. It will unfix and then fix an object to a new location. In other words these are equivalent:
+\begin{lstlisting}[language=emerald]
+unfix x
+fix x at C
+\end{lstlisting}
+and
+\begin{lstlisting}[language=emerald]
+refix x at C
+\end{lstlisting}
+Therefore we use refix almost everywhere when we are moving objects. 
+
+\subsubsection{Attached}
+When moving objects in Emerald, you are essentially just moving the pointer. This means that if you have a class with some inner variables, they will stay on the original node even though its parent is moved. When it makes sense to move the related data with the object we can use the \verb|attached| keyword.
+As shown in figure ~\ref{fig:emerald_attached_figure}, when using the Attached keyword, both the object and the related objects will move over. This can be done like this:
+\begin{lstlisting}[language=emerald]
+const x <- class x
+    attached const y <- someObject.create
+    attached const z <- someObject.create
+end x
+\end{lstlisting}
+
+\begin{figure}[t]
+    \centering
+    \textbf{Not attached vs Attached}\par\medskip
+    \includegraphics[scale=0.8]{chapters/background/emerald_attached.png}
+    \caption{Showing a move executed without and with attached objects}
+    \label{fig:emerald_attached_figure}
+\end{figure}
+
+\subsubsection{Call-by-visit and call-by-move}
+
+\subsubsection{How Emerald finds the location of objects}
+Emerald has a system for keeping track of and finding objects. To get the location of an object you can use the \verb|locate| keyword. For example:
+\begin{lstlisting}[language=emerald]
+const x <- 3
+move x to B
+var locationOfX : Node <- locate x
+% The variable "locationOfX" now holds 
+%  the Node object that resides on B.
+\end{lstlisting}
+Emerald uses something called \textit{Cascading Search} to locate an object. To prevent having to broadcast each time an object moves, a Node only keeps track of the last position it knows the object resides or resided on. If the last known position of X is on A, then we just ask the A if he can send it. If A has later moved X to node C, then it will just send the query to C. This is called a Forwarding Reference. It keeps track of last known location (from its own perspective) and also a counter. Each time an object moves, that counter is incremented on the receiving node. If node A moves object X to B, then the counter is 0 at A and 1 at B. That means that the higher the counter, the more recent the pointer is. The counter is essentially replacing a global clock, since having synchronized time is almost impossible in a distributed system. The algorithm also have ways of dealing with failing nodes and lost pointers, but we wont go any deeper into that. 
+
+
+
+
+\subsection{Compiling and running}
+- ec and emx
+
+- Object mobility
+    - Kilroy
+    - Clock? (A counter increments each jump)
+- The type system, conformity
+    - Any at the bottom, None at the top
+    - Type inference?
+- Failure handling
+- Checkpoints
+- Multiprocessing
+    - Monitor and signal
+- Immutable
+
+
+% \begin{lstlisting}[language=emerald]
+% const Main <- object Main 
+%   initially
+%     (locate self)$stdout.putstring["--------------------Starting--------------------\n"]
+%   end initially
+% end Main
+% \end{lstlisting}
+
+%% --------------------------------------------------------------
+
+\section{Docker}
+Docker is a tool for running programs on the same architecture everywhere, without spinning up a whole virtual machine. It is built around the concept of \textbf{containers}. Containers are small packages of software, that run on the Docker Engine. The Docker Engine is the the malware between the containers and the operating system. This lets us run something locally and be able to expect the same behavior on other machines. Therefore, no matter where you run the application, it will always be the same environment from the perspective of the program. 
+
+Because a Docker does not spin up a whole virtual machine, but rather share some resources with between the containers \cite{dockercom_what_nodate}, it is more efficient. The container is essentially a sandbox, that runs on top of the OS. Each of the applications are therefore isolated, even though they have some shared resources.
+
+To run Emerald we use a stripped debian image with i386 architecture, made by Oleks Shturmov\cite{oleks_oleksdocker-in5570v21_2021}.
+In the referenced github repository, Oleks provides a makefile to easily set up Emerald.
+
+
+
+%%------------------------------------------------------
+\section{PlanetLab}
+PlanetLab is virtual organization consisting of many nodes spread out over the world. If an institution, like an university, wants to use PlanetLab, then they have to provide a PlanetLab server themselves. In other word, the institution get sent a server, which they have to install and maintain to keep using PlanetLab. This ensures that you get a wide network that spans all over the world. At it's peak, it had 1353 nodes spread across the earth\cite{noauthor_planetlab_nodate}. It is used as a wide-area network to do research on distributed systems. To get access you request for a DIKU, which is a collection of servers that you can log into. The login username for the servers, is then the name of the DIKU.
+
+Each of the nodes run some from an operating system. We can connect to them with Secure Shell(SSH). Each node we use in this thesis will have Docker available. To run Emerald on a PlanetLab server, transfer the Emerald source code or executable and the makefile for running Emerald, over to the server with scp. For example, transfer the folder you are currently in to the home folder on the remote server:
+\begin{lstlisting}[language=Bash]
+scp -r . "planetlab-1.ida.liu.se":"~/"
+\end{lstlisting}
+Then ssh into the server: 
+\begin{lstlisting}[language=Bash]
+ssh -i ~/.ssh/planetlab \
+    -l diku_name \
+    "planetlab-1.ida.liu.se"
+\end{lstlisting}
+Here we provide a PlanetLab ssh key and the login name, which is the name of the DIKU, and a server URL.
+
+When logged in on the server, we run the makefile with \verb|make| to start the shell within the Docker container. Then you can either run the executable, or compile the code as described in the Emerald section \ref{Emerald}.
+
+
+
+%% TODO:
+
+%% LAG FIGURES TIL DISTRIBUTED SYSTEMS

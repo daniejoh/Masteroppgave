@@ -1,0 +1,62 @@
+\documentclass[UKenglish]{duo/ifimaster}  %% ... or USenglish or norsk or nynorsk
+\usepackage[utf8]{inputenc}           %% ... or latin1
+\usepackage[T1]{fontenc,url}
+\urlstyle{sf}
+\usepackage{babel,textcomp,csquotes,duo/duomasterforside,varioref,graphicx}
+\usepackage[backend=biber,style=numeric-comp]{biblatex}
+\usepackage{hyperref}
+\usepackage{dirtytalk}
+\usepackage{listings} %% for code examples
+\input{listings-emerald} % An Emerald language definition
+%% check out "minted" for code listings?
+
+\title{Investigating the Near-Far computing model}        %% ... or whatever
+%%\subtitle{Essay}         %% ... if any
+\author{Daniel Johnsen}                      %% ... or whoever 
+
+\addbibresource{references.bib}            %% ... or whatever
+\includeonly{
+    %chapters/introduction/introduction,
+    chapters/background/background
+    }
+\begin{document}
+\duoforside[dept={Department of Informatics},   %% ... or your department
+  program={Programming and System architecture},  %% ... or your programme
+  long]                                        %% ... or long
+
+\frontmatter{}
+\chapter*{Abstract}
+Cloud computing, Near-Far, Speed of light, investigation
+\tableofcontents{}
+\listoffigures{}
+\listoftables{}
+
+\chapter*{Preface}
+
+\mainmatter{}
+
+
+\include{chapters/introduction/introduction}
+
+\include{chapters/background/background} 
+
+%\chapter{Problem statement?}
+
+%\chapter{Architecture} %% implementation and design
+
+%\chapter{Design of experiments} %% “Plan for empirical studies”,“Design of experiments”
+%% this chapter describes how and why we evaluate this way
+
+%\chapter{Evaluation}
+%evaluation of architecture using the method described in "Design of experiments" chapter
+
+
+
+%\chapter{Conclusion}                     %% ... or Konklusjon
+
+%\chapter{Results}                     %% ... or ??
+
+
+\backmatter{}
+\printbibliography
+\end{document}
