@@ -121,12 +121,12 @@ There are several definitions of cloud computing. Many of them are similar, but 
 \begin{figure}[t]
     \centering
     \textbf{Simplified Cloud Computing}\par\medskip
-    \includegraphics[scale=0.7]{chapters/background/Simplified_cloud.png}
+    \includegraphics[scale=0.7]{chapters/background/figures/emerald_attached.png}
     \caption{A Simplified diagram of Cloud Computing}
     \label{fig:SimplifiedCloudDiagram}
 \end{figure}
 
-At a very high level, Cloud Computing is where you offload your work to the usually distant cloud. As shown on the simplified figure ~\ref{fig:SimplifiedCloudDiagram}, a laptop or any other device can communicate with the cloud, and let the cloud provide storage and computation. The Cloud is a distributed system which is usually built as a Grid Computing system in a data centre. When working with the cloud, we typically have thin clients and thick clients. For traditional cloud computing the thin client is for example your laptop or cell phone, while the thick client is the server or servers in the distant data centre.
+At a very high level, Cloud Computing is where you offload your work to the usually distant cloud. As shown on the simplified figure~\ref{fig:SimplifiedCloudDiagram}, a laptop or any other device can communicate with the cloud, and let the cloud provide storage and computation. The Cloud is a distributed system which is usually built as a Grid Computing system in a data centre. When working with the cloud, we typically have thin clients and thick clients. For traditional cloud computing the thin client is for example your laptop or cell phone, while the thick client is the server or servers in the distant data centre.
 
 However, in today's society it has of course become much more advanced. You have an increasing number of cloud service providers that offer Infrastructure as a Service(IaaS), Platform as a Service(PaaS) and Software as a Service(SaaS), like Amazon Web Services(AWS), Digital Ocean, Alibaba Cloud, Microsoft Azure and Google Cloud Platform(GCP) just to name a few. The biggest of them all is AWS, which holds almost half of the market share\cite{noauthor_cloud_2019}. The Cloud market made 129 billion dollars in 2020 alone\cite{noauthor_cloud_nodate}.
 
@@ -151,7 +151,7 @@ Vaquero and Rodero-Merino\cite{vaquero_finding_2014}, defines fog computing like
 
 As in other fields, there is no de-facto definition and the definition is debatable. Since Fog Computing is a relatively new concept, different definitions will be used depending on the field they are in.
 
-Fog computing is an extension of the Cloud Computing paradigm. You have some nodes, like servers or desktops, that you offload the computation and storage to. The difference is that in Fog computing the fog nodes are located close in proximity to the user\cite{msftadmin_concept_2020}, as shown in figure ~\ref{fig:FogDiagram}. The distant cloud has way more resources that the nodes in the fog layer, but since the fog nodes are closer, they are great at doing latency sensitive work. The Fog nodes is usually defined as being on the same LAN, but some argue that you can put them further away to, at least geographically speaking. 
+Fog computing is an extension of the Cloud Computing paradigm. You have some nodes, like servers or desktops, that you offload the computation and storage to. The difference is that in Fog computing the fog nodes are located close in proximity to the user\cite{msftadmin_concept_2020}, as shown in figure~\ref{fig:FogDiagram}. The distant cloud has way more resources that the nodes in the fog layer, but since the fog nodes are closer, they are great at doing latency sensitive work. The Fog nodes is usually defined as being on the same LAN, but some argue that you can put them further away to, at least geographically speaking. 
 
 An example is if an ISP has some Fog nodes at the base of cell towers. This will enable cell phones, or other SIM-card enabled devices, to offload storage and computation easily through the cell network. The introduction of 5G for the mainstream could benefit a lot from this. The latency for 5g will most likely be the same, but since the devices using it are so close to the 5G tower, it does not matter that much. The increased bandwidth of 5G is what will help a lot, as you can offload bigger workloads. We will talk about this in the Mobile Edge Computing chapter later. 
 
@@ -163,7 +163,7 @@ For comparison, a Traceroute\cite{noauthor_traceroute68_nodate} from Oslo, Norwa
 \begin{figure}[t]
     \centering
     \textbf{Fog Computing}\par\medskip
-    \includegraphics[scale=0.7]{chapters/background/Fog.png}
+    \includegraphics[scale=0.7]{chapters/background/figures/Fog.png}
     \caption{Diagram of Fog Computing}
     \label{fig:FogDiagram}
 \end{figure}
@@ -171,7 +171,7 @@ For comparison, a Traceroute\cite{noauthor_traceroute68_nodate} from Oslo, Norwa
 \subsection{Cisco}
 Cisco\cite{bonomi_fog_nodate} and Bonovi was the first to coin the term, and defines Fog Computing as \say{...a highly virtualized platform that provides compute, storage, and networking services between end devices and traditional Cloud Computing Data Centers, typically, but not exclusively located at the edge of network.}  The characteristics of Fog Computing is that it is located at the edge, has location awareness, low latency, easily geographically distributed, heterogeneity, support for mobility and some others. All these as a sum help with providing a service that is needed in some modern applications, for example Augmented Reality, and in general with IoT.
 
-A Fog node is \textbf{located at the edge} in the sense that it is close to the end user or client. Because of this, the Fog node will have \textbf{location awareness} and \textbf{low latency}. Since they are not big servers, the Fog nodes are also easily \textbf{geographically distributed}, in the sense that it should be easy to install and maintain. This also helps them be \textbf{mobile}. Most likely the Fog nodes do not have the same hardware or software, which gives us the \textbf{heterogeneity} characteristic. 
+A Fog node is located at the edge in the sense that it is close to the end user or client. Because of this, the Fog node will have \textbf{location awareness} and \textbf{low latency}. Since they are not big servers, the Fog nodes are also easily \textbf{geographically distributed}, in the sense that it should be easy to install and maintain. This also helps them be \textbf{mobile}. Most likely the Fog nodes do not have the same hardware or software, which gives us the \textbf{heterogeneity} characteristic. 
 
 \subsection{A survey of Fog Computing}
 The goal of Fog Computing is to improve Quality of service(QoS) with computation and storage offloading. Yi, Li, and Li, in ‘A Survey of Fog Computing’\cite{yi_survey_2015} argues that QoS can be divided into four aspects: Connectivity, reliability, capacity and delay.
@@ -206,6 +206,12 @@ The proposed solution to this is Cloudlets, which are nearby resource-rich thick
 %----------------------------------
 
 
+
+
+
+
+
+
 \section{Edge Computing}
 Edge Computing is about utilizing processing power at the edge of the internet, instead of using data centers. The edge of the internet are the devices that are closest to the users and clients. It's very relevant for IoT, because IoT end devices generate a lot of data close to the users but far from the data centres. This makes it very inefficient to send the data all the way to the distant cloud. Since IoT often requires real time processing of data, it is better to move the processing to the edge, closer to the devices, to minimize the latency\cite{shi_edge_2016}.
 A router, switch or Cloudlet are examples of an edge device. They can be utilized by the IoT devices to offload their computation to save time and energy.
@@ -219,30 +225,98 @@ There are of course different levels of closeness to the edge. Content Delivery 
 \begin{figure}[t]
     \centering
     \textbf{The Near-Far spectrum}\par\medskip
-    \includegraphics[scale=0.6]{chapters/background/Near-far-spectrum.png}
+    \includegraphics[scale=0.6]{chapters/background/figures/Near-far-spectrum.png}
     \caption{REMOVE ALL THIS, TALK ABOUT IT IN THE TEXT INSTEAD.Illustrates the Near-Far spectrum. The fat arrow illustrates the Near-Far spectrum, which goes all the way from the edge to the far data centre.  The arrows between the nodes illustrate communication between them. The right one of them has dots to show that there is a long physical distance between them.}
     \label{fig:nearFarSimple}
 \end{figure}
 
 \section{The Near-Far computing model}
-The Near-Far computing model is a cloud architecture that consists of a thin client that is connected to thick clients, which again is connected to even thicker clients. The Near-Far computing model covers a spectrum with nodes that are very close to you, like a cellphone in your pocket, and a node that is near you, like a desktop in the same room, as well as a distant data centre like AWS that is far away, most likely in another country. The spectrum covers distances from centimeters to several thousands of kilometers. Figure ~\ref{fig:nearFarSimple} shows a pretty simple Near-Far setup, as well as the spectrum. In the Near-Far computing model you take the proximity of the Near server into consideration. You want the Near server to be as close as possible to the user. It can be a Cloudlet, for example.Optimally it is only one hop away, but considering cost and practicality, it can be more. The point is to minimize latency, but getting as close to the thin client as one hop is not feasible in every situation, especially on a tight budget.
+The Near-Far computing model is a cloud architecture that consists of a thin client that is connected to thick clients, which again is connected to even thicker clients. The Near-Far computing model covers a spectrum with nodes that are very close to you, like a cellphone in your pocket, and a node that is near you, like a desktop in the same room, as well as a distant data centre like AWS that is far away, most likely in another country. The spectrum covers distances from centimeters to several thousands of kilometers. Figure~\ref{fig:nearFarSimple} shows a pretty simple Near-Far setup, as well as the spectrum. In the Near-Far computing model you take the proximity of the Near server into consideration. You want the Near server to be as close as possible to the user. It can be a Cloudlet, for example.Optimally it is only one hop away, but considering cost and practicality, it can be more. The point is to minimize latency, but getting as close to the thin client as one hop is not feasible in every situation, especially on a tight budget.
 %% HOW DOES NEAR FAR DIFFER FROM FOG?
 
 
 %%---------------------------------------------------------------------
 
-\section{Speed of light}
+\section{The slow speed of light}
+The speed of light in a vacuum is 299,792 458 kilometers a second. This is the upper limit for how fast anything can travel. This also limits how fast electrons can move in cobber and how fast light can travel in fiber-optic cables. Signals in fiber-optic travels at about 2/3 of the speed of light. The speed of electrons in a copper wire is slight faster than fiber. However, clock speed of computers today are in the billions of times per second. If you have a CPU running at 5GHz, in other words 5 billion clock cycles a second, we can see that the computer has time to do quite a lot while waiting for packets. When a packet has traveled just 1 foot, which takes 1 nanosecond, the CPU has already done 5 clock cycles. If the packet is traveling to another country, we can easily see that the CPU can do quite a bit of work while waiting for that packet. Since the speed of light is not going to change, the only way to improve latency is to reduce the physical distance between the nodes.
+
 
 
 %% ----------------------------------------------------------------------------
 
-\section{Emerald}\label{Emerald}
-Emerald is a programming language created in ... by .... It has several features that is important in distributed programming, and therefore eases the development process.
 
-\subsection{Types}
+
+
+
+
+
+
+\section{Emerald}\label{Emerald}
+Emerald is a programming language created in the period of 1984-1986 by Eric B. Jul, Norm Hutchinson, Hank Levy and Andrew Black. It has several features that is important in distributed programming, like object mobility and type conformity. These features helps easing the development process of distributed systems. Emerald is an example that you can have object orientation in distributed systems that have similar performance as C++ in many aspects. This section will give an introduction to Emerald, and are mainly based on the Emerald Language Report\cite{hutchinson_emerald_nodate}
+
+\subsection{Types and Conformity}
+When programming distributed systems, each node has to agree on how to handle data. Emerald does this with types and conformity. Each node does not need to transfer or have a copy of the whole object. It only needs to know what that object has available, which can be described with types. When calling a remote node, we just need to get a copy of the object type to be able to know what to call, and what to send. Having strong compile-time typing ensures that we will always get the expected data, which reduces errors and failures.
+
+Everything is an object in Emerald. Even types are just first-class objects. 
+Emerald is a compile-time strongly typed language. This means that the compiler will check that all objects conforms to the types at compile time, except for a few cases. An object conforms to a type if
+\begin{enumerate}
+    \item All operations defined in the type is available in the object
+    \item For each operation, there are the same number of parameters, and each parameter conforms to the corresponding parameters.
+\end{enumerate}
+There are more checks, but these two are the most important ones.
+Here is an example:
+\begin{lstlisting}[language=emerald]
+type TypeA
+    Integer multiplyByTwo[n: Integer]
+end TypeA
+
+const ObjectA <- class ObjectA
+    operation multiplyByTwo[n: Integer]
+                        <- [res: Integer]
+        res <- n * 2
+    end multiplyByTwo
+end ObjectA
+\end{lstlisting}
+Here, the ObjectA conforms to TypeA because we have the \textit{multiplyByTwo} operation, the type of the parameter and the type of the return is the same as described in the type.
+
+To enable generic types and polymorphism, Emerald lets you also check types during runtime with an operator: \verb|*>|. You can essentially read \verb|a *> b| as "\textit{a} conforms to \textit{b}". You also have \verb|view a as b| to help change the type of an object during runtime.
+
+
+
 
 \subsubsection{Classes}
-Emerald does not really have classes....
+Emerald does not really have classes as everything is an object. We still have the concept of classes, and Emerald has the keyword \verb|class| to help us easily create it. Emerald will automatically create a type, a \textit{getSignature} operation, which returns the type, and finally a \textit{create} operation. These two objects are therefore semantically equivalent:
+\begin{lstlisting}[language=emerald]
+const A <- class A[x: Integer]
+    export operation multiplyByTwo[n: Integer]
+                        -> [res: Integer]
+        res <- n * 2
+    end multiplyByTwo
+end A
+
+const B <- object B
+    const BType <- immutable typeobject BType
+        operation multiplyByTwo[n: Integer]
+                            -> [res: Integer]
+    end BType
+    export function getSignature -> [r: Signature]
+        r <- BType
+    end getSignature
+    export operation create[x: Integer] -> [e: B]
+        e <- immutable object aB
+            export operation multiplyByTwo[n: Integer]
+                        -> [res: Integer]
+                res <- n * 2
+            end multiplyByTwo
+        end aB
+    end create
+end B
+\end{lstlisting}
+As you can see, using the \verb|class| keyword dramatically increases readability, gives us the consept of classes, and eases the development.
+
+
+\subsubsection{Immutability}
+To ensure that objects does not change over time, we need immutability. This is important in distributed systems, as changing an object that was not meant to change can break how it is supposed to interpret data, as we can have nodes with different versions of the object. Since Emerald only copies over the type to other nodes, it is important that these types are not able to change(mutable). Therefore, all types should be mutable. Classes should be immutable if possible, to prevent confusion between nodes. The less mutable objects there are, the less errors and failure there can be.
 
 \subsection{Object mobility}
 One of the key features of Emerald is Object Mobility. It has the tools needed to easily move objects around in a distributed system. To move an object to a different node is as easy is this:
@@ -251,7 +325,23 @@ One of the key features of Emerald is Object Mobility. It has the tools needed t
 move x to B
 % x now might reside on B
 \end{lstlisting}
-However, the move keyword is more of a hint to the Emerald VM that the object should be moved over. In Emerald you can use \verb|fix| to tell the VM that it has to move the object, instead of it just being a hint. It has the same syntax as move:
+To visit all available nodes with your program is as easy as this\cite{noauthor_emerald_nodate}:
+\begin{lstlisting}[language=emerald]
+const Kilroy <- object Kilroy
+  process
+    const origin <-  locate self
+    const up <- origin.getActiveNodes
+    for e in up
+      	const there <- e.getTheNode
+      	move self to there
+    end for
+    move self to origin
+  end process
+end Kilroy
+\end{lstlisting}
+This short and simple compilable and runnable Emerald program will start a process, find all active nodes and then loop over and visit them, before going back to the original node.
+
+The move keyword is more of a hint to the Emerald VM that the object should be moved over. In Emerald you can use \verb|fix| to tell the VM that it has to move the object, instead of it just being a hint. It has the same syntax as move:
 \begin{lstlisting}[language=emerald]
 % x is created and resides on A
 fix x at B
@@ -272,27 +362,31 @@ refix x at C
 \end{lstlisting}
 Therefore we use refix almost everywhere when we are moving objects. 
 
+
+
 \subsubsection{Attached}
-When moving objects in Emerald, you are essentially just moving the pointer. This means that if you have a class with some inner variables, they will stay on the original node even though its parent is moved. When it makes sense to move the related data with the object we can use the \verb|attached| keyword.
-As shown in figure ~\ref{fig:emerald_attached_figure}, when using the Attached keyword, both the object and the related objects will move over. This can be done like this:
+When moving objects in Emerald, you are essentially just moving the pointer. This means that if you have an object with some inner variables, they will stay on the original node when the parent is moved. If it makes sense to move the related data with the object, which it usually does, we can use the \verb|attached| keyword.
+As shown in figure~\ref{fig:emerald_attached_figure}, when using the Attached keyword, both the object and the attached objects will move over, when that parent object (x) is moved. If we do not move the related objects over, then there will be a tremendous performance impact because local invocations are many times faster than remote invocations. Here is an example of how you can use attached:
 \begin{lstlisting}[language=emerald]
 const x <- class x
     attached const y <- someObject.create
     attached const z <- someObject.create
 end x
 \end{lstlisting}
+In the above code example, you will get an object similar to the one shown in Node A in figure~\ref{fig:emerald_attached_figure} before the move.
 
 \begin{figure}[t]
     \centering
     \textbf{Not attached vs Attached}\par\medskip
-    \includegraphics[scale=0.8]{chapters/background/emerald_attached.png}
+    \includegraphics[scale=0.8]{chapters/background/figures/emerald_attached.png}
     \caption{Showing a move executed without and with attached objects}
     \label{fig:emerald_attached_figure}
 \end{figure}
 
 \subsubsection{Call-by-visit and call-by-move}
+Call-by-visit and call-by-move are very similar concepts as attached. In Emerald you can use them to specify when you want to move the objects you send as parameters when invoking a function on a remote node. When using call-by-visit you move the parameters over, then move then back when finished with the function. When using call-by-move, you do the same, except the object stay on the remote node.
 
-\subsubsection{How Emerald finds the location of objects}
+\subsubsection{How the Emerald VM finds the location of objects}
 Emerald has a system for keeping track of and finding objects. To get the location of an object you can use the \verb|locate| keyword. For example:
 \begin{lstlisting}[language=emerald]
 const x <- 3
@@ -301,21 +395,122 @@ var locationOfX : Node <- locate x
 % The variable "locationOfX" now holds 
 %  the Node object that resides on B.
 \end{lstlisting}
-Emerald uses something called \textit{Cascading Search} to locate an object. To prevent having to broadcast each time an object moves, a Node only keeps track of the last position it knows the object resides or resided on. If the last known position of X is on A, then we just ask the A if he can send it. If A has later moved X to node C, then it will just send the query to C. This is called a Forwarding Reference. It keeps track of last known location (from its own perspective) and also a counter. Each time an object moves, that counter is incremented on the receiving node. If node A moves object X to B, then the counter is 0 at A and 1 at B. That means that the higher the counter, the more recent the pointer is. The counter is essentially replacing a global clock, since having synchronized time is almost impossible in a distributed system. The algorithm also have ways of dealing with failing nodes and lost pointers, but we wont go any deeper into that. 
+Emerald uses something called \textit{Cascading Search} to locate an object. To prevent having to broadcast each time an object moves, a node only keeps track of the last position it knows the object resides or resided on. If the last known position of X is on A, then we just ask the A if he can send it. If A has later moved X to node C, then it will just send the query to C. This is called a Forwarding Reference. It keeps track of last known location (from its own perspective) and also a counter. Each time an object moves, that counter is incremented on the receiving node. If node A moves object X to B, then the counter is 0 at A and 1 at B. That means that the higher the counter, the more recent the pointer is. The counter is essentially replacing a global clock, since having synchronized time is almost impossible in a distributed system. The algorithm also have ways of dealing with failing nodes and lost pointers, but we wont go any deeper into that. 
+
+
+\subsection{Remote Procedure Call}
+Emerald uses Remote Procedure Calls, which means that it will handle all remote invocations for you. Therefore, when programming, you can just invoke the object as if it were local. This ensures that programming with distributed objects is really easy, as you do not need to think about programming each remote invocation. Here is a comparison:
+\begin{lstlisting}[language=emerald, numbers=left]
+const A <- class A
+    export function multiplyByTwo[i: Integer] 
+                                -> [res: Integer]
+        res <- i * 2
+    end mulitplyByTwo
+end A
+
+const B <- object B
+    initially
+        const x <- A.create
+        % x is now a local pointer to A
+        const result1 <- x.multiplyByTwo[2]
+        
+        refix x at someOtherNode
+        % x is now a remote pointer to A
+        const result2 <- x.multiplyByTwo[2] 
+    end initially
+end B
+\end{lstlisting}
+On line 12 and 16, we do the same invocation, but the location of the invoked function is different.
+
+If we try to invoke a function on a node that is not available, Emerald will raise 
+
+
+
+
+\subsection{Failure and Unavailable}
+When programming distributed systems we need to account for nodes going up or down. To help with this, Emerald has introduced \textbf{unavailable handlers}. Unavailable handlers can be put at the bottom of process blocks, functions and compound blocks. Within an unavailable handler, one can try to recover by trying again or by trying other nodes, for example.
+
+\textbf{Failure Handlers} are invoked when a failure is raised by the program. An example of this is when invoking a nil object. The failure handler can be used to try to recover the program.
+
+Below is an example of both failure and unavailable handlers:
+\begin{lstlisting}[language=emerald, numbers=left]
+const A <- class A
+    export function divideTwoBy[i: Integer] 
+                                -> [res: Integer]
+        begin %compound statement
+            res <- 2 / i
+            failure
+                % This will be executed if i is 0
+            end failure
+        end
+    end mulitplyByTwo
+end A
+
+const B <- object B
+    initially
+        const x <- A.create
+        % x is now a local pointer to A
+        const result1 <- x.divideTwoBy[0]
+        
+        refix x at someOtherNode
+        % x is now a remote pointer to A
+        const result2 <- x.divideTwoBy[0]
+        
+        unavailable
+            % this will be executed if someOtherNode
+            %  is unavailable
+        end unavailable
+    end initially
+end B
+\end{lstlisting}
+
+
+
+
+
+
+\subsection{Checkpoints and Recovery}
+To help keeping nodes up, Emerald provides checkpoints and recovery blocks. At any point you can use the reserved \verb|checkpoint| keyword to create a checkpoint of an object. If a node has restarted, then it will load the last checkpoint. Code within the recovery block when the program has started.
+
+
+
+
 
 
 
 
 \subsection{Compiling and running}
-- ec and emx
+You can compile Emerald with the Emerald Compiler\cite{noauthor_emeraldold-emerald_2019}, which, when installed, can be run in a terminal with \verb|ec|. When you have written you program you compile the files with \verb|ec| like this:
+\begin{lstlisting}[language=Bash]
+ec file1.m file2.m 
+\end{lstlisting}
+To then run the program, you use the \verb|emx| which will run the compiled program on the Emerald VM:
+\begin{lstlisting}[language=Bash]
+emx file1.x file2.x
+\end{lstlisting}
 
-- Object mobility
-    - Kilroy
-    - Clock? (A counter increments each jump)
+To start a remote node, run this on the remote node:
+\begin{lstlisting}[language=Bash]
+emx -U -R
+\end{lstlisting}
+Then all the other additional nodes is started like this:
+\begin{lstlisting}[language=Bash]
+emx -U -R172.17.0.2
+\end{lstlisting}
+Here \textbf{172.17.0.2} is the IP address of the first node.
+Finally, to run the program run this:
+\begin{lstlisting}[language=Bash]
+emx -U -R172.17.0.2 file1.x file2.x
+\end{lstlisting}
+All the other nodes are now accessible, and can have objects moved to them.
+
+
+
+
 - The type system, conformity
     - Any at the bottom, None at the top
     - Type inference?
-- Failure handling
+
 - Checkpoints
 - Multiprocessing
     - Monitor and signal
@@ -333,7 +528,7 @@ Emerald uses something called \textit{Cascading Search} to locate an object. To 
 %% --------------------------------------------------------------
 
 \section{Docker}
-Docker is a tool for running programs on the same architecture everywhere, without spinning up a whole virtual machine. It is built around the concept of \textbf{containers}. Containers are small packages of software, that run on the Docker Engine. The Docker Engine is the the malware between the containers and the operating system. This lets us run something locally and be able to expect the same behavior on other machines. Therefore, no matter where you run the application, it will always be the same environment from the perspective of the program. 
+Docker is a tool for running programs on the same architecture everywhere, without spinning up a whole virtual machine. It is built around the concept of \textbf{containers}. Containers are small packages of software, that run on the Docker Engine. The Docker Engine is the the middleware between the containers and the operating system. This lets us run something locally and be able to expect the same behavior on other machines. Therefore, no matter where you run the application, it will always be the same environment from the perspective of the program. 
 
 Because a Docker does not spin up a whole virtual machine, but rather share some resources with between the containers \cite{dockercom_what_nodate}, it is more efficient. The container is essentially a sandbox, that runs on top of the OS. Each of the applications are therefore isolated, even though they have some shared resources.
 

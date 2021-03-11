@@ -6,9 +6,15 @@
 \usepackage[backend=biber,style=numeric-comp]{biblatex}
 \usepackage{hyperref}
 \usepackage{dirtytalk}
+\usepackage[parfill]{parskip}
+
+
 \usepackage{listings} %% for code examples
 \input{listings-emerald} % An Emerald language definition
 %% check out "minted" for code listings?
+
+\lstdefinestyle{mystyle}{frame=single} %% remove these two lines to remove border around code
+\lstset{style=mystyle}
 
 \title{Investigating the Near-Far computing model}        %% ... or whatever
 %%\subtitle{Essay}         %% ... if any
@@ -16,7 +22,7 @@
 
 \addbibresource{references.bib}            %% ... or whatever
 \includeonly{
-    %chapters/introduction/introduction,
+    chapters/introduction/introduction,
     chapters/background/background
     }
 \begin{document}
