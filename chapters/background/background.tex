@@ -7,23 +7,13 @@ In the start of their book, Steen and Tanenbaum\cite{steen_distributed_2017} def
 
 This definition describes two important characteristics of distributed systems. Firstly, we can think of a distributed system as several computers or programs that work independently. They share workload and storage between, but they are independent in the same sense as processes. The different programs or computers are referred to as Nodes. Each node in the system will work concurrently. This is one of the great benefits of a distributed system. This is because you can share heavy computational tasks across the system to make it distribute the load. A computer can have several nodes, but usually we think of different computers as different nodes. The other characteristic it describes, is that the users should only see a single coherent system. That means that the user should not notice that the application is running on a distributed system, unlike an application running on a single computer.
 
-Distributed systems have no shared clock. This is because having a shared clock is almost impossible, as even atomic clocks is not accurate enough. Therefore, you have to utilize other methods to ensure synchronization. EDIT THIS LATER, NEEDS AN EXAMPLE. Each node will therefore have an independent notion of time, and the system as a whole will not have a global clock\cite{steen_distributed_2017}. This is also important because even though the nodes work with each other, they should always be loosely coupled and as independent as possible.
+Distributed systems have no shared clock. This is because having a shared clock is almost impossible, as even atomic clocks is not accurate enough and other factors will affect the clocks. Therefore, you have to utilize other methods to ensure synchronization. We will talk about a synchronization in section \ref{cascading_search}. Each node will therefore have an independent notion of time, and the system as a whole will not have a global clock\cite{steen_distributed_2017}. This is also important because even though the nodes work with each other, they should always be loosely coupled and as independent as possible.
 
-The systems will exchange information, but they don’t have shared memory. This again(AGAIN?) is because of loose coupling. In some systems it is also important because the nodes in the system can be heterogeneous. Two nodes can have quite different environments, such as different OS, processing power, network, memory and hardware, but still work together in a distributed system. Having a loosely coupled system will ensure that the system is robust and that you don't need specific hardware to run it, but can rather focus on the other layers. The system is also dynamic, which means that nodes may leave or join the system at any time. This is useful for scaling. It also raises the issue that a node might disappear while doing a task, and that needs to be handled. SKRIV OM HELE DETTE AVSNITTET
+The nodes will exchange information, but they don’t have shared memory. This is to ensure \textit{loose coupling}, which means that nodes are not too dependent on each other. In some systems it is also important with loose coupling because the nodes in the system can be heterogeneous. Two nodes can have quite different environments, such as different OS, processing power, network, memory and hardware, but still work together in a distributed system. Having a loosely coupled system will ensure that the system is robust and that you don't need specific hardware to run it, but can rather focus on the other layers. 
 
-
-Distribution transparency is important but raises a few issues. It has to handle changes in the system without the clients noticing it. See 
-%~\ref{fig:transparencyTable} 
-for examples. To make the system seem coherent we use Remote Procedure Calls(RPC) or Remote Method Invocations(RMI). This thesis will focus mostly on RMI as we use the Emerald Programming language as a basis. RMI is about allowing the user to do an RMI without it explicitly knowing where the object is or how it calls. The interface makes it look like a normal method. We will cover this more later in the Emerald chapter.
+A distributed system is dynamic, which means that nodes may leave or join the system at any time. This is useful for scaling, as one can easily add nodes after demand. However, it also raises the issue that a node might disappear while doing a task, and that is difficult, but important to handle.
 
 
-%\begin{figure}[t]
-%    \centering
-%    \textbf{Table of distribution transparencies in Distributed Computing}\par\medskip
-%    \includegraphics[width=12.5cm]{parts/background/transparency_table.png}
-%    \caption{Table from \cite{steen_distributed_2017} showing different Distribution Transparencies that Steen and Tanenbaum discusses in their book. }
-%    \label{fig:transparencyTable}
-%\end{figure}
 
 \subsection{Distribution Transparency}
 To make a distributed system seem like one system, is called Distribution Transparency. You don't want the user to know that it is interacting with a distributed system. Steen and Tanenbaum brings up several types of transparency that helps achieve distribution transparency. Here is a brief description of them.
@@ -62,9 +52,17 @@ Scalability is about being able to scale up to meet demand. As more and more com
 
 \textbf{Administrative Scalability} is about scaling a distributed system across several independent administrative domains \cite{steen_distributed_2017}. This can be hard, as the domains can use different rules and conventions for communication, payment, resource usage, read-write privileges and etc. There is also a security aspect of it, as the domains might have different views on security, that might be conflicting. 
 
-\subsubsection{Reliability}
+
+
 \subsubsection{Fault Tolerance}
+A distributed system should be fault tolerant. When something fail, for example if a node goes down, then the system should be able to handle it with out the user or client knowing. This is one key characteristic of distributed systems, since it is distributed we can easily avoid having a single point of failure. Therefore it is called a \textit{partial failure}\cite{steen_distributed_2017} when something fails in a distributed system.
+
+
+Fault tolerance is really important to help keeping the system reliable. 
+
 \subsubsection{Performance}
+TODO
+- Multiprocessing
 
 \subsection{Pitfalls}
 Steen and Tanenbaum \cite{steen_distributed_2017} brings up several pitfalls that you should avoid when making a distributed system:
@@ -93,7 +91,8 @@ In a wide-area distributed system, the latency can be quite high. If you assume 
 When you have a case where you need to use a lot of bandwidth to use the application, it is important to have enough bandwidth. If you need to send more data than one part of the link between the nodes can handle, then you will probably get a substantial loss of quality on the client. 
 
 
-
+\subsection{Middleware}
+TODO
 
 \subsection{Types of Distributed systems}
 % on example of a cluster computing system is PlanetLab, which we will talk about later.
@@ -315,6 +314,7 @@ end B
 As you can see, using the \verb|class| keyword dramatically increases readability, gives us the consept of classes, and eases the development.
 
 
+
 \subsubsection{Immutability}
 To ensure that objects does not change over time, we need immutability. This is important in distributed systems, as changing an object that was not meant to change can break how it is supposed to interpret data, as we can have nodes with different versions of the object. Since Emerald only copies over the type to other nodes, it is important that these types are not able to change(mutable). Therefore, all types should be mutable. Classes should be immutable if possible, to prevent confusion between nodes. The less mutable objects there are, the less errors and failure there can be.
 
@@ -386,7 +386,7 @@ In the above code example, you will get an object similar to the one shown in No
 \subsubsection{Call-by-visit and call-by-move}
 Call-by-visit and call-by-move are very similar concepts as attached. In Emerald you can use them to specify when you want to move the objects you send as parameters when invoking a function on a remote node. When using call-by-visit you move the parameters over, then move then back when finished with the function. When using call-by-move, you do the same, except the object stay on the remote node.
 
-\subsubsection{How the Emerald VM finds the location of objects}
+\subsubsection{How the Emerald VM finds the location of objects}\label{cascading_search}
 Emerald has a system for keeping track of and finding objects. To get the location of an object you can use the \verb|locate| keyword. For example:
 \begin{lstlisting}[language=emerald]
 const x <- 3
@@ -470,8 +470,33 @@ end B
 
 
 \subsection{Checkpoints and Recovery}
-To help keeping nodes up, Emerald provides checkpoints and recovery blocks. At any point you can use the reserved \verb|checkpoint| keyword to create a checkpoint of an object. If a node has restarted, then it will load the last checkpoint. Code within the recovery block when the program has started.
+To help keeping nodes up, Emerald provides checkpoints and recovery blocks. At any point you can use the reserved \verb|checkpoint| keyword to create a checkpoint of an object. If a node has restarted, then it will load the last checkpoint. Code within the recovery block when the program has started. This is essential for creating more reliable distributed systems.
 
+
+
+\subsection{Concurrency}
+Emerald has support for processes, and they are really easy to set up. You use the process block like this:
+\begin{lstlisting}[language=emerald]
+const A <- class A
+    process
+        % do work here
+    end process
+end A
+\end{lstlisting}
+
+Emerald has also implemented monitors based on Hoare's monitors\cite{hoare_monitors_1974}. You can use the keywords \verb|monitor|, \verb|wait|, \verb|signal| and the \verb|Condition| type to easily have control over concurrency. Here is an example:
+\begin{lstlisting}[language=emerald, numbers=left]
+const A <- monitor class A
+    const cond: Condition <- Condition.create
+    export function multiplyByTwo[i: Integer] 
+                                -> [res: Integer]
+        wait cond % wait for your turn
+        res <- i * 2
+        signal cond % signal to _one_ other process
+    end mulitplyByTwo
+end A
+\end{lstlisting}
+In this example, line 6 will not be executed at the same time as other processes.
 
 
 
