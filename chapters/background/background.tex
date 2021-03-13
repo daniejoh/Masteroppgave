@@ -11,7 +11,7 @@ Distributed systems have no shared clock. This is because having a shared clock 
 
 The nodes will exchange information, but they don’t have shared memory. This is to ensure \textit{loose coupling}, which means that nodes are not too dependent on each other. In some systems it is also important with loose coupling because the nodes in the system can be heterogeneous. Two nodes can have quite different environments, such as different OS, processing power, network, memory and hardware, but still work together in a distributed system. Having a loosely coupled system will ensure that the system is robust and that you don't need specific hardware to run it, but can rather focus on the other layers. 
 
-A distributed system is dynamic, which means that nodes may leave or join the system at any time. This is useful for scaling, as one can easily add nodes after demand. However, it also raises the issue that a node might disappear while doing a task, and that is difficult, but important to handle.
+A distributed system is dynamic, which means that nodes may leave or join the system at any time. This is useful for scaling, as one can easily add nodes after demand. However, it also raises the issue that a node might disappear while doing a task, which is important to handle.
 
 
 
@@ -41,7 +41,7 @@ Failure Transparency is about hiding a object or node failure from a user. One s
 
 
 \subsection{Advantages}
-Some of the advantages of distributed systems are scalability, reliability, fault tolerance and increased performance. Each of the characteristics is on its own very good to have, but the sum of them is what makes distributed systems incredibly good to solve problems. %% Her må du fikse setningen.
+Some of the advantages of distributed systems are scalability, reliability, fault tolerance and increased performance. Each of the characteristics is on its own very good to have, but the sum of them is what makes distributed systems incredibly good.
 
 \subsubsection{Scalability}
 Scalability is about being able to scale up to meet demand. As more and more computation and storage move to the cloud, this is very important. Scalability can be measures in three different dimensions, namely \textbf{Size, Geographical and Administrative scalability}.
@@ -55,14 +55,12 @@ Scalability is about being able to scale up to meet demand. As more and more com
 
 
 \subsubsection{Fault Tolerance}
-A distributed system should be fault tolerant. When something fail, for example if a node goes down, then the system should be able to handle it with out the user or client knowing. This is one key characteristic of distributed systems, since it is distributed we can easily avoid having a single point of failure. Therefore it is called a \textit{partial failure}\cite{steen_distributed_2017} when something fails in a distributed system.
-
-
-Fault tolerance is really important to help keeping the system reliable. 
+A distributed system should be fault tolerant. When something fail, for example if a node goes down, then the system should be able to handle it with out the user or client knowing. This is one key characteristic of distributed systems, since it is often spread over several nodes, we can easily avoid having a single point of failure. Therefore it is called a \textit{partial failure}\cite{steen_distributed_2017} when something fails in a distributed system. 
+Fault tolerance is really important to help keeping the system reliable and maintainable. 
 
 \subsubsection{Performance}
-TODO
-- Multiprocessing
+There is little reason to use distributed systems if you do not get a performance boost while using it. Of course there are other reasons, like fault tolerance or convenience, but performance is at the heart of distributed systems. The fact that you can distribute the workload across several machines will in most cases give you a significant speed-up. Having several machines able to receive requests lets you have tremendous pressure from millions of requests without problems.
+To split the workload we need multiprocessing. Multiprocessing lets us divide different work do different machines. For example, it can be one machines job to receive requests and forward them to a set of machines who do the actual work. Essentially it enables doing things in parallel, which is what gives us speed-up in first place.
 
 \subsection{Pitfalls}
 Steen and Tanenbaum \cite{steen_distributed_2017} brings up several pitfalls that you should avoid when making a distributed system:
@@ -92,7 +90,8 @@ When you have a case where you need to use a lot of bandwidth to use the applica
 
 
 \subsection{Middleware}
-TODO
+To ease the development process in distributed systems we need middleware. Middleware is a layer running on top of the OS of each machine in the system, and connects all the applications running on top of it. It provides and interface to the application, which helps the application with resource management, communication with other nodes, security and recovery\cite{steen_distributed_2017}. An example of a middlware is the Emerald VM, which we will talk about in the Emerald section \ref{Emerald}. 
+
 
 \subsection{Types of Distributed systems}
 % on example of a cluster computing system is PlanetLab, which we will talk about later.
@@ -120,12 +119,12 @@ There are several definitions of cloud computing. Many of them are similar, but 
 \begin{figure}[t]
     \centering
     \textbf{Simplified Cloud Computing}\par\medskip
-    \includegraphics[scale=0.7]{chapters/background/figures/emerald_attached.png}
+    \includegraphics[scale=0.7]{chapters/background/figures/Simplified_cloud.png}
     \caption{A Simplified diagram of Cloud Computing}
     \label{fig:SimplifiedCloudDiagram}
 \end{figure}
 
-At a very high level, Cloud Computing is where you offload your work to the usually distant cloud. As shown on the simplified figure~\ref{fig:SimplifiedCloudDiagram}, a laptop or any other device can communicate with the cloud, and let the cloud provide storage and computation. The Cloud is a distributed system which is usually built as a Grid Computing system in a data centre. When working with the cloud, we typically have thin clients and thick clients. For traditional cloud computing the thin client is for example your laptop or cell phone, while the thick client is the server or servers in the distant data centre.
+At a very high level, Cloud Computing is where you offload your work to the usually distant cloud. As shown on figure~\ref{fig:SimplifiedCloudDiagram}, a laptop or any other device can communicate with the cloud, and let the cloud provide storage and computation. The Cloud is a distributed system which is usually built as a Grid Computing system in a data centre. When working with the cloud, we typically have thin clients and thick clients. For traditional cloud computing the thin client is for example your laptop or cell phone, while the thick client is the server or servers in the distant data centre.
 
 However, in today's society it has of course become much more advanced. You have an increasing number of cloud service providers that offer Infrastructure as a Service(IaaS), Platform as a Service(PaaS) and Software as a Service(SaaS), like Amazon Web Services(AWS), Digital Ocean, Alibaba Cloud, Microsoft Azure and Google Cloud Platform(GCP) just to name a few. The biggest of them all is AWS, which holds almost half of the market share\cite{noauthor_cloud_2019}. The Cloud market made 129 billion dollars in 2020 alone\cite{noauthor_cloud_nodate}.
 
@@ -146,9 +145,9 @@ Even though the largest cloud providers have established themselves in many plac
 \section{Fog Computing}
 
 Vaquero and Rodero-Merino\cite{vaquero_finding_2014}, defines fog computing like this: 
-“Fog computing is a scenario where a huge number of heterogeneous (wireless and sometimes autonomous) ubiquitous and decentralised devices communicate and potentially cooperate among them and with the network to perform storage and processing tasks without the intervention of third parties. These tasks can be for supporting basic network functions or new services and applications that run in a sandboxed environment. Users leasing part of their devices to host these services get incentives for doing so.”
+\say{Fog computing is a scenario where a huge number of heterogeneous (wireless and sometimes autonomous) ubiquitous and decentralised devices communicate and potentially cooperate among them and with the network to perform storage and processing tasks without the intervention of third parties. These tasks can be for supporting basic network functions or new services and applications that run in a sandboxed environment. Users leasing part of their devices to host these services get incentives for doing so.}
 
-As in other fields, there is no de-facto definition and the definition is debatable. Since Fog Computing is a relatively new concept, different definitions will be used depending on the field they are in.
+As in other fields, there is no de-facto definition and is debatable. Since Fog Computing is a relatively new concept, different definitions will be used depending on the field they are in.
 
 Fog computing is an extension of the Cloud Computing paradigm. You have some nodes, like servers or desktops, that you offload the computation and storage to. The difference is that in Fog computing the fog nodes are located close in proximity to the user\cite{msftadmin_concept_2020}, as shown in figure~\ref{fig:FogDiagram}. The distant cloud has way more resources that the nodes in the fog layer, but since the fog nodes are closer, they are great at doing latency sensitive work. The Fog nodes is usually defined as being on the same LAN, but some argue that you can put them further away to, at least geographically speaking. 
 
@@ -196,10 +195,7 @@ Mobile Edge Computing is about putting servers at the base of cell towers. The s
 One drawback of Cloud computing is that you need to be always connected to the internet. 
 Fog-Dew Computing aims to provide IoT devices with cloud computing without being connected to the internet to reduce this issue. Depending on the application it might not need connection to the internet at all, while others can work temporarily offline but need to eventually connect to the internet. Fog-Dew Computing solves this by having an edge community server providing the needed cloud services. 
 
-\subsection{Cloudlet //MOVE THIS TO ARCHITECTURES?}
-Satyanarayanan et al., proposed in their paper “The Case for VM-Based Cloudlets in Mobile Computing”\cite{satyanarayanan_case_2009} a solution to resource poverty of mobile devices and for the long latency in the Wide-Area Network(WAN). They raise the issue that humans will not tolerate significant delays when using applications. E.g. using a remote photo editing software. It does not matter how good the bandwidth is, the latency will hurt the interactive performance. Since WAN latency is unlikely to improve, we should rather move the thick client closer to the thin client. 
 
-The proposed solution to this is Cloudlets, which are nearby resource-rich thick-clients. Since they are nearby they are one-hop, high bandwidth, low latency wirelessly accessible computers. The goal is to do all significant computation on a nearby cloudlet instead of doing so on the cell phone. Since the cloudlet is near and resource rich, you can get fast and predictable results, when you offload the work to it. Offloading helps the device get results faster, and use less power. A Cloudlet is essentially a data center in a box. To let different devices use it seamlessly, it uses VM’s that runs on top of the OS. A device can send a specification of a VM to the Cloudlet, and let it spin up. It also allows for migration of the VM, as we can expect the mobile device to move closer to another Cloudlet.
 
 
 %----------------------------------
@@ -221,18 +217,19 @@ There are of course different levels of closeness to the edge. Content Delivery 
 
 %% ----------------------------------------------------------------------
 
-\begin{figure}[t]
-    \centering
-    \textbf{The Near-Far spectrum}\par\medskip
-    \includegraphics[scale=0.6]{chapters/background/figures/Near-far-spectrum.png}
-    \caption{REMOVE ALL THIS, TALK ABOUT IT IN THE TEXT INSTEAD.Illustrates the Near-Far spectrum. The fat arrow illustrates the Near-Far spectrum, which goes all the way from the edge to the far data centre.  The arrows between the nodes illustrate communication between them. The right one of them has dots to show that there is a long physical distance between them.}
-    \label{fig:nearFarSimple}
-\end{figure}
+
 
 \section{The Near-Far computing model}
-The Near-Far computing model is a cloud architecture that consists of a thin client that is connected to thick clients, which again is connected to even thicker clients. The Near-Far computing model covers a spectrum with nodes that are very close to you, like a cellphone in your pocket, and a node that is near you, like a desktop in the same room, as well as a distant data centre like AWS that is far away, most likely in another country. The spectrum covers distances from centimeters to several thousands of kilometers. Figure~\ref{fig:nearFarSimple} shows a pretty simple Near-Far setup, as well as the spectrum. In the Near-Far computing model you take the proximity of the Near server into consideration. You want the Near server to be as close as possible to the user. It can be a Cloudlet, for example.Optimally it is only one hop away, but considering cost and practicality, it can be more. The point is to minimize latency, but getting as close to the thin client as one hop is not feasible in every situation, especially on a tight budget.
+The Near-Far computing model is a cloud architecture that consists of a thin client that is connected to thick clients, which again is connected to even thicker clients. The Near-Far computing model covers a spectrum with nodes that are very close to you, like a cellphone in your pocket, and a node that is near you, like a desktop in the same room, as well as a distant data centre like AWS that is far away, most likely in another country. The spectrum covers distances from centimeters to several thousands of kilometers. Figure~\ref{fig:nearFarSimple} shows a pretty simple Near-Far setup, as well as the spectrum. In the Near-Far computing model you take the proximity of the Near server into consideration. You want the Near server to be as close as possible to the user. It can be a Cloudlet, which we talk about in section \ref{cloudlet}, for example. Optimally it is only one hop away, but considering cost and practicality, it can be more. The point is to minimize latency, but getting as close to the thin client as one hop is not feasible in every situation, especially on a tight budget.
 %% HOW DOES NEAR FAR DIFFER FROM FOG?
 
+\begin{figure}[t]
+    \centering
+    %\textbf{The Near-Far spectrum}\par\medskip
+    \includegraphics[scale=0.7]{chapters/background/figures/near-far-diagram.png}
+    \caption{The Near-Far spectrum}
+    \label{fig:nearFarSimple}
+\end{figure}
 
 %%---------------------------------------------------------------------
 

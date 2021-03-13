@@ -2,3 +2,8 @@
 
 %% cloudlet?
 %% MAUI?
+
+\section{Cloudlet //MOVE THIS TO ARCHITECTURES?} \label{cloudlet}
+Satyanarayanan et al., proposed in their paper “The Case for VM-Based Cloudlets in Mobile Computing”\cite{satyanarayanan_case_2009} a solution to resource poverty of mobile devices and for the long latency in the Wide-Area Network(WAN). They raise the issue that humans will not tolerate significant delays when using applications. E.g. using a remote photo editing software. It does not matter how good the bandwidth is, the latency will hurt the interactive performance. Since WAN latency is unlikely to improve, we should rather move the thick client closer to the thin client. 
+
+The proposed solution to this is Cloudlets, which are nearby resource-rich thick-clients. Since they are nearby they are one-hop, high bandwidth, low latency wirelessly accessible computers. The goal is to do all significant computation on a nearby cloudlet instead of doing so on the cell phone. Since the cloudlet is near and resource rich, you can get fast and predictable results, when you offload the work to it. Offloading helps the device get results faster, and use less power. A Cloudlet is essentially a data center in a box. To let different devices use it seamlessly, it uses VM’s that runs on top of the OS. A device can send a specification of a VM to the Cloudlet, and let it spin up. It also allows for migration of the VM, as we can expect the mobile device to move closer to another Cloudlet.
