@@ -1,7 +1,7 @@
-\chapter{Background}
+%\chapter{Background}
 
 
-\section{Distributed Systems}
+\section{Distributed Systems}\label{distributed_systems}
 In the start of their book, Steen and Tanenbaum\cite{steen_distributed_2017} defines distributed systems loosely: 
 \say{A distributed system is a collection of autonomous computing elements that appears to its users as a single coherent system.}
 
@@ -169,9 +169,9 @@ For comparison, a Traceroute\cite{noauthor_traceroute68_nodate} from Oslo, Norwa
 \subsection{Cisco}
 Cisco\cite{bonomi_fog_nodate} and Bonovi was the first to coin the term, and defines Fog Computing as \say{...a highly virtualized platform that provides compute, storage, and networking services between end devices and traditional Cloud Computing Data Centers, typically, but not exclusively located at the edge of network.}  The characteristics of Fog Computing is that it is located at the edge, has location awareness, low latency, easily geographically distributed, heterogeneity, support for mobility and some others. All these as a sum help with providing a service that is needed in some modern applications, for example Augmented Reality, and in general with IoT.
 
-A Fog node is located at the edge in the sense that it is close to the end user or client. Because of this, the Fog node will have \textbf{location awareness} and \textbf{low latency}. Since they are not big servers, the Fog nodes are also easily \textbf{geographically distributed}, in the sense that it should be easy to install and maintain. This also helps them be \textbf{mobile}. Most likely the Fog nodes do not have the same hardware or software, which gives us the \textbf{heterogeneity} characteristic. 
+A Fog node is located at the edge in the sense that it is close to the end user or client. Because of this, the Fog node will have \textit{location awareness} and \textit{low latency}. Since they are not big servers, the Fog nodes are also easily \textit{geographically distributed}, in the sense that it should be easy to install and maintain. This also helps them be \textit{mobile}. Most likely the Fog nodes do not have the same hardware or software, which gives us the \textit{heterogeneity} characteristic. 
 
-\subsection{A survey of Fog Computing}
+\subsection{A survey of Fog Computing} % TODO: REWRITE this
 The goal of Fog Computing is to improve Quality of service(QoS) with computation and storage offloading. Yi, Li, and Li, in ‘A Survey of Fog Computing’\cite{yi_survey_2015} argues that QoS can be divided into four aspects: Connectivity, reliability, capacity and delay.
 
 Connectivity in a fog network can be improved by network relaying, partitioning and clustering. They can be used to reduce cost, trim data and expand connectivity. Connectivity is of course important, because if you lose connection with the node, then you cannot offload work to it. 
@@ -182,7 +182,7 @@ For capacity you need enough storage and good bandwidth. It does not matter how 
 
 Lastly, Fog focuses a lot on delay. It’s a good solution for “latency-sensitive” applications. There are several proposed solutions to minimize delay. We will talk about Cloudlets as a solution later.
 
-\subsection{Fog architectures}
+\subsection{Fog architectures} %% move this to architectures?
 Naha et al.\cite{naha_fog_2018}, reviewed a couple of architectures that arguably falls under the Fog computing paradigm. We have focused on the ones that also fall under the Near-Far computing model, in that they have a Near node and a Far node. These architectures focus on offloading from an IoT device, to assist with computation, energy and storage. We will talk about IoT in a later chapter. 
 
 \subsubsection{Mobile Cloud Computing(MCC)}
@@ -467,7 +467,7 @@ end B
 
 
 \subsection{Checkpoints and Recovery}
-To help keeping nodes up, Emerald provides checkpoints and recovery blocks. At any point you can use the reserved \verb|checkpoint| keyword to create a checkpoint of an object. If a node has restarted, then it will load the last checkpoint. Code within the recovery block when the program has started. This is essential for creating more reliable distributed systems.
+To help keeping nodes up, Emerald provides checkpoints and recovery blocks. At any point you can use the reserved \verb|checkpoint| keyword to create a checkpoint of an object. The checkpoint is just a saved state on the machine, so that the state is available on the disk instead of just RAM. If a node has restarted, then it will load the last checkpoint. When the program is recovering, the \verb|recovery| block is ran instead of the initially block. This is essential for creating more reliable distributed systems.
 
 
 
@@ -528,29 +528,10 @@ All the other nodes are now accessible, and can have objects moved to them.
 
 
 
-
-- The type system, conformity
-    - Any at the bottom, None at the top
-    - Type inference?
-
-- Checkpoints
-- Multiprocessing
-    - Monitor and signal
-- Immutable
-
-
-% \begin{lstlisting}[language=emerald]
-% const Main <- object Main 
-%   initially
-%     (locate self)$stdout.putstring["--------------------Starting--------------------\n"]
-%   end initially
-% end Main
-% \end{lstlisting}
-
-%% --------------------------------------------------------------
+%% ---------------------------------------------------------
 
 \section{Docker}
-Docker is a tool for running programs on the same architecture everywhere, without spinning up a whole virtual machine. It is built around the concept of \textbf{containers}. Containers are small packages of software, that run on the Docker Engine. The Docker Engine is the the middleware between the containers and the operating system. This lets us run something locally and be able to expect the same behavior on other machines. Therefore, no matter where you run the application, it will always be the same environment from the perspective of the program. 
+Docker is a tool for running programs on the same architecture everywhere, without spinning up a whole virtual machine. It is built around the concept of \textit{containers}. Containers are small packages of software, that run on the Docker Engine. The Docker Engine is the the middleware between the containers and the operating system. This lets us run something locally and be able to expect the same behavior on other machines. Therefore, no matter where you run the application, it will always be the same environment from the perspective of the program. 
 
 Because a Docker does not spin up a whole virtual machine, but rather share some resources with between the containers \cite{dockercom_what_nodate}, it is more efficient. The container is essentially a sandbox, that runs on top of the OS. Each of the applications are therefore isolated, even though they have some shared resources.
 
@@ -578,6 +559,9 @@ Here we provide a PlanetLab ssh key and the login name, which is the name of the
 When logged in on the server, we run the makefile with \verb|make| to start the shell within the Docker container. Then you can either run the executable, or compile the code as described in the Emerald section \ref{Emerald}.
 
 
+
+\section{Summary}
+In this chapter we have made a theoretical foundation to help understanding this thesis. We have described what a distributed system is, what it consists of, and some key features about it. We have given a short introduction to Edge, Fog and Cloud computing. We have also made a short description of Near-Far computing, explained what speed of light have to do with latency, and showed how the Emerald eco-system works. Finally we have given a description of the environment the experiments will be conducted on, with Docker and PlanetLab.
 
 %% TODO:
 

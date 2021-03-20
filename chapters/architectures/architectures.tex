@@ -3,7 +3,25 @@
 %% cloudlet?
 %% MAUI?
 
-\section{Cloudlet //MOVE THIS TO ARCHITECTURES?} \label{cloudlet}
+\section{Cloudlet} \label{cloudlet} 
 Satyanarayanan et al., proposed in their paper “The Case for VM-Based Cloudlets in Mobile Computing”\cite{satyanarayanan_case_2009} a solution to resource poverty of mobile devices and for the long latency in the Wide-Area Network(WAN). They raise the issue that humans will not tolerate significant delays when using applications. E.g. using a remote photo editing software. It does not matter how good the bandwidth is, the latency will hurt the interactive performance. Since WAN latency is unlikely to improve, we should rather move the thick client closer to the thin client. 
 
 The proposed solution to this is Cloudlets, which are nearby resource-rich thick-clients. Since they are nearby they are one-hop, high bandwidth, low latency wirelessly accessible computers. The goal is to do all significant computation on a nearby cloudlet instead of doing so on the cell phone. Since the cloudlet is near and resource rich, you can get fast and predictable results, when you offload the work to it. Offloading helps the device get results faster, and use less power. A Cloudlet is essentially a data center in a box. To let different devices use it seamlessly, it uses VM’s that runs on top of the OS. A device can send a specification of a VM to the Cloudlet, and let it spin up. It also allows for migration of the VM, as we can expect the mobile device to move closer to another Cloudlet.
+
+% Husk at cloudlet kan videre overføre til distant cloud.
+
+\section{CDN}
+
+
+\section{Mobile Cloud Computing}
+%32, 33, 34
+Mobile Cloud Computing(MCC) is a research domain targeted at utilizing heterogeneous cloud resources to overcome computational, energy and storage limitations on mobile devices\cite{sanaei_heterogeneity_2014}\cite{naha_fog_2018}. The mobile device, can then offload work and storage to a close by thick client. This ensures minimal latency. The server is very lightweight compared to servers in a data center.
+% lag et diagram og forklar med diagrammet her:
+
+In MCC, the mobile device will have unrestricted access to these resources and use a pay-per-use model. The Pay-per-use model might be different for each provider, but usually means that you pay for computational time, RAM use, and storage use in the form of megabytes or gigabytes used. One downside of MCC is that it requires high bandwidth, which is not available everywhere. However, the introduction of 5G in society might help with this.
+
+\section{Edge computing}
+
+\section{Accesspoint?}
+
+%% bare skriv om en av de fog computing arkitekturene så er du i gang! :D

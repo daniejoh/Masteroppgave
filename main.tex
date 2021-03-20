@@ -23,7 +23,10 @@
 \addbibresource{references.bib}            %% ... or whatever
 \includeonly{
     %chapters/introduction/introduction,
-    chapters/background/background
+    %chapters/background/background,
+    chapters/Design_of_experiments/designOfExperiments,
+    chapters/architectures/architectures,
+    chapters/evaluation/evaluation
     }
 \begin{document}
 \duoforside[dept={Department of Informatics},   %% ... or your department
@@ -42,25 +45,34 @@ Cloud computing, Near-Far, Speed of light, investigation
 \mainmatter{}
 
 
+\chapter{Introduction}
 \include{chapters/introduction/introduction}
 
+\chapter{Background}
 \include{chapters/background/background} 
 
-%\chapter{Problem statement?}
 
-%\chapter{Architecture} %% implementation and design
-
-%\chapter{Design of experiments} %% “Plan for empirical studies”,“Design of experiments”
+\chapter{Design of experiments}\label{design_of_experiments}
+% how to do the experiments etc
+% methodology
+ %% “Plan for empirical studies”,“Design of experiments”
 %% this chapter describes how and why we evaluate this way
+\include{chapters/Design_of_experiments/designOfExperiments}
 
-%\chapter{Evaluation}
+
+
+\chapter{Architectures}\label{architectures} %% implementation and design
+\include{chapters/architectures/architectures}
+
+\chapter{Evaluation}\label{evaluation}
+\include{chapters/evaluation/evaluation}
 %evaluation of architecture using the method described in "Design of experiments" chapter
 
 
+\chapter{Results}                     %% ... or ??
 
-%\chapter{Conclusion}                     %% ... or Konklusjon
-
-%\chapter{Results}                     %% ... or ??
+\chapter{Conclusion}                     %% ... or Konklusjon
+%% future work!!
 
 
 \backmatter{}

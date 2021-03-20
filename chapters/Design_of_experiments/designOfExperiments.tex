@@ -1,0 +1,97 @@
+
+\section{Scope}
+Our goal of these experiments is to show how the Near-Far Computing Model relates to already existing architectures. We will develop several of the architectures in Emerald, and then conduct experiments on them. We will analyze and measure how the architectures tackle latency problems. 
+
+
+
+
+
+\section{Simulation}
+We will simulate the different architectures using Emerald and PlanetLab. The Emerald programming language will be used to make a high level version of these architectures. This comes with a bonus, namely that the Emerald VM is working as middleware for these experiments. This makes it easier to show experiments, as the code is easily understood and the architectures will be reduced to something that is easily tested.
+
+
+
+
+
+
+
+
+\section{Experiments}
+To show the viability of the architectures we will benchmark and analyze some factors:
+\begin{itemize}
+    \item Latency
+    \item Reliability?
+    \item Distribution Transparency
+    \item Computational usage
+    \item Storage
+    \item TODO: need more here
+\end{itemize}
+% Hvordan kan man måle reliability?
+
+
+
+\subsection{Latency}
+Latency will be mapped by recording the round trip time in milliseconds. Doing this is really easy, as we can just record the time before sending work, and then recording the time when we get the result. If time at send is $T_0$ and time at receive is $T_1$ then latency gets this easy formula:
+\[Latency=T_1-T_0\]
+There is a slight overhead for actually taking this time, but it is marginal compared to the milliseconds of latency. Here is a small program which just takes time $T_0$ and $T_1$ and just prints the difference:
+\begin{lstlisting}[language=emerald, numbers=left]
+const main <- object main
+  initially
+    const home <- locate self
+    const t0 <- home$timeOfDay
+    const t1 <- home$timeOfDay
+    home$stdout.PutString[
+        "Total time " || 
+        (t1-t0).asString ||
+        "\n"]
+  end initially
+end main
+\end{lstlisting}
+Output:
+\begin{lstlisting}[language=Bash]
+$ emx latency_overhead_test.x
+Total time 0:000002
+\end{lstlisting}
+As we can see, there is just 2 microseconds of overhead.
+When there is several nodes, we will map these latency's as needed to be able to compare each architecture.
+
+\subsection{Reliability}
+TODO
+%Simulere støy? F.eks, de som bruker base-stations så kan jeg si at så n så mange pakker må sendes på nytt?
+
+\subsection{Transparency}
+Since Distribution Transparency is more about key features, it makes little sense to measure it quantitatively. We will therefore compare transparency characteristics from each architecture instead. We will take the different transparencies we talked about in section \ref{distributed_systems} in the background, and lay out how the different characteristics relate to these.
+
+
+\subsection{Computational usage}
+We will compare how much computation each group of nodes in the architectures is using. Specifically, we will see how much the end client, the near nodes and the far nodes are being used. This is to show how the load is spread across the nodes in the different architectures. For example, the end user are using 20\%, the near node(s) are using 70\% and the far node(s) are using 10\%.
+TODO: how do we benchmark this?
+
+\section{Storage}
+We will compare how viable the architecture are for offloading storage. We will measure how fast it can offload and download data.
+
+
+
+\bigskip
+TODO:
+\begin{itemize}
+    \item several architectures  
+    \item Create a program in emerald  
+    \item benchmark  
+    \item How it relates to the near-far computing model  
+    \item quantitaive data  
+    \item Compare to the background of distributed systems, like how transparent it is  
+    \item PlanetLab  
+    \item Emerald  
+\end{itemize}
+
+
+
+
+\section{Summary}
+TODO: summaryyy
+
+
+
+%Notes:
+% Hvis vi mangler info å skrive om kan vi skrive om storage?
