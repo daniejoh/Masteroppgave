@@ -1,7 +1,8 @@
+This chapter will discuss how we will research and evaluate the architectures.
+
 
 \section{Scope}
-Our goal of these experiments is to show how the Near-Far Computing Model relates to already existing architectures. First we will research them and give an overview of them in the Architectures chapter\ref{chapter:architectures}. Then we will develop several of the architectures in Emerald, and then conduct experiments on them. We will analyze and measure how the architectures tackle latency problems. 
-
+Our goal of these experiments is to show how the Near-Far Computing Model relates to already existing architectures. First we will research them and give an overview of them in the Architectures chapter. Then we will develop several of the architectures in Emerald, and then conduct experiments on them. We will analyze and measure how the architectures perform and how they work. Finally we will discuss how the architectures related to the Near-Far Computing model.
 
 
 
@@ -57,36 +58,35 @@ When there is several nodes, we will map these latency's as needed to be able to
 
 
 \subsection{Transparency}
-Since Distribution Transparency is more about key features, it makes little sense to measure it quantitatively. We will therefore compare transparency characteristics from each architecture instead. We will take the different transparencies we talked about in section \ref{distributed_systems} in the background, and lay out how the different characteristics relate to these.
+Since Distribution Transparency is more about key features, it makes little sense to measure it quantitatively. We will therefore compare transparency characteristics from each architecture instead. We will take the different transparencies we discussed in section \ref{background:distributed_systems} in the background, and lay out how the different characteristics relate to these.
 
 
 \subsection{Computational usage}
 We will compare how much computation each group of nodes in the architectures is using. Specifically, we will see how much the end client, the near nodes and the far nodes are being used. This is to show how the load is spread across the nodes in the different architectures. For example, the end user are using 20\%, the near node(s) are using 70\% and the far node(s) are using 10\%.
-To simulate and measure computation, we will be generating primes. By generating primes we can do some heavy computation that is easily parallelizable and therefore easy to distribute between nodes. We can then see how much of the work went into the different machine by seeing how many primes the generated.
+% move this to implementation:
+To simulate and measure computation, we will be hashing random data. This is because hashing is computation intensive work, but uses little memory. We can then easily see how much work each node did, by counting how many iterations of hashing they did. We can then see how much of the work went into the different machine by seeing how many rounds of hashing were done.
+% TODO. Finn ut forholdene når det kommer til styrke av enhetene. Feks Cloudlet er 10 ganger sterkere enn telefon, og server er 10 ganger sterkere enn cloudlet.
 
-\section{Storage}
+\subsection{Storage}
 We will compare how viable the architecture are for offloading storage. We will measure how fast it can offload and download data. This will be done by having a 100 megabyte file that will be sent and replicated?? between the nodes.
 
 
 
-\bigskip
-TODO:
-\begin{itemize}
-    \item several architectures  
-    \item Create a program in emerald  
-    \item benchmark  
-    \item How it relates to the near-far computing model  
-    \item quantitaive data  
-    \item Compare to the background of distributed systems, like how transparent it is  
-    \item PlanetLab  
-    \item Emerald  
-\end{itemize}
+
+
+
+\section{How it relates to the Near-Far model}
+When we have the characteristics and data laid out we will be able to discuss how it relates to the Near-Far computing model. This will be done theoretically and focus mostly on the characteristics of the architectures. The data is there to show the viability.
+
+
+
+
 
 
 
 
 \section{Summary}
-TODO: summaryyy
+TODO
 
 
 

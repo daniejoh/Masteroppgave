@@ -1,13 +1,13 @@
 %\chapter{Background}
 
 
-\section{Distributed Systems}\label{distributed_systems}
+\section{Distributed Systems}\label{background:distributed_systems}
 In the start of their book, Steen and Tanenbaum\cite{steen_distributed_2017} defines distributed systems loosely: 
 \say{A distributed system is a collection of autonomous computing elements that appears to its users as a single coherent system.}
 
 This definition describes two important characteristics of distributed systems. Firstly, we can think of a distributed system as several computers or programs that work independently. They share workload and storage between, but they are independent in the same sense as processes. The different programs or computers are referred to as Nodes. Each node in the system will work concurrently. This is one of the great benefits of a distributed system. This is because you can share heavy computational tasks across the system to make it distribute the load. A computer can have several nodes, but usually we think of different computers as different nodes. The other characteristic it describes, is that the users should only see a single coherent system. That means that the user should not notice that the application is running on a distributed system, unlike an application running on a single computer.
 
-Distributed systems have no shared clock. This is because having a shared clock is almost impossible, as even atomic clocks is not accurate enough and other factors will affect the clocks. Therefore, you have to utilize other methods to ensure synchronization. We will talk about a synchronization in section \ref{cascading_search}. Each node will therefore have an independent notion of time, and the system as a whole will not have a global clock\cite{steen_distributed_2017}. This is also important because even though the nodes work with each other, they should always be loosely coupled and as independent as possible.
+Distributed systems have no shared clock. This is because having a shared clock is almost impossible, as even atomic clocks is not accurate enough and other factors will affect the clocks. Therefore, you have to utilize other methods to ensure synchronization. We will discuss synchronization in section \ref{cascading_search}. Each node will therefore have an independent notion of time, and the system as a whole will not have a global clock\cite{steen_distributed_2017}. This is also important because even though the nodes work with each other, they should always be loosely coupled and as independent as possible.
 
 The nodes will exchange information, but they don’t have shared memory. This is to ensure \textit{loose coupling}, which means that nodes are not too dependent on each other. In some systems it is also important with loose coupling because the nodes in the system can be heterogeneous. Two nodes can have quite different environments, such as different OS, processing power, network, memory and hardware, but still work together in a distributed system. Having a loosely coupled system will ensure that the system is robust and that you don't need specific hardware to run it, but can rather focus on the other layers. 
 
@@ -90,7 +90,7 @@ When you have a case where you need to use a lot of bandwidth to use the applica
 
 
 \subsection{Middleware}
-To ease the development process in distributed systems we need middleware. Middleware is a layer running on top of the OS of each machine in the system, and connects all the applications running on top of it. It provides and interface to the application, which helps the application with resource management, communication with other nodes, security and recovery\cite{steen_distributed_2017}. An example of a middlware is the Emerald VM, which we will talk about in the Emerald section \ref{Emerald}. 
+To ease the development process in distributed systems we need middleware. Middleware is a layer running on top of the OS of each machine in the system, and connects all the applications running on top of it. It provides and interface to the application, which helps the application with resource management, communication with other nodes, security and recovery\cite{steen_distributed_2017}. An example of a middlware is the Emerald VM, which we will discuss in the Emerald section \ref{Emerald}. 
 
 
 \subsection{Types of Distributed systems}
@@ -101,7 +101,7 @@ Distributed systems can generally be divided into two types: \textbf{Cluster com
 Cluster computing is a collection of computers that usually has homogeneous architecture and hardware, as well as being in about the same place geographically. These computers usually run the same OS and are used to effectively distribute (and therefore parallelize) heavy computational tasks. They are able to easily communicate because of the small latency and high reliability of LAN's. Data centres are an example of Cluster computing. 
 
 \subsubsection{Grid computing}
-Grid computing is when you have several nodes spread across different domains, and usually not geographically close. In Grid computing there is more heterogeneity. Each node might have different hardware and different OS. Grid computing networks are often brought together in a virtual organization. An example of this is PlanetLab, which we will talk about later. 
+Grid computing is when you have several nodes spread across different domains, and usually not geographically close. In Grid computing there is more heterogeneity. Each node might have different hardware and different OS. Grid computing networks are often brought together in a virtual organization. An example of this is PlanetLab, which we will discuss later. 
 
 
 
@@ -118,7 +118,6 @@ There are several definitions of cloud computing. Many of them are similar, but 
 
 \begin{figure}[t]
     \centering
-    \textbf{Simplified Cloud Computing}\par\medskip
     \includegraphics[scale=0.7]{chapters/background/figures/Simplified_cloud.png}
     \caption{A Simplified diagram of Cloud Computing}
     \label{fig:SimplifiedCloudDiagram}
@@ -151,7 +150,7 @@ As in other fields, there is no de-facto definition and is debatable. Since Fog 
 
 Fog computing is an extension of the Cloud Computing paradigm. You have some nodes, like servers or desktops, that you offload the computation and storage to. The difference is that in Fog computing the fog nodes are located close in proximity to the user\cite{msftadmin_concept_2020}, as shown in figure~\ref{fig:FogDiagram}. The distant cloud has way more resources that the nodes in the fog layer, but since the fog nodes are closer, they are great at doing latency sensitive work. The Fog nodes is usually defined as being on the same LAN, but some argue that you can put them further away to, at least geographically speaking. 
 
-An example is if an ISP has some Fog nodes at the base of cell towers. This will enable cell phones, or other SIM-card enabled devices, to offload storage and computation easily through the cell network. The introduction of 5G for the mainstream could benefit a lot from this. The latency for 5g will most likely be the same, but since the devices using it are so close to the 5G tower, it does not matter that much. The increased bandwidth of 5G is what will help a lot, as you can offload bigger workloads. We will talk about this in the Mobile Edge Computing chapter later. 
+An example is if an ISP has some Fog nodes at the base of cell towers. This will enable cell phones, or other SIM-card enabled devices, to offload storage and computation easily through the cell network. The introduction of 5G for the mainstream could benefit a lot from this. The latency for 5g will most likely be the same, but since the devices using it are so close to the 5G tower, it does not matter that much. The increased bandwidth of 5G is what will help a lot, as you can offload bigger workloads. We will discuss this in the Mobile Edge Computing chapter later. 
 
 In Fog computing you would like as few jumps as possible to the node. A jump is when you move from one network node to another, for example from a cellphone to an Access Point. If the nodes are on the same LAN, the number of jumps are predictable and low in frequency, at least compared to the number of jumps to a distant data centre. 
 
@@ -160,8 +159,7 @@ For comparison, a Traceroute\cite{noauthor_traceroute68_nodate} from Oslo, Norwa
 
 \begin{figure}[t]
     \centering
-    \textbf{Fog Computing}\par\medskip
-    \includegraphics[scale=0.7]{chapters/background/figures/Fog.png}
+    \includegraphics[scale=0.6]{chapters/background/figures/Fog.png}
     \caption{Diagram of Fog Computing}
     \label{fig:FogDiagram}
 \end{figure}
@@ -180,20 +178,18 @@ Reliability is very difficult to provide in Fog computing. The methods used in t
 
 For capacity you need enough storage and good bandwidth. It does not matter how much storage you have, if it is slow to transfer it. To achieve good utilization of storage and bandwidth, it is important to analyse user patterns to know where data is most used. It’s difficult to know where to store data when it may need to be stored across several fog nodes. It is also hard to know when to send storage further to the distant cloud with bigger capacity at the cost of delay. 
 
-Lastly, Fog focuses a lot on delay. It’s a good solution for “latency-sensitive” applications. There are several proposed solutions to minimize delay. We will talk about Cloudlets as a solution later.
+Lastly, Fog focuses a lot on delay. It’s a good solution for “latency-sensitive” applications. There are several proposed solutions to minimize delay. We will discuss Cloudlets as a solution later.
 
-\subsection{Fog architectures} %% move this to architectures?
-Naha et al.\cite{naha_fog_2018}, reviewed a couple of architectures that arguably falls under the Fog computing paradigm. We have focused on the ones that also fall under the Near-Far computing model, in that they have a Near node and a Far node. These architectures focus on offloading from an IoT device, to assist with computation, energy and storage. We will talk about IoT in a later chapter. 
 
-\subsubsection{Mobile Cloud Computing(MCC)}
-MCC offloads by sending the work to a nearby lightweight server. An example of such a server is a Cloudlet. We will talk about Cloudlets later. The servers are on the edge of the network, and will act as the access point of the devices. The device will then directly communicate with the server and use it to offload computation and storage, and therefore save energy. It focuses on the fact that the device is mobile, such as a smartphone. It will provide functionality and storage facility much like the distant cloud, but additionally ensure that this works while being mobile. It uses the same pay-per-use as is normally used by cloud providers. We can think of this as using a traditional Cloud Service provider, but instead uses servers at the edge such that the devices only have one hop and minimal latency.
+% DETTE HØRER TIL I ARCHITECTURES
+% \subsection{Fog architectures} %% move this to architectures?
+% Naha et al.\cite{naha_fog_2018}, reviewed a couple of architectures that arguably falls under the Fog computing paradigm. We have focused on the ones that also fall under the Near-Far computing model, in that they have a Near node and a Far node. These architectures focus on offloading from an IoT device, to assist with computation, energy and storage. We will talk about IoT in a later chapter. 
 
-\subsubsection{Mobile Edge Computing(MEC)}
-Mobile Edge Computing is about putting servers at the base of cell towers. The server is called an MEC server. This enables smartphones to communicate with a server for computation and storage offloading with just two hops. This is especially interesting with the rise of 5G, as the bandwidth is big enough to offload significant work fast and reliably. Since the servers are just two hops away and relatively close, we get an architecture that will be reachable for a lot of devices with very little latency.
 
-\subsubsection{Fog-Dew Computing (FD)}
-One drawback of Cloud computing is that you need to be always connected to the internet. 
-Fog-Dew Computing aims to provide IoT devices with cloud computing without being connected to the internet to reduce this issue. Depending on the application it might not need connection to the internet at all, while others can work temporarily offline but need to eventually connect to the internet. Fog-Dew Computing solves this by having an edge community server providing the needed cloud services. 
+
+% \subsubsection{Fog-Dew Computing (FD)}
+% One drawback of Cloud computing is that you need to be always connected to the internet. 
+% Fog-Dew Computing aims to provide IoT devices with cloud computing without being connected to the internet to reduce this issue. Depending on the application it might not need connection to the internet at all, while others can work temporarily offline but need to eventually connect to the internet. Fog-Dew Computing solves this by having an edge community server providing the needed cloud services. 
 
 
 
@@ -204,13 +200,16 @@ Fog-Dew Computing aims to provide IoT devices with cloud computing without being
 
 
 
-
+\section{Internet Of Things}
+%TODO
 
 
 \section{Edge Computing}
 Edge Computing is about utilizing processing power at the edge of the internet, instead of using data centers. The edge of the internet are the devices that are closest to the users and clients. It's very relevant for IoT, because IoT end devices generate a lot of data close to the users but far from the data centres. This makes it very inefficient to send the data all the way to the distant cloud. Since IoT often requires real time processing of data, it is better to move the processing to the edge, closer to the devices, to minimize the latency\cite{shi_edge_2016}.
 A router, switch or Cloudlet are examples of an edge device. They can be utilized by the IoT devices to offload their computation to save time and energy.
 
+
+%TODO FJERN og snakk om dette i architectures?
 \subsection{Content Delivery Networks (CDN)}
 There are of course different levels of closeness to the edge. Content Delivery Networks are distributed systems that have servers geographically closer to the users. Akamai is a CDN company that specializes in bringing edge computing as close to the edge as possible. It has become widely popular, and a significant portion of the web moves through an Akamai device. They will have servers directly at the ISP’s so clients are just one “network hop” away from their servers. Akamai\cite{noauthor_exceptional_nodate} claims \say{85\% of the world’s Internet users are within a single “network hop” of an Akamai edge server.}. They also claim to handle 15-30\% of the world's web traffic. They help Netflix and similar companies to cache videos closer to the users so that they don't need to waste bandwidth across continents. They also help websites load faster and be more responsive, as the latency for getting the webpages are now minimal.
 
@@ -220,7 +219,7 @@ There are of course different levels of closeness to the edge. Content Delivery 
 
 
 \section{The Near-Far computing model}
-The Near-Far computing model is a cloud architecture that consists of a thin client that is connected to thick clients, which again is connected to even thicker clients. The Near-Far computing model covers a spectrum with nodes that are very close to you, like a cellphone in your pocket, and a node that is near you, like a desktop in the same room, as well as a distant data centre like AWS that is far away, most likely in another country. The spectrum covers distances from centimeters to several thousands of kilometers. Figure~\ref{fig:nearFarSimple} shows a pretty simple Near-Far setup, as well as the spectrum. In the Near-Far computing model you take the proximity of the Near server into consideration. You want the Near server to be as close as possible to the user. It can be a Cloudlet, which we talk about in section \ref{cloudlet}, for example. Optimally it is only one hop away, but considering cost and practicality, it can be more. The point is to minimize latency, but getting as close to the thin client as one hop is not feasible in every situation, especially on a tight budget.
+The Near-Far computing model is a cloud architecture that consists of a thin client that is connected to thick clients, which again is connected to even thicker clients. The Near-Far computing model covers a spectrum with nodes that are very close to you, like a cellphone in your pocket, and a node that is near you, like a desktop in the same room, as well as a distant data centre like AWS that is far away, most likely in another country. The spectrum covers distances from centimeters to several thousands of kilometers. Figure~\ref{fig:nearFarSimple} shows a pretty simple Near-Far setup, as well as the spectrum. In the Near-Far computing model you take the proximity of the Near server into consideration. You want the Near server to be as close as possible to the user. It can be a Cloudlet, which we discuss in section \ref{cloudlet}, for example. Optimally it is only one hop away, but considering cost and practicality, it can be more. The point is to minimize latency, but getting as close to the thin client as one hop is not feasible in every situation, especially on a tight budget.
 %% HOW DOES NEAR FAR DIFFER FROM FOG?
 
 \begin{figure}[t]
@@ -241,11 +240,33 @@ The speed of light in a vacuum is 299,792 458 kilometers a second. This is the u
 %% ----------------------------------------------------------------------------
 
 
+\section{Why high latency and low bandwidth hurts}
+
+
+Humans will easily detect delay and jitter when using applications\cite{satyanarayanan_case_2009}. Delay is almost impossible to fight when using hardware that is physically a long distance away. Jitter is impossible to prevent when using WAN. As a consequence, user experience of applications using WAN might suffer. Applications where crispness and high response time is important is called \textit{latency-aware applications}. Niraj Tolia et al.\cite{tolia_quantifying_2006} showed that we can divide user perceived responsiveness into several bins:
+\begin{center}
+\begin{tabular}{ | p{3cm} | p{5cm} | } 
+    \hline
+    Response Time& Perceived Responsiveness  \\ 
+    \hline
+    < 150ms & Crisp  \\ 
+    150ms - 1s & Noticeable to annoying \\ 
+    1s - 2s & Annoying \\ 
+    2s - 5s & Unacceptable \\ 
+    > 5s & Unusable \\ 
+    \hline
+\end{tabular}
+\end{center}
+The response time of applications is the sum of the time taken for packets to be sent between nodes, plus the processing time. Latency is not the only factor for how slow data transferring can be. Bandwidth is also a really important factor\cite{cerqueira_interactive_2007}. Some applications require very high bandwidth, that is not necessarily available everywhere. When bandwidth is too low, the transferring time will take longer, which then affects the response time. 
+For latency-aware applications, keeping the application crisp is important. There of course exists applications that needs way lower response time than 150ms. Some applications require response time down to a few milliseconds. An example of this is when surgeons use a remote controlled robot to perform surgery. In this situation responsiveness need real-time to ensure safety. 
 
 
 
 
 
+
+
+% ------------------------------------------------------------------------  
 
 \section{Emerald}\label{Emerald}
 Emerald is a programming language created in the period of 1984-1986 by Eric B. Jul, Norm Hutchinson, Hank Levy and Andrew Black. It has several features that is important in distributed programming, like object mobility and type conformity. These features helps easing the development process of distributed systems. Emerald is an example that you can have object orientation in distributed systems that have similar performance as C++ in many aspects. This section will give an introduction to Emerald, and are mainly based on the Emerald Language Report\cite{hutchinson_emerald_nodate}
@@ -570,3 +591,5 @@ In this chapter we have made a theoretical foundation to help understanding this
 % Snakk om Why latency hurts? Snakk om hvorfor vi offloader?
 
 % iot
+
+%NFV og SDN?
