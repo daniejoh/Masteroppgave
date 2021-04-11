@@ -331,6 +331,26 @@ end B
 \end{lstlisting}
 As you can see, using the \verb|class| keyword dramatically increases readability, gives us the consept of classes, and eases the development.
 
+\subsection{Fields}\label{emerald:fields}
+Emerald provides the keyword \verb|field| to automatically provide getters and setters.
+\begin{lstlisting}[language=emerald]
+const A <- class A
+    field someVar : String <- ""
+end A
+
+const B <- class B
+    var someVar: String <- ""
+    
+    export op getSomeVar -> [res: String]
+        res <- someVar
+    end getSomeVar
+    
+    export op setSomeVar[input: someVar]
+        someVar <- input
+    end setSomeVar
+end B
+\end{lstlisting}
+In the above example, both class A and class B is equivalent. They will both have the operations \verb|getSomeVar| and \verb|setSomeVar| available.
 
 
 \subsubsection{Immutability}
