@@ -211,7 +211,7 @@ A router, switch or Cloudlet are examples of an edge device. They can be utilize
 
 %TODO FJERN og snakk om dette i architectures?
 \subsection{Content Delivery Networks (CDN)}
-There are of course different levels of closeness to the edge. Content Delivery Networks are distributed systems that have servers geographically closer to the users. Akamai is a CDN company that specializes in bringing edge computing as close to the edge as possible. It has become widely popular, and a significant portion of the web moves through an Akamai device. They will have servers directly at the ISP’s so clients are just one “network hop” away from their servers. Akamai\cite{noauthor_exceptional_nodate} claims \say{85\% of the world’s Internet users are within a single “network hop” of an Akamai edge server.}. They also claim to handle 15-30\% of the world's web traffic. They help Netflix and similar companies to cache videos closer to the users so that they don't need to waste bandwidth across continents. They also help websites load faster and be more responsive, as the latency for getting the webpages are now minimal.
+Content Delivery Networks are distributed systems that have servers geographically closer to the users. Akamai is a CDN company that specializes in bringing edge computing as close to the edge as possible. It has become widely popular, and a significant portion of the web moves through an Akamai device. They will have servers directly at the ISP’s so clients are just one “network hop” away from their servers. Akamai\cite{noauthor_exceptional_nodate} claims \say{85\% of the world’s Internet users are within a single “network hop” of an Akamai edge server.}. They also claim to handle 15-30\% of the world's web traffic. They help Netflix and similar companies to cache videos closer to the users so that they don't need to waste bandwidth across continents. They also help websites load faster and be more responsive, as the latency for getting the webpages are now minimal.
 
 
 %% ----------------------------------------------------------------------
@@ -571,7 +571,7 @@ All the other nodes are now accessible, and can have objects moved to them.
 
 %% ---------------------------------------------------------
 
-\section{Docker}
+\section{Docker}\label{background:docker}
 Docker is a tool for running programs on the same architecture everywhere, without spinning up a whole virtual machine. It is built around the concept of \textit{containers}. Containers are small packages of software, that run on the Docker Engine. The Docker Engine is the the middleware between the containers and the operating system. This lets us run something locally and be able to expect the same behavior on other machines. Therefore, no matter where you run the application, it will always be the same environment from the perspective of the program. 
 
 Because a Docker does not spin up a whole virtual machine, but rather share some resources with between the containers \cite{dockercom_what_nodate}, it is more efficient. The container is essentially a sandbox, that runs on top of the OS. Each of the applications are therefore isolated, even though they have some shared resources.

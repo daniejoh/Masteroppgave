@@ -2,6 +2,7 @@
 
 %% cloudlet?
 %% MAUI?
+In this chapter we will see what already exists of architectures that relates to the Near-Far computing model. We will give an overview of how each architecture works.
 
 
 
@@ -16,6 +17,7 @@ Multi-Access Edge Computing(MEC), also known as Mobile Edge Computing, was origi
     \label{fig:MEC}
 \end{figure}
 
+\subsection{Offloading}
 Figure \ref{fig:MEC} shows how MEC works on a high level. MEC will utilize the ubiquitous cellular network to offload its work. At the base station there will be a MEC server that can provide storage and computational power to the mobile devices. However, the base station servers is not as powerful as the distant cloud servers. Since the base station is just one hop away, we don't have to deal with the dynamic wide-area network. Additionally, the cellular network provides a very small delay, as base stations are relatively close by to almost everywhere where there are developed civilization. If the servers at the base station are overloaded they can send the work further to the data centres of the distant cloud or a CDN. The mobile devices can be any type of device that need storage offloading. The only requirement for this architecture is that it has a cellular or WiFi connection.
 
 The MEC server architecture is divided into several layers that together forms three systems\cite{patel_mec_nodate}. At the bottom is the hardware layer. Over that is the virtualization layer. These two layers is part of the MEC Hosting Infrastructure Management System. Over that is the MEC Application Platform Management System which consists of a MEC virtualization manager layer and and MEC Application Platform Services layer. The virtualization manager can provide IaaS. The MEC Application Platform Services layer is an interface for the virtual machines that the applications is running on. The VMs and the apps form the Application Management Systems. Figure \ref{fig:MEC_Server} is a simplified version of the server architecture presented in \cite{patel_mec_nodate}. It shows that we can have several applications running simultaneously on the MEC Server. All the Applications run in a VM that is controlled by the MEC Application Platform Services.
@@ -35,8 +37,7 @@ Software-Defined Networking(SDN) is often used together with NFV. Instead of hav
 % In our experiments, the Emerald VM will consist of the two bottom systems, and we will focus on the application layer.
 
 %TODO talk about HOW it is decided how much should be offloaded
-\subsection{Offloading}
-TODO
+
 
 %SDN er at vi har virtuelle nettverk. Slik som at vi har eget nettverk i AWS på jobben. Vi kan da definere virtuelle nettverksdrivere og interfaces osv. For eksempel ha et eget virtuellt nettverk til kun databaseting.
 %https://www.cisco.com/c/en/us/solutions/software-defined-networking/sdn-vs-nfv.html
@@ -79,30 +80,37 @@ To simplify deployment, Cloudlets use \textit{transient customization of Cloudle
 % ------------------------------------------------------------------------------------------
 
 
-\section{Content Delivery Networks}
-Content Delivery Networks(CDN) are providers that have focused on putting servers close to the users. Firms like Akamai will have deals with local Internet Service Providers (ISP) to have some servers at their facilities. This ensures that their servers are only a few hops away from the clients. You also have technologies like Google AMP, which lets you have cached stripped down versions of websites cached at these CDNs to help speed up website loading.
-%Diagram med servere som ligger hos ISP, og servere som ligger langt unna. Tenk på Netflix først prøve og hente ved ISP før den går videre til frankfurt eller amerika.
-%TODO Lambda@edge
-
 
 \section{Google Anthos}
+Google Cloud Platform(GCP) has been providing Cloud solutions since 2008. Like many other cloud providers, you can rent hosted servers on GCP. In 2019 Google announced Google Anthos, also known as just Anthos. Anthos is a way to bring GCP to the edge and on-premises\cite{noauthor_anthos_nodate}. All you need to do is install some software on a machine that lets you run connect it to GCP. In the GCP console, you can then control this new node in the Anthos section. You can then set up a cluster consisting of nodes that resides on the edge and in the data centre, and let them easily collaborate with each other. GCP will control the device that you have connected to Anthos. This ensures that you do not have to think about security. It also lets you easily manage them.
+
+\subsection{Offloading}
+Google Anthos uses Kubernetes\cite{noauthor_production-grade_nodate} to easily create distributed systems\cite{noauthor_anthos_nodate}. This means that everything that runs on the Anthos platform uses container software and middleware like Docker(see section \ref{background:docker}), and every program that runs on it is within a Docker container. Due to containerization of programs, we can easily distributed them on this platform. This enables us to easily offload work to edge nodes as well as nodes in the distant data center.
+\begin{figure}[t]
+    \centering
+    \includegraphics[scale=0.9]{chapters/architectures/figures/anthos_architecture.png}
+    \caption{Illustration of a simple two nodes running on Anthos}
+    \label{fig:Anthos_architecture}
+\end{figure}
+Figure \ref{fig:Anthos_architecture} show a simplified overview of two nodes running on Anthos. Anthos middleware runs in each node and controls a Kubernetes cluster. Zero or more containers runs on Kubernetes.
 % Uses devices in your home like the chromecast or google home?
 %Gir deg muligheten til å deploye on the edge, "on-premises". Veldig lik de andre
 %https://cloud.google.com/anthos/docs/concepts/overview
 %kanskje bare sammenligne characteristics for denne? På et vis, bare droppe å bruke programmet fordi det uansett blir så likt.
 
 
+% -------------------------------------------------------------------------------
+
+\section{Amazon Cloudfront}
+Amazon Web Services (AWS) provides Amazon Cloudfront as a solution for latency-aware applications\cite{noauthor_production-grade_nodate}. Amazon Cloudfront is a CDN service that lets you integrate other important AWS services at the edge. This lets you easily provide storage and computation at the edge. Additionally, you get the safety that is already integrated in the services that AWS provides. 
+
+\subsection{Offloading}
+Within Amazon Cloudfront they provide a service called Lambda@Edge. AWS Lambda is a serverless service that lets you run small functions in the cloud so that you do not need a whole server, for a small piece of code. Also, it lets you easily scale if need be. Lambda@Edge lets you put these Lambda functions on the edge, and therefore closer to the user. It then lets you easily connect to their database services to provide storage. This storage can also be at the edge if its needed. When storage offloading is needed, you just call a Lambda function that is placed at the edge. You will then get a really fast response, as the computation happens geographically close to you.
+
+
 \section{Fog Computing for Big Data}
 %https://dl.acm.org/doi/pdf/10.1145/2818869.2818898
-
-% TODO:
-
-% Odessa
-% MAUI
-
-% peer to peer?
-
-% MCC vs MEC
+TODO
 
 
 \section{Summary}

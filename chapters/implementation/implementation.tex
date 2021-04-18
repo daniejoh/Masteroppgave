@@ -1,6 +1,6 @@
 In this chapter we will show how we have implemented the architectures presented in chapter \ref{chapter:architectures}.
 
-\section{Testing Program}
+\section{Testing Programs}
 We have developed two applications in Emerald to test computation offloading and storage offloading. Each of them are easily configurable and flexible for testing. The next two subsections will show how they are implemented.
 
 \subsection{Computation offloading}
@@ -67,6 +67,8 @@ const HashWorker <- class HashWorker
   export op collectTimeUsed -> [res: Time]
 end HashWorker
 \end{lstlisting}
+HashWorker is an object that is distributed to all machines. The role of HashWorker is to provide an interface for main to start and control work. The constant \verb|workload| is the initial parameter for the hash function for each iteration. The constant \verb|mon| is used to store an instance of the \verb|InnerMonitor| class. Then we have the definitions for \verb|InnerMontor| and \verb|Worker|. They are defined inside the HashWorker class and are therefore inner classes. Then we have the \verb|initially| section. Here we ensure that the class parameter \verb|limitation| is equal to or higher than zero. This is because the limitation is used to make a time constraint, and we don´t want negative time. Operation \verb|setLimitation| is there to be able to change the limitation during runtime. Operation \verb|doWork| will create an instance of the \verb|Worker| class. It takes a parameter \verb|iterations| which is how many iterations we want the node to do. Operation \verb|collectTimeUsed| is used to collect the time used after process is done. When called, it will wait for the process in Worker to be done, then return the time used.
+Notice that all of the constants are attached. This is because we want to ensure that all of them are on the same node as the HashWorker instance. This reduces the amount of costly remote reads.
 
 
 
@@ -81,14 +83,29 @@ attached const InnerMonitor
   field timeTaken : Time <- nil
 end InnerMonitor
 \end{lstlisting}
-As discussed in section \ref{emerald:field}, fields in Emerald automatically generates getters and setters. Since it is in a monitor class it is guaranteed that invoking them is mutual exclusive. In other words, the getters and setters that are automatically created within the class is safe to use in parallel. Variable \verb|timeTaken| is used to store the time used by the process in class \verb|Worker|. Variable \verb|waiting| is used to ensure that main does not collect \verb|timeTaken| before the worker is done.
+As discussed in section \ref{emerald:field}, fields in Emerald automatically generates getters and setters. Since it is in a monitor class it is guaranteed that invoking them is mutual exclusive. In other words, the getters and setters that are automatically created within the class is safe to use in parallel. Variable \verb|timeTaken| is used to store the time used by the process in class \verb|Worker|. Variable \verb|waiting| is used to ensure that main does not collect \verb|timeTaken| before the worker is done. 
 
 
 
 
 
 \subsubsection{Worker}
-The hashing algorithm we use is called \textit{Djb2}. Our implementation is a converted version from a C implementation found here\cite{noauthor_hash_nodate}.
+Below is the skeleton of class Worker.
+
+\begin{minipage}{\linewidth}
+\begin{lstlisting}[language=emerald]
+attached const Worker 
+                <- class Worker[iterations: Integer]
+                
+    initially
+    
+    process
+    
+    function djb2Hash[str: String] -> [res: Integer]
+end Worker
+\end{lstlisting}
+\end{minipage}
+The \verb|initially| section will assert that iterations are higher than zero. The \verb|process| section is where the actual work of the node happens. When \verb|doWork| is called in class \verb|HashWorker|, it creates an instance of the Worker class by invoking operation \verb|create|. The process is then started. In the process, it will run \verb|iterations| number of iterations. The hashing algorithm we use is called \textit{Djb2}. Our implementation is a converted version from a C implementation found here\cite{noauthor_hash_nodate}.
 \begin{lstlisting}[language=emerald]
 function djb2Hash[str: String] -> [res: Integer]
   res <- 5381
@@ -98,7 +115,7 @@ function djb2Hash[str: String] -> [res: Integer]
   end for
 end djb2Hash
 \end{lstlisting}
-The algorithm takes a string, iterates over it and multiplies itself with 33 and the characters ordinal number. To make it even heavier, we convert the result to string, and then re-insert that into the hash function 10000 times. We see that as one iteration, as shown in figure \ref{fig:Hashing_algorithm_iteration}. In other words, the HashWorker will do what figure \ref{fig:Hashing_algorithm_iteration} shows, parameter \verb|iterations| number of times. Since we just throw out the result after each time, Emeralds garbage compiler will ensure that we have plenty of memory available. 
+The algorithm takes a string, iterates over it and multiplies itself with 33 and the characters ordinal number. To make it even more compute heacy, we convert the result to string, and then re-insert that into the hash function 10000 times. We see that as one iteration, as shown in figure \ref{fig:Hashing_algorithm_iteration}. In other words, the HashWorker will do what figure \ref{fig:Hashing_algorithm_iteration} shows, parameter \verb|iterations| number of times. Since we just throw out the result after each time, Emeralds garbage compiler will ensure that we have plenty of memory available. 
 \begin{figure}[t]
     \centering
     \includegraphics[scale=0.9]{chapters/implementation/figures/Iteration.png}
@@ -110,18 +127,29 @@ The algorithm takes a string, iterates over it and multiplies itself with 33 and
 
 
 \subsubsection{Main}
+Main only has an initially section that will do a number of steps. First it will move through all nodes and print some information on each node. This is mainly for debugging, and to ensure that things are running correctly. Further it will invoke the create an instance of the \verb|FileReader| class and read config file that you have specified. Config files are discussed in subsection \ref{subsection:configfiles}. Further, it will use this config to initilize \verb|HashWorker| instances and move them to a node decided by user input. Then, it will iterate through all \verb|HashWorker| instances and invoke operation \verb|doWork|. All processes should then have started. Finally, it will collect and print the results.
 
 
 
 \subsection{Simulating CPU restrictions}
 To simulate CPU restrictions, we place a limitation on each HashWorker. This limitation is implemented as time delay. For each iteration a time delay is called. The amount of microseconds delayed is the \verb|limitation| parameter multiplied by 1000. 
+\subsection{Simulating CPU restrictions FPS ALTERNATIVE}
+To simulate CPU restrictions, we place a limitation on each HashWorker. To be able to accurately control how much work is done on each HashWorker, we have implemented a way of specifying how many iterations (see figure \ref{fig:Hashing_algorithm_iteration}) each node can do per second.
 
 
 
+\subsection{Config files}\label{subsection:configfiles}
+When the \verb|FileReader| class reads in the config file, it expects a very simple syntax. Each line should be a positive integer. For example a file that for two nodes will set their limitations to 0 and 100 and make them both do 50 iterations, will look like this:
+\begin{lstlisting}
+0
+100
+50
+50
+\end{lstlisting}
+The \verb|FileReader| reads each line until the newline character. After everything is read, it will convert them to an array of Integers, instead of array of Strings.
 
-
-
-\subsection{Storage offloading}
+\section{Storage offloading}
+TODO
 
 
 
@@ -137,11 +165,36 @@ To simulate CPU restrictions, we place a limitation on each HashWorker. This lim
 % -----------------------------------------------------------------------------------
 
 \section{Multi-Access Edge Computing}
-Figure TODO illustrates how three+ nodes will be set up. Blablabla.
-TODO
+% 
+\subsection{Computation offloading}
+\begin{figure}[t]
+    \centering
+    \includegraphics[scale=1]{chapters/implementation/figures/MEC_implementation.png}
+    \caption{Illustration of the node structure used for computation offloading in MEC}
+    \label{fig:MEC_implementation}
+\end{figure}
+Figure \ref{fig:MEC_implementation} illustrates how three nodes can be set up. The \verb|Main| object will reside on the mobile device, as that is where we want the result. We can create several HashWorkers to place them on servers. However, the Cloud Data Center will have enough resources to have significantly more HashWorkers than the MEC Servers, and the MEC Servers can have significantly more HashWorkers than the mobile client. The MEC Servers can consist of one or more machines that hosts one to many HashWorker instances. The Cloud Data Center consists of many machines that can host one to many HashWorker instances.
+
+
+\subsection{Storage offloading}
 % Vis de forskjellige måtene og ta storage offloading på
 
 
-%\subsection{Limitation}
-%Originally we wanted to use monitors. However when there is a case in Emerald where if you have to separate objects containing each of their own monitor with condition. Then when waiting on these separate conditions just exits the program when hitting the other condition!
+
+% -------------------------------------------------------------------
+
+\section{Cloudlets}
+
+\subsection{Computation offloading}
+
+\subsection{Storage offloading}
+
+
+
+
+
+
+
+
+
 
