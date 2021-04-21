@@ -132,8 +132,6 @@ Main only has an initially section that will do a number of steps. First it will
 
 
 \subsection{Simulating CPU restrictions}
-To simulate CPU restrictions, we place a limitation on each HashWorker. This limitation is implemented as time delay. For each iteration a time delay is called. The amount of microseconds delayed is the \verb|limitation| parameter multiplied by 1000. 
-\subsection{Simulating CPU restrictions FPS ALTERNATIVE}
 To simulate CPU restrictions, we place a limitation on each HashWorker. To be able to accurately control how much work is done on each HashWorker, we have implemented a way of specifying how many iterations (see figure \ref{fig:Hashing_algorithm_iteration}) each node can do per second.
 
 
@@ -148,7 +146,11 @@ When the \verb|FileReader| class reads in the config file, it expects a very sim
 \end{lstlisting}
 The \verb|FileReader| reads each line until the newline character. After everything is read, it will convert them to an array of Integers, instead of array of Strings.
 
-\section{Storage offloading}
+
+
+
+
+\subsection{Storage offloading}
 TODO
 
 
@@ -184,8 +186,14 @@ Figure \ref{fig:MEC_implementation} illustrates how three nodes can be set up. T
 % -------------------------------------------------------------------
 
 \section{Cloudlets}
-
 \subsection{Computation offloading}
+\begin{figure}[t]
+    \centering
+    \includegraphics[scale=0.9]{chapters/implementation/figures/Cloudlet_implementation.png}
+    \caption{Illustration of the node structure used for computation offloading with Cloudlets}
+    \label{fig:Cloudlet_implementation}
+\end{figure}
+Figure \ref{fig:Cloudlet_implementation} illustrates how we can set up an example implementation of Cloudlets. The mobile device will be in very short distance of the Cloudlets and therefore use WiFi to connect with them. In our tests, the Cloudlets are not access points themselves, and therefore there is a WiFi accesspoint hop between the mobile device and the Cloudlets.
 
 \subsection{Storage offloading}
 

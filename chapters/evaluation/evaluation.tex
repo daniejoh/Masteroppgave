@@ -1,17 +1,179 @@
 In this chapter we will evaluate the architectures described in chapter \ref{chapter:architectures} with the method described in chapter \ref{chapter:design_of_experiments}. Some of them will additionally be evaluated with the implementation from chapter \ref{chapter:implementation}.
 
-% eg: MCC aims to have offloading invisble by users, this enforeces this and that dist transparency.
+
+
+
+
+
+
+\section{Bandwidth}
+When evaluating we are making some assumptions about bandwidth. Table \ref{tab:Bandwidth_latency} shows latency and bandwidth for different technologies. The WiFi bandwidths are based on data from CenturyLink\cite{noauthor_24_nodate}. The 4G and 5G bandwidths are real-world examples from 4g.co.uk\cite{noauthor_how_nodate}. The 4G latency are from ping tests, while the 5G latency are from Verizon\cite{noauthor_what_2020}.
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}[c]{|c|c|c|}
+        \hline
+        Technology & Latency (ms) & Bandwidth (Mbps) \\
+            &   &  Download/Upload \\
+        \hline
+        \hline
+        Wifi (2.4GHz) & <=1 & 150/150  \\
+        \hline
+        Wifi (5GHz) & <=1 & 450/450  \\
+        \hline
+        4G & 30-65 & 42/25  \\
+        \hline
+        5G & 30 & 200/100  \\
+        \hline
+        Wired LAN & <=1 & 1000+  \\
+        \hline
+        WAN & 10-300+ & 1000+  \\
+        \hline
+        
+        
+    \end{tabular}
+    \caption{Latency and bandwidth for different technologies.}
+    \label{tab:Bandwidth_latency}
+\end{table}
+When doing calculations in this chapter, we will be using numbers from table \ref{tab:Bandwidth_latency}.
+
+
+
+
+
+
+
 
 
 \section{Multi-Access Edge Computing}
-In MEC, they seek to offload a reasonable amount of work. Therefore, we will not offload all the work, but rather test with several ratios of computation offloading.
+MEC seeks to offload a reasonable amount of work. Therefore, we will not offload all the work, but rather test with several ratios of computation offloading. It is not always efficient to offload all the work. According to Mach and Becvar´s survey\cite{mach_mobile_2017}, we can divide offloading into three categories:
+\begin{itemize}
+    \item \textit{Local execution}, where all the work is done on the mobile device.
+    \item \textit{Full offloading}, where we offload all work to server(s).
+    \item \textit{Partial offloading}, where we offload some of the work, and do some local.
+\end{itemize}
+We will compare these three. We will also test different variations of Partial offloading. According to cpubenchmark\cite{noauthor_passmark_nodate}, flagship phones is about half as fast as a standard desktop CPU. We assume that we are dealing with below average CPU's cellphones, as most people do not have the flagship phone. We will test different strengths of the MEC Server. We assume that the data centre will have plenty of resources. In total, we want to do 10000 iterations spread over all the nodes.
+
+\subsection{Local execution}
+For local execution we set limitation to 50 mimic below average mobile devices.
+
+%lacking geographic location?
+\begin{table}[h!]
+    \centering
+    \begin{tabular}[c]{|c|c|c|c|c|}
+        \hline
+        Node type & Limitation & Iterations & Time used (s) \\
+        \hline
+        \hline
+        Local & 50 & 10000 & 199.4 \\
+        \hline
+    \end{tabular}
+    \caption{Only local execution}
+    \label{tab:MEC_local_execution}
+\end{table}
+
+
+
+\subsection{Full execution}
+%spread out over more nodes
+Here we offload all the work to the nodes. Since the Far node has more resources we let it do more of the work.
+\begin{table}[h!]
+    \centering
+    \begin{tabular}[c]{|c|c|c|c|}
+        \hline
+        Node type & Limitation & Iterations & Time used (s)\\
+        \hline
+        \hline
+        Local & 50 & 0 & 0 \\
+        \hline
+        Near & 100 & 2500 & 23.3 \\
+        \hline
+        Far & 300 & 7500 & 30.5 \\
+        \hline
+    \end{tabular}
+    \caption{Full offloading execution}
+    \label{tab:MEC_full_execution}
+\end{table}
+
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}[c]{|c|c|c|c|}
+        \hline
+        Node type & Limitation & Iterations & Time used (s)\\
+        \hline
+        \hline
+        Local & 50 & 0 & 0 \\
+        \hline
+        Near & 100 & 2800 & 27.3 \\
+        \hline
+        Far & 300 & 7200 & 29.8 \\
+        \hline
+    \end{tabular}
+    \caption{Full offloading execution with more balance}
+    \label{tab:MEC_full_execution}
+\end{table}
+
+
+
+
+
+\subsection{Partial execution}
+For partial execution, we want all nodes to work. Not necessarily equally as much, but all of them should do some work. 
+\begin{table}[h!]
+    \centering
+    \begin{tabular}[c]{|c|c|c|c|}
+        \hline
+        Node type & Limitation & Iterations & Time used (s)\\
+        \hline
+        \hline
+        Local & 50 & 1000 & 19.2 \\
+        \hline
+        Near & 100 & 2000 & 19.3 \\
+        \hline
+        Far & 300 & 7000 & 29.0 \\
+        \hline
+    \end{tabular}
+    \caption{Partial offloading execution}
+    \label{tab:MEC_partial_execution1}
+\end{table}
+
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}[c]{|c|c|c|c|}
+        \hline
+        Node type & Limitation & Iterations & Time used (s)\\
+        \hline
+        \hline
+        Local & 50 & 1200 & 23.2 \\
+        \hline
+        Near & 100 & 2600 & 25.3 \\
+        \hline
+        Far & 300 & 6200 & 25.5 \\
+        \hline
+    \end{tabular}
+    \caption{Partial offloading execution with more balance}
+    \label{tab:MEC_partial_execution2}
+\end{table}
+
+
+
+
+\subsection{Comparison}
+As we can see from table \ref{tab:MEC_partial_execution1} and \ref{tab:MEC_partial_execution2}, there has to be a balance of how much work is offloaded to get the fastest result. In this thesis we will not focus on offloading algorithms, but they are researched and exists. If we look at table \ref{tab:MEC_local_execution}, we can see that we get significant speedup by offloading.  %Discussion?
+
+%TODO
+% Gjøre målinger med overføring av filer først. Finn data på bandwidth og pluss det på tiden.
+% Gjøre målinger hvor det kreves mer samhandling mellom nodene. Vi må se latency!
+
+
+%\cite{mach_mobile_2017} for hvor mye som skal offloades.!!!!
 % test med 100% offload, 50% offload osv
 %\begin{itemize}
  %   \item Easily scalable as we have the common interface. This makes it easy to add more vms to run more apps. So, its horizontally scalable?
 %\end{itemize}
 
-
-% \section{Mobile Cloud computing}
 
 % \subsection{Computation}% move this over to evaluation?
 % In MCC most of the computation will be done on the closest server. This is because MCC aims to have as little as possible computation on the mobile device to conserve computation, storage and most importantly, energy.
@@ -19,7 +181,24 @@ In MEC, they seek to offload a reasonable amount of work. Therefore, we will not
 % \subsection{storage}% move this over to evaluation?
 % MCC will have little storage offloading. The device itself might have little storage, but in todays society most of them have enough local storage for what they need to do. However, in some cases there might be need for storage offloading.
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 \section{Amazon Cloudfront}
 TODO: Warm up time for lambda.
 \section{Summary}
+TODO
+
+\section{Comparison of the architectures}
 TODO
