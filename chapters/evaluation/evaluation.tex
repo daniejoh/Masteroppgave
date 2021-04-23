@@ -55,12 +55,10 @@ MEC seeks to offload a reasonable amount of work. Therefore, we will not offload
 We will compare these three. We will also test different variations of Partial offloading. According to cpubenchmark\cite{noauthor_passmark_nodate}, flagship phones is about half as fast as a standard desktop CPU. We assume that we are dealing with below average CPU's cellphones, as most people do not have the flagship phone. We will test different strengths of the MEC Server. We assume that the data centre will have plenty of resources. In total, we want to do 10000 iterations spread over all the nodes.
 
 \subsection{Local execution}
-For local execution we set limitation to 50 mimic below average mobile devices.
-
 %lacking geographic location?
 \begin{table}[h!]
     \centering
-    \begin{tabular}[c]{|c|c|c|c|c|}
+    \begin{tabular}[c]{|c|c|c|c|}
         \hline
         Node type & Limitation & Iterations & Time used (s) \\
         \hline
@@ -71,6 +69,7 @@ For local execution we set limitation to 50 mimic below average mobile devices.
     \caption{Only local execution}
     \label{tab:MEC_local_execution}
 \end{table}
+Table \ref{tab:MEC_local_execution} shows the time used for local execution only.
 
 
 
@@ -95,7 +94,6 @@ Here we offload all the work to the nodes. Since the Far node has more resources
     \label{tab:MEC_full_execution}
 \end{table}
 
-
 \begin{table}[h!]
     \centering
     \begin{tabular}[c]{|c|c|c|c|}
@@ -111,15 +109,94 @@ Here we offload all the work to the nodes. Since the Far node has more resources
         \hline
     \end{tabular}
     \caption{Full offloading execution with more balance}
-    \label{tab:MEC_full_execution}
+    \label{tab:MEC_full_execution_balanced}
 \end{table}
+
+Table \ref{tab:MEC_full_execution} and \ref{tab:MEC_full_execution_balanced} shows time used when offloading work to nodes. However, here we only send the workload once, and it does not need to do any communication until the work is done.
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}[c]{|c|c|c|c|c|}
+        \hline
+        Node type & Limitation & Iterations & RTT to Local (ms)& Time used (s)\\
+        \hline
+        \hline
+        Local & 50 & 0 & 0 & 0 \\
+        \hline
+        Near & 100 & 2800 & 30 & 94.8 \\
+        \hline
+        Far & 300 & 7200 & 76 & 588.0 \\
+        \hline
+    \end{tabular}
+    \caption{Full offloading execution with interaction}
+    \label{tab:MEC_full_execution_latency}
+\end{table}
+
+Table \ref{tab:MEC_full_execution_latency} shows how latency affects the work. The Near node had a latency 30ms RTT from the Local node. The Far node had a latency of 76ms RTT from the Local node.
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}[c]{|c|c|c|c|c|}
+        \hline
+        Node type & Limitation & Iterations & RTT to Local (ms)& Time used (s)\\
+        \hline
+        \hline
+        Local & 50 & 0 & 0 & 0 \\
+        \hline
+        Near & 100 & 7200 & 30 & 239.5 \\
+        \hline
+        Far & 300 & 2800 & 76 & 237.9 \\
+        \hline
+    \end{tabular}
+    \caption{Full offloading execution with interaction with more balance in the nodes}
+    \label{tab:MEC_full_execution_latency_balance}
+\end{table}
+
+Table \ref{tab:MEC_full_execution_latency_balance} shows a more balanced workload distribution. Both the near node and the far node used about the same time, which is optimal.
+
+%TODO find out where they balance out. Finn en likning for det?
+% planet7 og planet-70ms
+% eksprementer med 5k totalt istedet for 10k
+% Le
+
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}[c]{|c|c|c|c|c|}
+        \hline
+        Node type & Number of & Limitation & Iterations & Time used (s)\\
+         & HashWorkers & & & \\
+        \hline
+        \hline
+        Local & 0 & 50 & 0 & 0 \\
+        \hline
+        Near & 2 & 100 & 2800 & 27.3 \\
+        \hline
+        Far & 5 & 300 & 7200 & 29.8 \\
+        \hline
+    \end{tabular}
+    \caption{Full offloading execution with interaction}
+    \label{tab:MEC_full_execution_latency_multiple}
+\end{table}
+
+
+
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[scale=1]{chapters/evaluation/figures/times.png}
+    \caption{Graph showing how interaction hurts. If x=10 then we get from Local every 10 iterations.}
+    \label{fig:time_graph_near_far}
+\end{figure}
+
+Figure \ref{fig:time_graph_near_far} shows how latency affects the time used when you have to constantly get info from the mobile device (Local). If you constantly have to get info from the mobile device, the time to complete the whole task will be much slower. If you don't need to get info that often, then the Far server will yield better results as it has more computational power.
 
 
 
 
 
 \subsection{Partial execution}
-For partial execution, we want all nodes to work. Not necessarily equally as much, but all of them should do some work. 
+For partial execution, we want all nodes to work.
 \begin{table}[h!]
     \centering
     \begin{tabular}[c]{|c|c|c|c|}
@@ -135,7 +212,7 @@ For partial execution, we want all nodes to work. Not necessarily equally as muc
         \hline
     \end{tabular}
     \caption{Partial offloading execution}
-    \label{tab:MEC_partial_execution1}
+    \label{tab:MEC_partial_execution}
 \end{table}
 
 
@@ -154,8 +231,11 @@ For partial execution, we want all nodes to work. Not necessarily equally as muc
         \hline
     \end{tabular}
     \caption{Partial offloading execution with more balance}
-    \label{tab:MEC_partial_execution2}
+    \label{tab:MEC_partial_execution_balanced}
 \end{table}
+Table \ref{tab:MEC_partial_execution} and \ref{tab:MEC_partial_execution_balanced} shows offloading with little overhead and no latency.
+
+
 
 
 
@@ -187,7 +267,7 @@ As we can see from table \ref{tab:MEC_partial_execution1} and \ref{tab:MEC_parti
 
 
 
-
+\section{Cloudlets}
 
 
 
