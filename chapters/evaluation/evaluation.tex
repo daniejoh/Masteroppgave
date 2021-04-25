@@ -63,7 +63,7 @@ We will compare these three. We will also test different variations of Partial o
         Node type & Limitation & Iterations & Time used (s) \\
         \hline
         \hline
-        Local & 50 & 10000 & 199.4 \\
+        Local & 30 & 10000 & 333.6 \\
         \hline
     \end{tabular}
     \caption{Only local execution}
@@ -83,7 +83,7 @@ Here we offload all the work to the nodes. Since the Far node has more resources
         Node type & Limitation & Iterations & Time used (s)\\
         \hline
         \hline
-        Local & 50 & 0 & 0 \\
+        Local & 30 & 0 & 0 \\
         \hline
         Near & 100 & 2500 & 23.3 \\
         \hline
@@ -101,7 +101,7 @@ Here we offload all the work to the nodes. Since the Far node has more resources
         Node type & Limitation & Iterations & Time used (s)\\
         \hline
         \hline
-        Local & 50 & 0 & 0 \\
+        Local & 30 & 0 & 0 \\
         \hline
         Near & 100 & 2800 & 27.3 \\
         \hline
@@ -121,18 +121,18 @@ Table \ref{tab:MEC_full_execution} and \ref{tab:MEC_full_execution_balanced} sho
         Node type & Limitation & Iterations & RTT to Local (ms)& Time used (s)\\
         \hline
         \hline
-        Local & 50 & 0 & 0 & 0 \\
+        Local & 30 & 0 & 0 & 0 \\
         \hline
-        Near & 100 & 2800 & 30 & 94.8 \\
+        Near & 100 & 2800 & 30 & 92.8 \\
         \hline
-        Far & 300 & 7200 & 76 & 588.0 \\
+        Far & 300 & 7200 & 170 & 1304.8 \\
         \hline
     \end{tabular}
-    \caption{Full offloading execution with interaction}
+    \caption{Full offloading execution with communication between Local and Near/Far}
     \label{tab:MEC_full_execution_latency}
 \end{table}
 
-Table \ref{tab:MEC_full_execution_latency} shows how latency affects the work. The Near node had a latency 30ms RTT from the Local node. The Far node had a latency of 76ms RTT from the Local node.
+Table \ref{tab:MEC_full_execution_latency} shows how latency affects the work. We get a very big slowdown from when all is done locally. 
 
 \begin{table}[h!]
     \centering
@@ -141,18 +141,18 @@ Table \ref{tab:MEC_full_execution_latency} shows how latency affects the work. T
         Node type & Limitation & Iterations & RTT to Local (ms)& Time used (s)\\
         \hline
         \hline
-        Local & 50 & 0 & 0 & 0 \\
+        Local & 30 & 0 & 0 & 0 \\
         \hline
-        Near & 100 & 7200 & 30 & 239.5 \\
+        Near & 100 & 8500 & 30 & 279.3 \\
         \hline
-        Far & 300 & 2800 & 76 & 237.9 \\
+        Far & 300 & 1500 & 170 & 267.9 \\
         \hline
     \end{tabular}
-    \caption{Full offloading execution with interaction with more balance in the nodes}
+    \caption{Full offloading execution with communication and more balance in the nodes}
     \label{tab:MEC_full_execution_latency_balance}
 \end{table}
 
-Table \ref{tab:MEC_full_execution_latency_balance} shows a more balanced workload distribution. Both the near node and the far node used about the same time, which is optimal.
+Table \ref{tab:MEC_full_execution_latency_balance} shows a more balanced workload distribution. The Near node is doing significantly more work. Due to latency they use about the same time.
 
 %TODO find out where they balance out. Finn en likning for det?
 % planet7 og planet-70ms
@@ -160,36 +160,13 @@ Table \ref{tab:MEC_full_execution_latency_balance} shows a more balanced workloa
 % Le
 
 
-\begin{table}[h!]
-    \centering
-    \begin{tabular}[c]{|c|c|c|c|c|}
-        \hline
-        Node type & Number of & Limitation & Iterations & Time used (s)\\
-         & HashWorkers & & & \\
-        \hline
-        \hline
-        Local & 0 & 50 & 0 & 0 \\
-        \hline
-        Near & 2 & 100 & 2800 & 27.3 \\
-        \hline
-        Far & 5 & 300 & 7200 & 29.8 \\
-        \hline
-    \end{tabular}
-    \caption{Full offloading execution with interaction}
-    \label{tab:MEC_full_execution_latency_multiple}
-\end{table}
 
 
 
 
-\begin{figure}[t]
-    \centering
-    \includegraphics[scale=1]{chapters/evaluation/figures/times.png}
-    \caption{Graph showing how interaction hurts. If x=10 then we get from Local every 10 iterations.}
-    \label{fig:time_graph_near_far}
-\end{figure}
 
-Figure \ref{fig:time_graph_near_far} shows how latency affects the time used when you have to constantly get info from the mobile device (Local). If you constantly have to get info from the mobile device, the time to complete the whole task will be much slower. If you don't need to get info that often, then the Far server will yield better results as it has more computational power.
+
+
 
 
 
@@ -204,11 +181,11 @@ For partial execution, we want all nodes to work.
         Node type & Limitation & Iterations & Time used (s)\\
         \hline
         \hline
-        Local & 50 & 1000 & 19.2 \\
+        Local & 30 & 1000 & 33.0 \\
         \hline
-        Near & 100 & 2000 & 19.3 \\
+        Near & 100 & 2000 & 19.5 \\
         \hline
-        Far & 300 & 7000 & 29.0 \\
+        Far & 300 & 7000 & 30.6 \\
         \hline
     \end{tabular}
     \caption{Partial offloading execution}
@@ -223,11 +200,11 @@ For partial execution, we want all nodes to work.
         Node type & Limitation & Iterations & Time used (s)\\
         \hline
         \hline
-        Local & 50 & 1200 & 23.2 \\
+        Local & 30 & 850 & 28.1 \\
         \hline
-        Near & 100 & 2600 & 25.3 \\
+        Near & 100 & 2700 & 26.5 \\
         \hline
-        Far & 300 & 6200 & 25.5 \\
+        Far & 300 & 6450 & 29.1 \\
         \hline
     \end{tabular}
     \caption{Partial offloading execution with more balance}
@@ -240,8 +217,72 @@ Table \ref{tab:MEC_partial_execution} and \ref{tab:MEC_partial_execution_balance
 
 
 
-\subsection{Comparison}
-As we can see from table \ref{tab:MEC_partial_execution1} and \ref{tab:MEC_partial_execution2}, there has to be a balance of how much work is offloaded to get the fastest result. In this thesis we will not focus on offloading algorithms, but they are researched and exists. If we look at table \ref{tab:MEC_local_execution}, we can see that we get significant speedup by offloading.  %Discussion?
+\begin{table}[h!]
+    \centering
+    \begin{tabular}[c]{|c|c|c|c|c|}
+        \hline
+        Node type & Limitation & Iterations & RTT to Local (ms)& Time used (s)\\
+        \hline
+        \hline
+        Local & 30 & 850 & 0 & 28.1 \\
+        \hline
+        Near & 100 & 2700 & 30 & 86.0 \\
+        \hline
+        Far & 300 & 6450 & 170 & 1131.2 \\
+        \hline
+    \end{tabular}
+    \caption{Partial offloading execution with communication between Local and Near/Far}
+    \label{tab:MEC_partial_execution_latency}
+\end{table}
+
+Table \ref{tab:MEC_partial_execution_latency} shows how latency affects the work. We get a very big slowdown from when all is done locally. 
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}[c]{|c|c|c|c|c|}
+        \hline
+        Node type & Limitation & Iterations & RTT to Local (ms)& Time used (s)\\
+        \hline
+        \hline
+        Local & 30 & 4550 & 0 & 151.3  \\
+        \hline
+        Near & 100 & 4525 & 30 & 149.8 \\
+        \hline
+        Far & 300 & 925 & 170 & 163.0 \\
+        \hline
+    \end{tabular}
+    \caption{Partial offloading execution with communication and more balance in the nodes}
+    \label{tab:MEC_partial_execution_latency_balance}
+\end{table}
+
+
+
+
+
+\subsection{Comparison of results}
+%nevn offloading. Vis stolpediagramm hvor en chunk av tiden er offloading. Vis også med N*latency?
+\begin{figure}[t]
+    \centering
+    \includegraphics[scale=1]{chapters/evaluation/figures/times.png}
+    \caption{Graph showing how interaction hurts. If x=10 then we get from Local every 10 iterations.}
+    \label{fig:time_graph_near_far}
+\end{figure}
+
+Figure \ref{fig:time_graph_near_far} shows how latency affects the time used when you have to constantly get info from the mobile device (Local). If you constantly have to get info from the mobile device, the time to complete the whole task will be much slower. If you don't need to get info that often, then the Far server will yield better results as it has more computational power.
+
+
+%Bar chart med som viser hvor stor andel av de forskjellige utregningene som består av calulation og latency
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[scale=1]{chapters/evaluation/figures/bar_local_near_far_compare.png}
+    \caption{bla}
+    \label{fig:bar_local_near_far}
+\end{figure}
+
+
+\subsection{Characteristics}
+%tabell? subsections? idk
 
 %TODO
 % Gjøre målinger med overføring av filer først. Finn data på bandwidth og pluss det på tiden.
@@ -253,13 +294,6 @@ As we can see from table \ref{tab:MEC_partial_execution1} and \ref{tab:MEC_parti
 %\begin{itemize}
  %   \item Easily scalable as we have the common interface. This makes it easy to add more vms to run more apps. So, its horizontally scalable?
 %\end{itemize}
-
-
-% \subsection{Computation}% move this over to evaluation?
-% In MCC most of the computation will be done on the closest server. This is because MCC aims to have as little as possible computation on the mobile device to conserve computation, storage and most importantly, energy.
-
-% \subsection{storage}% move this over to evaluation?
-% MCC will have little storage offloading. The device itself might have little storage, but in todays society most of them have enough local storage for what they need to do. However, in some cases there might be need for storage offloading.
 
 
 
