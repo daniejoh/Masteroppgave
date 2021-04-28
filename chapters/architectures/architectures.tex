@@ -7,7 +7,7 @@ In this chapter we will see what already exists of architectures that relates to
 
 
 
-\section{Multi-Access Edge Computing}
+\section{Multi-Access Edge Computing}\label{section:MEC_architecture}
 Multi-Access Edge Computing(MEC), also known as Mobile Edge Computing, was originally an architecture that proposes to utilize the cellular network for having a close-by MEC server\cite{porambage_survey_2018}. An MEC server is a server that has software and hardware designed to handle work and storage offloading. However, this has later extended to include WiFi as well, as more and more IoT devices are connected to either cellular of WiFi. If needed, a distant data centre or CDN can aid the MEC server with even more storage and computation.
 \begin{figure}[t]
     \centering
@@ -56,7 +56,7 @@ Software-Defined Networking(SDN) is often used together with NFV. Instead of hav
 
 % ------------------------------------------------------------------------------------------
 
-\section{Cloudlet} \label{cloudlet} 
+\section{Cloudlet} \label{section:architecutres_cloudlet} 
 Satyanarayanan et al., proposed in their paper “The Case for VM-Based Cloudlets in Mobile Computing”\cite{satyanarayanan_case_2009} a solution to resource poverty of mobile devices and for the high latency in the Wide-Area Network(WAN). They wanted something that could fulfill the need for real-time responsiveness by having low-latency, one-hop, high-bandwidth access to a nearby \textit{Cloudlet}. They describe Cloudlets as a "data centre in a box"\cite{satyanarayanan_case_2009}. They are small computers that will run locally at each location where they are needed. All it needs is access to internet and power. An example is setting it up in a coffee shop. There it will be able to serve costumers with computation and storage if needed. All the coffee shop needs to do is plug in and configure the cloudlet. Since it is a relatively small box, it will not take much space or be in the way of costumers or employees. Having the Cloudlet so close, will help the response time stay low, as well as being predictable.
 
 In this architecture, they focus on having as much as possible of the computation done on the nearby Cloudlet. The mobile device is just a thin client, and offloads all computation to the Cloudlet. If no Cloudlet is available, then the mobile device will try to offload to the distant cloud, or if all else fails, use its own computing power. This will heavily affect performance, especially if it has to do the work locally. However, if it detects a nearby Cloudlet, it can easily migrate the work over to it, and return to full functionality.
@@ -108,8 +108,23 @@ Amazon Web Services (AWS) provides Amazon Cloudfront as a solution for latency-a
 Within Amazon Cloudfront they provide a service called Lambda@Edge. AWS Lambda is a serverless service that lets you run small functions in the cloud so that you do not need a whole server, for a small piece of code. Also, it lets you easily scale if need be. Lambda@Edge lets you put these Lambda functions on the edge, and therefore closer to the user. It then lets you easily connect to their database services to provide storage. This storage can also be at the edge if its needed. When storage offloading is needed, you just call a Lambda function that is placed at the edge. You will then get a really fast response, as the computation happens geographically close to you.
 
 
+
+% ------------------------------------------------------------------------------
+
 \section{Akamai}
-TODO
+Akamai is a company which specializes on bringing content closer to the edge by using Content Delivery Networks. It has become widely popular, and a significant portion of the web moves through an Akamai device. They will have servers directly at the ISP’s so clients are just one “network hop” away from their servers. Akamai\cite{noauthor_exceptional_nodate} claims \say{85\% of the world’s Internet users are within a single “network hop” of an Akamai edge server.}. They also claim to handle 15-30\% of the world's web traffic. Companies pay Akamai to cache videos and web pages closer to the user. This helps improve latency and stability, as interaction through Wide-Area Network is minimized. 
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[scale=0.8]{chapters/architectures/figures/akamai_dist.png}
+    \caption{Simplified Illustration of replication in Akamai CDN}
+    \label{fig:Akamai_cdn}
+\end{figure}
+
+Figure \ref{fig:Akamai_cdn} shows how content is replicated across the world. A big server rack might be in Washington an contains the web content for a page there. If we were to get this page from the other side of the world in Norway, then there will be significant latency and instability when trying to retrieve the content. The server will therefore benefit from replicating the page to an Akamai server in Oslo, Norway. Then when someone in Norway tries to retrieve the page, it will instead get it from the Edge server that is geographically close to the end user. However should one of the edge servers be overloaded or fail, then it will let you get content from the original server in Washington. 
+
+
 
 
 \section{Summary}
+In this chapter we have presented several architectures that focuses on mitigating latency. We have presented how they work, and how they are setup. We have focused on presenting how they offload work or storage where applicable. 
