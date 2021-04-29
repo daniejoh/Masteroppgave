@@ -200,8 +200,7 @@ Lastly, Fog focuses a lot on delay. It’s a good solution for “latency-sensit
 
 
 
-\section{Internet Of Things}
-%TODO
+
 
 
 \section{Edge Computing}
@@ -214,7 +213,15 @@ A router, switch or Cloudlet are examples of an edge device. They can be utilize
 
 %% ----------------------------------------------------------------------
 
+\section{Ubiquitous computing and Internet Of Things}
+%TODO
+Internet of Things(IoT) is a system of ubiquitous devices that is connected to the Internet\cite{oauthor_what_nodate}. These devices are now everywhere in modern society. Things with a wide array of sensors are placed everywhere to solve problems or give us information. An example of this is smart watches. Smart watches has several to measure things like heart beat, geographical location, speed and so on. These devices give information to and takes information from the internet. These devices are often very small, have energy constraints because of small battery, and very limited storage. They there often offload computation and storage via its connection to the internet.
 
+
+
+
+
+%% ----------------------------------------------------------------------
 
 \section{The Near-Far computing model}
 The Near-Far computing model is a cloud architecture that consists of a thin client that is connected to thick clients, which again is connected to even thicker clients. The Near-Far computing model covers a spectrum with nodes that are very close to you, like a cellphone in your pocket, and a node that is near you, like a desktop in the same room, as well as a distant data centre like AWS that is far away, most likely in another country. The spectrum covers distances from centimeters to several thousands of kilometers. Figure~\ref{fig:nearFarSimple} shows a pretty simple Near-Far setup, as well as the spectrum. In the Near-Far computing model you take the proximity of the Near server into consideration. You want the Near server to be as close as possible to the user. It can be a Cloudlet, which we discuss in section \ref{cloudlet}, for example. Optimally it is only one hop away, but considering cost and practicality, it can be more. The point is to minimize latency, but getting as close to the thin client as one hop is not feasible in every situation, especially on a tight budget.

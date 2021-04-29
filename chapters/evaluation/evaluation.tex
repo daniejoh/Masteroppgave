@@ -299,14 +299,13 @@ Table \ref{tab:MEC_partial_offloading_little} shows the result of having high fr
 
 
 
-\subsection{Comparison of results} \label{subsection:MEC_comparison}%Discussion of mec?
+\subsection{Discussion of results} \label{subsection:MEC_comparison}%Discussion of mec?
 By comparing table \ref{tab:MEC_full_offloading_latency_balance} and \ref{tab:MEC_partial_offloading_latency_balance} we can see that we get faster results by using Partial offloading. Because the nodes work in parallel, the node who used the longest time shows how much time were used from start to end. Therefore, Partial offloading is the best solution for having fastest result when there is a lot of interaction.
 
 
 Full offloading might for some devices be a requirement. The two most likely causes for this is if the Local device have very limited computational power, or need to save battery. Computation offloading is a great strategy to save energy, as sending data is usually not as expensive as computation. However, if we compare table \ref{tab:MEC_full_offloading_latency_balance} and \ref{tab:MEC_partial_offloading_latency_balance}, we can clearly see that using the local device will give results faster.
 
-Table \ref{fig:bar_local_near_far} shows that if the Near and Far node constantly have to get data from Local, the time to complete the whole task will be much slower. If you don't need to get info that often, then the Far server will yield better results as it has more computational power. In other words, the more interaction the better it is to use Local or Near node more. When there is little interaction then it is best to use the Far node more.
-
+Table \ref{tab:MEC_partial_offloading_little} shows that using a strong Far node is beneficial as long as the interaction between Local or Near and Far is low. Additionally, figure \ref{fig:bar_local_near_far} shows that if the Near and Far node constantly have to get data from Local, the time to complete the whole task will be much slower. If you don't need to get info that often, then the Far server will yield better results as it has more computational power. In other words, the more interaction the better it is to use Local or Near node more. When there is little interaction then it is best to use the Far node more.
 
 %nevn offloading. Vis stolpediagramm hvor en chunk av tiden er offloading. Vis også med N*latency?
 %Bar chart med som viser hvor stor andel av de forskjellige utregningene som består av calulation og latency
@@ -318,13 +317,15 @@ Table \ref{fig:bar_local_near_far} shows that if the Near and Far node constantl
 
 \subsection{Characteristics}
 \subsubsection{Control}
-As discussed in section \ref{section:MEC_architecture}, the architecture of MEC is up to the programmers. They can use NFV and SDN to control how each mobile device will be able to use the architecture. They can in other words use SDN and NFV to tailor the network to the context.
+As discussed in section \ref{section:MEC_architecture}, the network architecture of MEC is up to the programmers. They can use NFV and SDN to control how each mobile device will be able to use the architecture. They can in other words use SDN and NFV to tailor the network to the context. Since VMs can be uploaded to surrounding MEC Servers, ensuring good \textit{relocation transparency} should be trivial. Due to SDN and NFV they could quickly redirect packets to new MEC Server when needed. The level of \textit{migration transparency} is therefore also left to developers.
+
 \subsubsection{Offloading}
-Since they use the cellular network to offload work, this architecture is well suited for IoT devices that can afford the latency. The cellular network is ubiquitous in modern society, and therefore it is optimal for IoT devices that move a lot, e.g. self-driving cars. When offloading they have to upload something, e.g. a VM, to the MEC Server. Alternatively they can make the MEC Server download from elsewhere.
-\subsubsection{Distribution}
-MEC is easily horizontally scalable, as more MEC Servers can easily be added to cell towers. The only limit is how much power there is available and how much space there is available. If only a few servers is needed, then the cost is not too high either. It is also easily scalable in the sense that you can add more VMs to the MEC Server to help with offloading if needed. 
-\subsubsection{Security?}
-TODO
+Since they use the cellular network to offload work, this architecture is well suited for IoT devices that can afford the latency. The cellular network is ubiquitous in modern society, and therefore it is optimal for IoT devices that move a lot, e.g. self-driving cars. When offloading they have to upload something, e.g. a VM, to the MEC Server. Alternatively they can make the MEC Server download from elsewhere. Since MEC uses VMs on the servers when offloading, the level of \textit{access transparency} is very good. The VMs ensure that the APIs for all the nodes are the same. Since cellular networks cover such a large area, \textit{location transparency} is trivial as the device can move quite a lot of distance before any migration is needed. If a node were to fail, it is up to the developers to ensure that other resources are available to recover from the failure. In other words, the level of \textit{failure transparency} is up to the programmers.
+
+\subsubsection{Deployment}
+MEC is easily horizontally scalable, as more MEC Servers can easily be added to cell towers. The only limit is how much power there is available and how much space there is available. If only a few servers is needed, then the cost is not too high either. It is also easily scalable in the sense that you can add more VMs to the MEC Server to help with offloading if needed. Another benefit of using VMs is that \textit{concurrency transparency} is easy to ensure as long as the MEC Server does not run out of resources. This is because they are in sperate VMs and should not affect each other.
+
+
 
 %offloading
 %    compute 
@@ -348,6 +349,10 @@ TODO
 %\end{itemize}
 
 
+
+
+
+% -------------------------------------------------------------------------------------------
 
 
 
@@ -486,33 +491,78 @@ Figure \ref{fig:Cloudlet_latency_bar} shows how much time used on waiting for da
 Table \ref{tab:Cloudlet_partial_offloading_little_far} shows the result of offloading with high frequency to the Near node, while letting the Far node have bigger workloads, and therefore frequent interaction. 
 
 
-\subsection{Comparison of results}
-By comparing table \ref{tab:Cloudlet_full_offloading_latency_balanced} and \ref{tab:Cloudlet_partial_offloading_latency_balanced} we can see that we benefit from also using the Local device. However, if the device that is using the Cloudlets require Full offloading, then we still have significant speedup by offloading to the Cloudlet and the Far node compared to Local execution.
+\subsection{Discussion of results}
+By comparing table \ref{tab:Cloudlet_full_offloading_latency_balanced} and \ref{tab:Cloudlet_partial_offloading_latency_balanced} we can see that we benefit from also using the Local device. However, if the device that is using the Cloudlets require Full offloading, then we still have significant speedup by offloading to the Cloudlet and the Far node compared to Local execution. Table \ref{tab:Cloudlet_partial_offloading_little_far} shows that using Far node as long as interaction is low, is also very beneficial.
 
 Figure \ref{fig:Cloudlet_latency_near_far_comparison} shows that we can get better results by using Far in the situation where interaction between nodes is low. In other words, Cloudlets can benefit from using Far, but only when there is little communication needed. For fast response times we need to use the Cloudlet to do the computation. 
 
-Figure \ref{fig:Cloudlet_latency_bar} shows that having the lower latency than MEC is beneficial. More time is used on calculation rather than waiting on data.
+Figure \ref{fig:Cloudlet_latency_bar} shows that having minimal latency to a Near node is very beneficial. Even though almost half of the time is spent waiting, we have offloaded a significant amount of work. Table \ref{tab:Cloudlet_partial_offloading_little_far} 
 
 
 
 \subsection{Characteristics}
 \subsubsection{Control}
-Controlling Cloudlets is done by the owner of each Cloudlet. Since Cloudlets are to be placed on locations, e.g. a coffee shop, then the owner of that location is able to configure the Cloudlet. The location owner can then limit usage and limit what kinds of applications are used on the Cloudlet.
+Controlling Cloudlets is done by the owner of each Cloudlet. Since Cloudlets are to be placed on locations, e.g. a coffee shop, then the owner of that location is able to configure the Cloudlet. The location owner can then limit usage and limit what kinds of applications are used on the Cloudlet. Handling failure and having good \textit{failure transparency} is mostly up to the programmer in Cloudlets. Should the Cloudlet fail, then a different near Cloudlet should take over, or in the worst case let the Local device handle it. 
 \subsubsection{Offloading}
-Cloudlets use \textit{dynamic VM synthesis} \cite{satyanarayanan_case_2009} to offload work. Essentially it means that we have to give the Cloudlet a VM to run the application. This gives an overhead, which they reported to be quite high. However, this has likely been improved since 2009 as technology has improved. Bandwitdth, storage and computational power have significantly improved, which mitigates many of the issues they raised.
-\subsubsection{Distribution}
-Distribution is expensive for Cloudlets. Satyanarayanan et al.\cite{satyanarayanan_case_2009} purposes different payment models, but each owner of a location has to decide if it is worth the investment. Since they are supposed to be ubiquitous, the total cost of having these readily available everywhere in society will be significant. 
-\subsubsection{Security?}
-TODO
+Cloudlets use \textit{dynamic VM synthesis} \cite{satyanarayanan_case_2009} to offload work. Essentially it means that we have to give the Cloudlet a VM to run the application. This makes \textit{access transparency} for Cloudlets quite good in theory. However, it gives an overhead which they reported to be quite high. This has likely been improved since 2009 as technology has improved. Bandwitdth, storage and computational power have significantly improved, which mitigates many of the issues they raised.
+\subsubsection{Deployment}
+Distribution is expensive for Cloudlets. Satyanarayanan et al\cite{satyanarayanan_case_2009} purposes different payment models, but each owner of a location has to decide if it is worth the investment. Since they are supposed to be ubiquitous, the total cost of having these readily available everywhere in society will be significant. If the Cloudlets are ubuiquitus, then the level of \textit{location, relocation and migration transparency} is quite high. In their paper, they purpose a way of seamlessly migrating to other Cloudlets when needed. If this is accomplished, then the users of the local devices will not notice any drop in performance. Due to the ubiquitous nature of Cloudlets, having \textit{concurrency transparency} should not be a problem. Overloading all of the nearby Cloudlets will be a rare occurrence.
+
+
+
+
+
+
+
+% -------------------------------------------------------------------------------------------
+
+
+
+
+
+
 
 \section{Google Anthos}
+\subsection{Characteristics}
+
+
+
+
+
+
+
+
+
+% -------------------------------------------------------------------------------------------
+
+
+
+
+
+
 
 \section{Amazon Cloudfront}
 \subsection{Characteristics}
 TODO: Warm up time for lambda.
 
+
+
+
+
+% -------------------------------------------------------------------------------------------
+
+
+
+
+
 \section{Akamai}
 \subsection{Characteristics}
+
+
+
+
+% -------------------------------------------------------------------------------------------
+
 
 
 
