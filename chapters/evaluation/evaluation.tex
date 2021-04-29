@@ -5,8 +5,8 @@ In this chapter we will evaluate the architectures described in chapter \ref{cha
 
 
 
-
-\section{Bandwidth}
+\section{Assumptions}
+\subsection{Bandwidth}
 When evaluating we are making some assumptions about bandwidth. Table \ref{tab:Bandwidth_latency} shows latency and bandwidth for different technologies. The WiFi bandwidths are based on data from CenturyLink\cite{noauthor_24_nodate}. The 4G and 5G bandwidths are real-world examples from 4g.co.uk\cite{noauthor_how_nodate}. The 4G latency are from ping tests, while the 5G latency are from Verizon\cite{noauthor_what_2020}.
 
 \begin{table}[h!]
@@ -40,19 +40,11 @@ When doing calculations in this chapter, we will be using numbers from table \re
 
 
 
+\subsection{Hardware}
+According to cpubenchmark\cite{noauthor_passmark_nodate}, flagship phones is about half as fast as a standard desktop CPU. We assume that we are dealing with below average CPU's cellphones, as most people do not have the flagship phone. We will test different strengths of the MEC Server. We assume that the data centre will have plenty of resources. In total, we want to do 10000 iterations spread over all the nodes.
 
 
 
-
-
-\section{Multi-Access Edge Computing} \label{section:MEC_evaluation}
-MEC seeks to offload a reasonable amount of work. Therefore, we will not necessarily offload all the work, but rather test with several ratios of computation offloading. It is not always efficient to offload all the work. According to Mach and Becvar´s survey\cite{mach_mobile_2017}, we can divide offloading into three categories:
-\begin{itemize}
-    \item \textit{Local execution}, where all the work is done on the mobile device.
-    \item \textit{Full offloading}, where we offload all work to server(s).
-    \item \textit{Partial offloading}, where we offload some of the work, and do some local.
-\end{itemize}
-We will compare these three. We will also test different variations of Partial offloading. According to cpubenchmark\cite{noauthor_passmark_nodate}, flagship phones is about half as fast as a standard desktop CPU. We assume that we are dealing with below average CPU's cellphones, as most people do not have the flagship phone. We will test different strengths of the MEC Server. We assume that the data centre will have plenty of resources. In total, we want to do 10000 iterations spread over all the nodes.
 
 \subsection{Local execution}
 %lacking geographic location?
@@ -69,11 +61,13 @@ We will compare these three. We will also test different variations of Partial o
     \caption{Only local execution.}
     \label{tab:MEC_local_execution}
 \end{table}
-Table \ref{tab:MEC_local_execution} shows the time used for local execution only. This to show how long it would take if we do not use offloading.
+Table \ref{tab:MEC_local_execution} shows the time used for local execution only.
 
 
+\subsection{Common results}
+The tables shown in the following two sub subsections are common for both MEC and Cloudlets. This is because we test the same hardware, so when latency is not a factor, we will have the same results. They are all results of tests with little to no latency.
 
-\subsection{Full offloading}
+\subsubsection{Full offloading}
 %spread out over more nodes
 \begin{table}[h!]
     \centering
@@ -111,8 +105,56 @@ Table \ref{tab:MEC_local_execution} shows the time used for local execution only
     \label{tab:MEC_full_offloading_balanced}
 \end{table}
 
-Table \ref{tab:MEC_full_offloading} and \ref{tab:MEC_full_offloading_balanced} shows time used when offloading work to nodes that have little to no latency from Local (less than 1 ms). This essentially shows how much time is used on calculation if we have no communication between nodes.  
+Table \ref{tab:MEC_full_offloading} and \ref{tab:MEC_full_offloading_balanced} shows time used when offloading work to nodes that have little to no latency from Local (less than 1 ms). This essentially shows how much time is used on calculation if we have no communication between nodes. 
 
+\subsection{Partial offloading}
+The tables shown in this subsection are common for both MEC and Cloudlets. This is because we test the same hardware, so when latency is not a factor, we will have the same results.
+\begin{table}[h!]
+    \centering
+    \begin{tabular}[c]{|c|c|c|c|}
+        \hline
+        Node type & Limitation & Iterations & Time used (s)\\
+        \hline
+        \hline
+        Local & 30 & 1000 & 33.0 \\
+        \hline
+        Near & 100 & 2000 & 19.5 \\
+        \hline
+        Far & 300 & 7000 & 30.6 \\
+        \hline
+    \end{tabular}
+    \caption{Partial offloading.}
+    \label{tab:MEC_partial_offloading}
+\end{table}
+
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}[c]{|c|c|c|c|}
+        \hline
+        Node type & Limitation & Iterations & Time used (s)\\
+        \hline
+        \hline
+        Local & 30 & 850 & 28.1 \\
+        \hline
+        Near & 100 & 2700 & 26.5 \\
+        \hline
+        Far & 300 & 6450 & 29.1 \\
+        \hline
+    \end{tabular}
+    \caption{Partial offloading with more balance.}
+    \label{tab:MEC_partial_offloading_balanced}
+\end{table}
+Table \ref{tab:MEC_partial_offloading} and \ref{tab:MEC_partial_offloading_balanced} shows the result of offloading with less than 1 ms latency and little overhead.
+
+
+
+
+
+
+\section{Multi-Access Edge Computing} \label{section:MEC_evaluation}
+
+\subsection{Full offloading}
 \begin{table}[h!]
     \centering
     \begin{tabular}[c]{|c|c|c|c|c|}
@@ -167,44 +209,7 @@ Table \ref{tab:MEC_full_offloading_latency_balance} shows a more balanced worklo
 
 
 \subsection{Partial offloading}
-For partial offloading, we want all nodes to work.
-\begin{table}[h!]
-    \centering
-    \begin{tabular}[c]{|c|c|c|c|}
-        \hline
-        Node type & Limitation & Iterations & Time used (s)\\
-        \hline
-        \hline
-        Local & 30 & 1000 & 33.0 \\
-        \hline
-        Near & 100 & 2000 & 19.5 \\
-        \hline
-        Far & 300 & 7000 & 30.6 \\
-        \hline
-    \end{tabular}
-    \caption{Partial offloading.}
-    \label{tab:MEC_partial_offloading}
-\end{table}
 
-
-\begin{table}[h!]
-    \centering
-    \begin{tabular}[c]{|c|c|c|c|}
-        \hline
-        Node type & Limitation & Iterations & Time used (s)\\
-        \hline
-        \hline
-        Local & 30 & 850 & 28.1 \\
-        \hline
-        Near & 100 & 2700 & 26.5 \\
-        \hline
-        Far & 300 & 6450 & 29.1 \\
-        \hline
-    \end{tabular}
-    \caption{Partial offloading with more balance.}
-    \label{tab:MEC_partial_offloading_balanced}
-\end{table}
-Table \ref{tab:MEC_partial_offloading} and \ref{tab:MEC_partial_offloading_balanced} shows the result of offloading with less than 1 ms latency and little overhead.
 
 
 
@@ -271,6 +276,26 @@ Figure \ref{fig:time_graph_near_far} shows how latency affects the time used whe
 
 Figure \ref{fig:bar_local_near_far} shows how latency affect the the total time used when we have to constantly get data from the local device. It uses the same configuration as shown in table \ref{tab:MEC_partial_offloading_latency_balance}.
 
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}[c]{|c|c|c|c|c|}
+        \hline
+        Node type & Limitation & Iterations & RTT to Local (ms)& Time used (s)\\
+        \hline
+        \hline
+        Local & 30 & 1200 & 0 & 39.1  \\
+        \hline
+        Near & 100 & 1000 & 30 & 32.0 \\
+        \hline
+        Far & 300 & 7800 & 170 & 38.4 \\
+        \hline
+    \end{tabular}
+    \caption{Partial offloading with a lot of communication between Local and Near, and little communication with Far.}
+    \label{tab:MEC_partial_offloading_little}
+\end{table}
+
+Table \ref{tab:MEC_partial_offloading_little} shows the result of having high frequency of interaction between Local and Near, while having low frequency of interaction with Far.
 
 
 
@@ -441,6 +466,24 @@ Figure \ref{fig:Cloudlet_latency_near_far_comparison} shows how the frequency of
 Figure \ref{fig:Cloudlet_latency_bar} shows how much time used on waiting for data from Local, compared to how much time is used on calculating. The configuration used here is the same as shown in table \ref{tab:Cloudlet_partial_offloading_latency_balanced}.
 
 
+\begin{table}[h!]
+    \centering
+    \begin{tabular}[c]{|c|c|c|c|c|}
+        \hline
+        Node type & Limitation & Iterations & RTT to Local (ms)& Time used (s)\\
+        \hline
+        \hline
+        Local           & 30 & 750 & 0 & 24.1  \\
+        \hline
+        Cloudlet(Near)  & 100 & 3250 & 3 & 33.6 \\
+        \hline
+        Far             & 300 & 6000 & 170 & 29.6 \\
+        \hline
+    \end{tabular}
+    \caption{Partial offloading with a lot of communication between Local and Near, and little communication with Far.}
+    \label{tab:Cloudlet_partial_offloading_little_far}
+\end{table}
+Table \ref{tab:Cloudlet_partial_offloading_little_far} shows the result of offloading with high frequency to the Near node, while letting the Far node have bigger workloads, and therefore frequent interaction. 
 
 
 \subsection{Comparison of results}
@@ -456,7 +499,7 @@ Figure \ref{fig:Cloudlet_latency_bar} shows that having the lower latency than M
 \subsubsection{Control}
 Controlling Cloudlets is done by the owner of each Cloudlet. Since Cloudlets are to be placed on locations, e.g. a coffee shop, then the owner of that location is able to configure the Cloudlet. The location owner can then limit usage and limit what kinds of applications are used on the Cloudlet.
 \subsubsection{Offloading}
-Cloudlets use \textit{dynamic VM synthesis} \cite{satyanarayanan_case_2009} to offload work. Essentially it means that we have to give the Cloudlet a VM to run the application. This gives an overhead, which they reported to be quite high. However, this has likely been improved since 2009 as technology has improved. 
+Cloudlets use \textit{dynamic VM synthesis} \cite{satyanarayanan_case_2009} to offload work. Essentially it means that we have to give the Cloudlet a VM to run the application. This gives an overhead, which they reported to be quite high. However, this has likely been improved since 2009 as technology has improved. Bandwitdth, storage and computational power have significantly improved, which mitigates many of the issues they raised.
 \subsubsection{Distribution}
 Distribution is expensive for Cloudlets. Satyanarayanan et al.\cite{satyanarayanan_case_2009} purposes different payment models, but each owner of a location has to decide if it is worth the investment. Since they are supposed to be ubiquitous, the total cost of having these readily available everywhere in society will be significant. 
 \subsubsection{Security?}
@@ -465,9 +508,12 @@ TODO
 \section{Google Anthos}
 
 \section{Amazon Cloudfront}
+\subsection{Characteristics}
 TODO: Warm up time for lambda.
 
 \section{Akamai}
+\subsection{Characteristics}
+
 
 
 \section{Discussion of findings}
@@ -484,6 +530,9 @@ MEC and Cloudlets both have migration overhead, while the others do not.
 Sometimes the result of the far is not relevant for the near. We can also let the near compute while the far stores data.
 
 Near-Far computing is applicable where there is not much need for interaction between the Far node and the Local or Near node.
+
+
+TODO: When is Near-Far worth it? Show graphs!!!
 
 \section{Summary}
 TODO

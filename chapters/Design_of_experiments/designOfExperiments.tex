@@ -18,65 +18,39 @@ We will simulate the different architectures using Emerald and PlanetLab. The Em
 
 
 \section{Experiments}
-To show the viability of the architectures we will benchmark and analyze some factors:
+The experiments done in this thesis will focus on how latency affects offloading work. We will test with two different architectures and compare the results, to see if Near-Far computing is a viable solution for the latency problem. We will test with different amounts of latency for the Near node, while using a Far node that geographically very distant from, and therefore high latency from, Local or Near node. We will create a program that lets us easily change these parameters:
 \begin{itemize}
     \item Latency
-    %\item Reliability?
-    \item Distribution Transparency
-    \item Computational usage
-    \item Storage
-    %\item TODO: need more here
+    \item Workload
+    \item Processing power of the node
+    \item Amount of interaction between the nodes
+    \item Amount of nodes
 \end{itemize}
+We aim to make it easy to set up these tests with the help of Emeralds built in object mobility.
+
+\subsubsection{Offloading}
+It is not always efficient to offload all the work. According to Mach and Becvar´s survey\cite{mach_mobile_2017}, we can divide offloading into three categories:
+\begin{itemize}
+    \item \textit{Local execution}, where all the work is done on the mobile device.
+    \item \textit{Full offloading}, where we offload all work to server(s).
+    \item \textit{Partial offloading}, where we offload some of the work, and do some local.
+\end{itemize}
+We will compare these three ways of offloading for both architectures we test.
+The rest of the architectures have very similar high level architectures, which is what we test with. We therefore assume that the results are very similar, and there is no need to present them in results.
 
 
-
-
-\subsection{Latency}
-Latency will be mapped by recording the round trip time in milliseconds. Doing this is really easy, as we can just record the time before sending work, and then recording the time when we get the result. If time at send is $T_0$ and time at receive is $T_1$ then latency gets this easy formula:
-\[Latency=T_1-T_0\]
-There is a slight overhead for actually recording this time, but it is marginal compared to the milliseconds of latency. Here is a small program which just takes time $T_0$ and $T_1$ and just prints the difference:
-\begin{lstlisting}[language=emerald, numbers=left]
-const main <- object main
-  initially
-    const home <- locate self
-    const t0 <- home$timeOfDay
-    const t1 <- home$timeOfDay
-    home$stdout.PutString[
-        "Total time " || 
-        (t1-t0).asString ||
-        "\n"]
-  end initially
-end main
-\end{lstlisting}
-Output:
-\begin{lstlisting}[language=Bash]
-$ emx latency_overhead_test.x
-Total time 0:000002
-\end{lstlisting}
-As we can see, there is just 2 microseconds of overhead.
-When there is several nodes, we will map these latency's as needed to be able to compare each architecture.
-
+\section{Theoretical analysis}
+When evaluating we will also have a theoretical part where we compare the characteristics of the different architectures. This is to find what characteristics are typical for Near-Far computing.
 
 \subsection{Transparency}
 Since Distribution Transparency is more about key features, it makes little sense to measure it quantitatively. We will therefore compare transparency characteristics from each architecture instead. We will take the different transparencies we discussed in section \ref{background:distributed_systems} in the background, and lay out how the different characteristics relate to these.
 
 
-\subsection{Computational usage}
-We will compare how much computation each group of nodes in the architectures is using. Specifically, we will see how much the end client, the near nodes and the far nodes are being used. This is to show how the load is spread across the nodes in the different architectures. For example, the end user are using 20\%, the near node(s) are using 70\% and the far node(s) are using 10\%.
-% move this to implementation:
-To simulate and measure computation, we will be hashing random data. This is because hashing is computation intensive work, but uses little memory. We can then easily see how much work each node did, by counting how many iterations of hashing they did. We can then see how much of the work went into the different machine by seeing how many rounds of hashing were done.
-% TODO. Finn ut forholdene når det kommer til styrke av enhetene. Feks Cloudlet er 10 ganger sterkere enn telefon, og server er 10 ganger sterkere enn cloudlet.
-
-\subsection{Storage}
-We will compare how viable the architecture are for offloading storage. We will measure how fast it can offload and download data. This will be done by having a 100 megabyte file that will be sent and replicated?? between the nodes.
-
-
-
-
 
 
 \section{How it relates to the Near-Far model}
-When we have the characteristics and data laid out we will be able to discuss how it relates to the Near-Far computing model. This will be done theoretically and focus mostly on the characteristics of the architectures. The data is there to show the viability.
+When we have the characteristics and data laid out we will be able to discuss how it relates to the Near-Far computing model. We will compare all the data and characteristics to show what is best related to the Near-Far computing model.
+
 
 
 
@@ -86,8 +60,7 @@ When we have the characteristics and data laid out we will be able to discuss ho
 
 
 \section{Summary}
-TODO
-
+In this chapter we have discussed how we will conduct the experiments and analysis of the architectures. It will be an empirical part with tests and data, and a theoretical part where we compare characteristics of the architectures.
 
 
 %Notes:
