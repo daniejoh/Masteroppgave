@@ -585,7 +585,7 @@ Setting up the edge servers are easily done through Akamai's console. You set up
 \section{Discussion of findings}
 
 \subsection{Comparing Cloudlets and MEC}
-From the results we can see that if enough funding is available, then Cloudlets gives the best result. We can see that having less latency between Local and Near like the Cloudlet, is preferable for better results. However, one could argue that installation of MEC Servers are significantly easier and cheaper as you only install them at base stations that cover a wide area. When it comes to migration, it is significantly easier for MEC due to how much area is covered with cellular. If the mobile device were to move in the Cloudlet architecture then Cloudlets in the new location should already be ready to offload. This is hard, as with the frequency of Cloudlets it can be difficult to decide which Cloudlet to migrate to before it is too late. Since MEC cover such a large area, it should not be a problem to see when it is needed to migrate to other base stations. However, migration in MEC will likely take a longer time, as Cloudlets often will be on the same LAN and can therefore transfer faster.
+From the results we can see that if enough funding is available, then Cloudlets gives the best result. We can see that having low latency between Local and Near like the Cloudlet, is preferable for better results. However, one could argue that installation of MEC Servers are significantly easier and cheaper as you only install them at base stations that cover a wide area. When it comes to migration, it is significantly easier for MEC due to how much area is covered with cellular. If the mobile device were to move in the Cloudlet architecture then Cloudlets in the new location should already be ready to offload. This is hard, as with the frequency of Cloudlets it can be difficult to decide which Cloudlet to migrate to before it is too late. Since MEC cover such a large area, it should not be a problem to see when it is needed to migrate to other base stations. However, migration in MEC will likely take a longer time, as Cloudlets often will be on the same LAN and can therefore transfer faster and more reliably.
 
 \subsection{Discussion of architectures}
 Anthos is able to mimic the Cloudlet architecture by letting you set up on-premises servers. However, the Anthos nodes are confined to the owners environment, which is unlike the vision for Cloudlets. 
@@ -594,41 +594,64 @@ Cloudfront is a good choice as it is backed by a massive company, which has infr
 
 Akamai is leading when it comes to content caching as they have the most infrastructure available. However, it is best used as a standard CDN, in the sense that you should offload web pages or other high volume data to their servers. Doing this will significantly improve the response time due to the lower latency, and will most likely give a smoother experience as there is less use of the Wide-area network.
 
+A common thing for all architectures is that a lot of the control is up to the programmers. This allows for high customization of the application, as it is not limited to many constraints. Additionally, all the architectures allow for cooperation between Near nodes and Far nodes. 
+
 
 \subsection{Offloading}
-Every architecture that requires transferring of a VM or similar to the offloading node, will have an overhead. This overhead is mainly dependent on the size of the load that need to be transferred, the bandwidth between the Local and Near node, and the time it takes to start the VM or container.
+We can see from table \ref{tab:MEC_partial_offloading_little} and \ref{tab:Cloudlet_partial_offloading_little_far} that we do get a speed-up by using the Near-Far model, on the condition that the Far node does not do much latency-aware work. 
 
-
-Therefore, a balance of offloading is needed to adapt to each context.
-
-
+Every architecture that requires transferring of a VM or similar to the offloading node, will have an overhead. This overhead is mainly dependent on the size of the load that need to be transferred, the bandwidth between the Local and Near node, and the time it takes to start the VM or container. Context is required to know when to start offloading these VMs to the other nodes. If context is well known to the nodes, then they can start pre-loading to avoid having to wait for this overhead.
 
 
 
 
-\subsection{The Near-Far computing model}
+
+
+
+\section{The Near-Far Computing Model}
 The Near-Far Computing Model is worth it in many cases. However, it is best utilized when you can have a Near node doing latency critical work, and having a Far node doing the latency non-critical work. For example, if the Local device is a smart device that need quick response on their data, it can offload to the Near node. When the Near node is done calculating, it can use the Far server to analyze the result as well as logging it. For storage, Near-Far is great for caching. Having caches that is closer to the client will result in way quicker results.
 
 The common thing for all the discussed architectures is that they use a mix of both edge nodes and server nodes. They try as best as possible to use the edge nodes, but the distant strong data centers can aid when needed. 
 
-\subsubsection{Distribution transparency}
- 
+If the Near node were to fail, then the Far node can take over. However, due to latency the Far node will give the client a worse experience if response time is critical. 
 
-Comparing the results of Cloudlets and MEC Servers, then we can see that having less latency like the Cloudlet is preferable for better results. Howver one could argue that installation of MEC Servers are significantly easier. (TODO because...)
+\subsection{Distribution Transparency}
+In the following subsections we will discuss distribution transparency in Near-Far computing.
+
+\subsubsection{Access Transparency}
+When using the Near-Far model, one should use containerization or VMs to provide common API or middleware for all the nodes in the system. This ensures that developers does not have to deal with very low-level programming, and focus more on providing features and solutions.
+
+\subsubsection{Location Transparency}
+Location transparency is up to the programmer, but in most cases one should try to hide where objects are located. Due to the Near node having low latency, there should not be a problem to ensure that the location is hidden.
+
+\subsubsection{Relocation Transparency}
+Relocation transparency can be hard if the area where you are connected to the Near device is not big. For example, if you have to connect to a new node each time you enter a new room, ensuring relocation transparency can be hard. However, with good algorithms and enough knowledge about the context, it is possible. 
+
+\subsubsection{Migration Transparency}
+Migration transparency should not be difficult to implement. It is up to the programmer to decide how much level of transparency they want. 
+
+\subsubsection{Replication Transparency}
+Replication transparency is mostly up to the programmer. With enough Nodes available, the programmer can add or remove nodes as they see fit. It is up to the context if this will be noticed by the client. 
+
+\subsubsection{Concurrency Transparency}
+Concurrency transparency is also up to the programmer. In most cases however, it is best to avoid showing that multiple users are using the same resources. For example, one should not notice that several others are watching the same content as you are. 
+
+\subsubsection{Failure Transparency}
+If enough nodes are available, then recovering from a failure should have minimal impact on the user. However, if the application in question is latency-aware and is forced to use Far or Local resources to do these time critical operations, then the client will suffer. However, one should quickly be able to recover to the previous state.
+
+\subsection{Definition}
+The Near-Far Computing is a superset, or a spectrum that covers all models or architecutres that focuses on mitigating latency issues by using Near nodes and Far nodes. 
 
 
-MEC and Cloudlets both have migration overhead, while the others do not.
+
+\section{Summary}
+In this chapter we have tested MEC and Cloudlets with the program described in implementation. We have also discussed characteristics of all the architectures. We have discussed how these characteristics relate to the Near-Far Computing Model. Finally we have provided a definition for the Near-Far Computing Model
+
+
+
+\section{TODO}
 
 Sometimes the result of the far is not relevant for the near. We can also let the near compute while the far stores data.
 
 Near-Far computing is applicable where there is not much need for interaction between the Far node and the Local or Near node.
 
-
-TODO: When is Near-Far worth it? Show graphs!!!
-
-TODO: MEC og Cloudlets har low-level controls, mens resterende har high-level controls. Dette gjør at førstnevnet er mer costumizable.
-Having high-level controls comes at a cost of customization.
-
-
-\section{Summary}
-TODO
