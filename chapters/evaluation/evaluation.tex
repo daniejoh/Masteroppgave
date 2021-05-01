@@ -213,9 +213,6 @@ Table \ref{tab:MEC_full_offloading_latency_balance} shows a more balanced worklo
 
 
 
-
-
-
 \begin{table}[h!]
     \centering
     \begin{tabular}[c]{|c|c|c|c|c|}
@@ -284,11 +281,11 @@ Figure \ref{fig:bar_local_near_far} shows how latency affect the the total time 
         Node type & Limitation & Iterations & RTT to Local (ms)& Time used (s)\\
         \hline
         \hline
-        Local & 30 & 1200 & 0 & 39.1  \\
+        Local & 30 & 850 & 0 & 28.0  \\
         \hline
-        Near & 100 & 1000 & 30 & 32.0 \\
+        Near & 100 & 850 & 30 & 27.6 \\
         \hline
-        Far & 300 & 7800 & 170 & 38.4 \\
+        Far & 300 & 8300 & 170 & 27.5 \\
         \hline
     \end{tabular}
     \caption{Partial offloading with a lot of communication between Local and Near, and little communication with Far.}
@@ -464,7 +461,7 @@ Figure \ref{fig:Cloudlet_latency_near_far_comparison} shows how the frequency of
 
 \begin{figure}[t]
     \centering
-    \includegraphics[scale=1]{chapters/evaluation/figures/Cloudlet_bar_latency.png}
+    \includegraphics[scale=1]{chapters/evaluation/figures/bar_local_near_far_compare_low_interaction.png}
     \caption{Illustration of how much time is spent on waiting for data due to latency when using Cloudlets.}
     \label{fig:Cloudlet_latency_bar}
 \end{figure}
@@ -478,11 +475,11 @@ Figure \ref{fig:Cloudlet_latency_bar} shows how much time used on waiting for da
         Node type & Limitation & Iterations & RTT to Local (ms)& Time used (s)\\
         \hline
         \hline
-        Local           & 30 & 750 & 0 & 24.1  \\
+        Local           & 30 & 750 & 0 & 24.1 \\
         \hline
-        Cloudlet(Near)  & 100 & 3250 & 3 & 33.6 \\
+        Cloudlet(Near)  & 100 & 2250 & 3 & 24.4 \\
         \hline
-        Far             & 300 & 6000 & 170 & 29.6 \\
+        Far             & 300 & 7000 & 170 & 24.3 \\
         \hline
     \end{tabular}
     \caption{Partial offloading with a lot of communication between Local and Near, and little communication with Far.}
@@ -506,7 +503,7 @@ Controlling Cloudlets is done by the owner of each Cloudlet. Since Cloudlets are
 \subsubsection{Offloading}
 Cloudlets use \textit{dynamic VM synthesis} \cite{satyanarayanan_case_2009} to offload work. Essentially it means that we have to give the Cloudlet a VM to run the application. This makes \textit{access transparency} for Cloudlets quite good in theory. However, it gives an overhead which they reported to be quite high. This has likely been improved since 2009 as technology has improved. Bandwitdth, storage and computational power have significantly improved, which mitigates many of the issues they raised.
 \subsubsection{Deployment}
-Distribution is expensive for Cloudlets. Satyanarayanan et al\cite{satyanarayanan_case_2009} purposes different payment models, but each owner of a location has to decide if it is worth the investment. Since they are supposed to be ubiquitous, the total cost of having these readily available everywhere in society will be significant. If the Cloudlets are ubuiquitus, then the level of \textit{location, relocation and migration transparency} is quite high. In their paper, they purpose a way of seamlessly migrating to other Cloudlets when needed. If this is accomplished, then the users of the local devices will not notice any drop in performance. Due to the ubiquitous nature of Cloudlets, having \textit{concurrency transparency} should not be a problem. Overloading all of the nearby Cloudlets will be a rare occurrence.
+Distribution is expensive for Cloudlets. Satyanarayanan et al\cite{satyanarayanan_case_2009} purposes different payment models, but each owner of a location has to decide if it is worth the investment. Since they are supposed to be ubiquitous, the total cost of having these readily available everywhere in society will be significant. If the Cloudlets are ubuiquitus, then the level of \textit{location and relocation transparency} is quite high. In their paper, they purpose a way of seamlessly migrating to other Cloudlets when needed. If this is accomplished, then the users of the local devices will not notice any drop in performance. Due to the ubiquitous nature of Cloudlets, having \textit{concurrency transparency} should not be a problem. Overloading all of the nearby Cloudlets will be a rare occurrence due to their ubiquitous nature.
 
 
 
@@ -524,9 +521,14 @@ Distribution is expensive for Cloudlets. Satyanarayanan et al\cite{satyanarayana
 
 \section{Google Anthos}
 \subsection{Characteristics}
+\subsubsection{Control}
+Controlling the Anthos architecture is relatively easy as GCP will take care of all the difficult parts. You can control all the nodes in the Anthos control panel. This means that the one who owns the GCP account has full control over the nodes. The level of \textit{access  transparency} is quit high, as Anthos will take care of all the low-level problems. It is up to the programmer to decide how containers running on the platform will communicate. It also up to the programmer if they want users to be able to relocate objects. In other words \textit{migration transparency} is also up to the programmers.
 
+\subsubsection{Offloading}
+Since Anthos uses containers, offloading can be quite easy. However, it is up to the programmers to decide how offloading will work. Essentially, the Local device only needs to somehow contact the on-premises machines, for example through WiFi and LAN connections. The level of \textit{location transparency} is up to the programmers. It is dependent on how the containers are set up. Kubernetes is easily set up to manage \textit{replication and concurrency transparency}, as it lets you configure where the containers should reside, and how many of them should be there, as well as many other parameters.
 
-
+\subsubsection{Deployment}
+Deploying is relatively easy. As discussed earlier, you only need to install Anthos software on on-premises hardware and then configure Kubernetes to use it. Ensuring \textit{failure transparency} can be hard, but Kubernetes is configureable to handle failures. Essentially, it is up to the programmer to decide what happens if there is one.
 
 
 
@@ -543,8 +545,16 @@ Distribution is expensive for Cloudlets. Satyanarayanan et al\cite{satyanarayana
 
 \section{Amazon Cloudfront}
 \subsection{Characteristics}
-TODO: Warm up time for lambda.
+\subsubsection{Control}
+Controlling Cloudfront is done in the Cloudfront control panel in the AWS console. Cloudfront lets you set up a wide array of features for your architecture. They provide DNS, NFV, Lambda@edge, Security, Sertificates, etc. All of this is controlled by the programmers in the AWS console.  
 
+
+\subsubsection{Offloading}
+AWS lets you set up servers, container software or Lambda@edge on Cloudfront. This lets gives a lot of freedom to the programmers on how they will set up the architecture. A downside of using AWS Lambda is that there is something called warm up time. It is pretty small, but can be notices in extreme latency-aware contexts. The warm up time depends on the programming language used, but it comes in addition to the latency towards the edge location. When it comes to \textit{concurrency, location and replication transparency}, it is up to the programmer, but are very easily adjustable. For example, for AWS Lambda, a single parameter can be change to let it scale more. AWS will handle scaling, the programmer just have to set the limit. When using server however, you have to add more servers to scale, so it is therefore more up to the programmers. The level of \textit{access transparency} is high, due to containerization and AWS Lambda. However, if servers are used, then the programmer have control of the access transparency level. \textit{Relocation and migration transparency} can be ensured by Cloudfront, unless you use the servers. Then it is up to the programmer to control it. 
+
+
+\subsubsection{Deployment}
+When setting up Cloudfront you do it trough the AWS control panel. You are restricted to use the edge servers that AWS provide. These servers are deployed all over the world. However, in some places there might be a long distance to the nearest server. Ensuring \textit{failure transparency} is handled by Cloudfront in this architecture. The programmer can focus more on what the program should do rather than focusing on what happens if it were to fail. 
 
 
 
@@ -557,8 +567,14 @@ TODO: Warm up time for lambda.
 
 \section{Akamai}
 \subsection{Characteristics}
+\subsubsection{Control}
+Akamai features are controlled through Akamai's console. The level of \textit{access and migration transparency} is up to the programmer in this architecture.
 
+\subsubsection{Offloading}
+Akamai does offer ways of offloading, but they focus more on bringing content to the edge rather than just computation. Caching is the main purpose of Akamai edge servers, and using their edge servers for this ensures \textit{location, relocation, replication and concurrency transparency}. The level of \textit{replication transparency} is also somewhat up to the programmer, as the choose the locations of where they should cache the content.
 
+\subsubsection{Deployment}
+Setting up the edge servers are easily done through Akamai's console. You set up the edge server where you want it, and then push your content to that server. Akamai will take care of failures and will route requests to the original server if needed. This ensures \textit{failure transparency}. However, if the orginial server is very distant, then the client will most likely notice a drop in performance or response time.
 
 
 % -------------------------------------------------------------------------------------------
@@ -567,10 +583,36 @@ TODO: Warm up time for lambda.
 
 
 \section{Discussion of findings}
-TODO
+
+\subsection{Comparing Cloudlets and MEC}
+From the results we can see that if enough funding is available, then Cloudlets gives the best result. We can see that having less latency between Local and Near like the Cloudlet, is preferable for better results. However, one could argue that installation of MEC Servers are significantly easier and cheaper as you only install them at base stations that cover a wide area. When it comes to migration, it is significantly easier for MEC due to how much area is covered with cellular. If the mobile device were to move in the Cloudlet architecture then Cloudlets in the new location should already be ready to offload. This is hard, as with the frequency of Cloudlets it can be difficult to decide which Cloudlet to migrate to before it is too late. Since MEC cover such a large area, it should not be a problem to see when it is needed to migrate to other base stations. However, migration in MEC will likely take a longer time, as Cloudlets often will be on the same LAN and can therefore transfer faster.
+
+\subsection{Discussion of architectures}
+Anthos is able to mimic the Cloudlet architecture by letting you set up on-premises servers. However, the Anthos nodes are confined to the owners environment, which is unlike the vision for Cloudlets. 
+
+Cloudfront is a good choice as it is backed by a massive company, which has infrastructure in a lot of locations, and will likely expand in the future. It comes with the negative side effect of being confined to their locations, which in many cases might have too much latency.
+
+Akamai is leading when it comes to content caching as they have the most infrastructure available. However, it is best used as a standard CDN, in the sense that you should offload web pages or other high volume data to their servers. Doing this will significantly improve the response time due to the lower latency, and will most likely give a smoother experience as there is less use of the Wide-area network.
+
+
+\subsection{Offloading}
+Every architecture that requires transferring of a VM or similar to the offloading node, will have an overhead. This overhead is mainly dependent on the size of the load that need to be transferred, the bandwidth between the Local and Near node, and the time it takes to start the VM or container.
+
+
 Therefore, a balance of offloading is needed to adapt to each context.
+
+
+
+
+
+
+\subsection{The Near-Far computing model}
+The Near-Far Computing Model is worth it in many cases. However, it is best utilized when you can have a Near node doing latency critical work, and having a Far node doing the latency non-critical work. For example, if the Local device is a smart device that need quick response on their data, it can offload to the Near node. When the Near node is done calculating, it can use the Far server to analyze the result as well as logging it. For storage, Near-Far is great for caching. Having caches that is closer to the client will result in way quicker results.
+
+The common thing for all the discussed architectures is that they use a mix of both edge nodes and server nodes. They try as best as possible to use the edge nodes, but the distant strong data centers can aid when needed. 
+
+\subsubsection{Distribution transparency}
  
-Comparing MEC and cloudlets, Cloudlets have to migrate their program. MEC might have to, but dont generally have the same problem, as Cellular will work for quite a large area.
 
 Comparing the results of Cloudlets and MEC Servers, then we can see that having less latency like the Cloudlet is preferable for better results. Howver one could argue that installation of MEC Servers are significantly easier. (TODO because...)
 
@@ -583,6 +625,10 @@ Near-Far computing is applicable where there is not much need for interaction be
 
 
 TODO: When is Near-Far worth it? Show graphs!!!
+
+TODO: MEC og Cloudlets har low-level controls, mens resterende har high-level controls. Dette gjør at førstnevnet er mer costumizable.
+Having high-level controls comes at a cost of customization.
+
 
 \section{Summary}
 TODO
