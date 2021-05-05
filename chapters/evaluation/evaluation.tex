@@ -639,8 +639,18 @@ Concurrency transparency is also up to the programmer. In most cases however, it
 \subsubsection{Failure Transparency}
 If enough nodes are available, then recovering from a failure should have minimal impact on the user. However, if the application in question is latency-aware and is forced to use Far or Local resources to do these time critical operations, then the client will suffer. However, one should quickly be able to recover to the previous state.
 
-\subsection{Definition}
-The Near-Far Computing is a superset, or a spectrum that covers all models or architecutres that focuses on mitigating latency issues by using Near nodes and Far nodes. 
+\subsection{Introduction to the Near-Far Computing Model}
+The Near-Far Computing Model is a spectrum that covers all models or architectures that focuses on mitigating latency issues by using Near nodes and Far nodes. One can use the Near node to offload time sensitive work, and further aid this offloading with the strong Far nodes. Using the Near-Far Computing model is therefore most applicable when you have work or storage that needs to be offloaded with low latency, as well as having less time sensitive parts that can be done on a stronger node that is geographically distant, but much stronger.
+
+Figure \ref{fig:nearFarSimple} illustrates the Near-Far spectrum. We have a Local devices which communicates with a Near device which is typically an edge or fog device, e.g. a Cloudlet. This Near node or Local device will communicate with the Far node to offload less time sensitive work or storage. The Near node should optimally be in close proximity to the Local device to ensure low-latency.
+
+\begin{figure}[t]
+    \centering
+    %\textbf{The Near-Far spectrum}\par\medskip
+    \includegraphics[scale=1]{chapters/evaluation/figures/near-far-diagram.png}
+    \caption{The Near-Far spectrum}
+    \label{fig:nearFarSimple}
+\end{figure}
 
 
 
@@ -649,9 +659,5 @@ In this chapter we have tested MEC and Cloudlets with the program described in i
 
 
 
-\section{TODO}
 
-Sometimes the result of the far is not relevant for the near. We can also let the near compute while the far stores data.
-
-Near-Far computing is applicable where there is not much need for interaction between the Far node and the Local or Near node.
 

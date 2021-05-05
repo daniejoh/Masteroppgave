@@ -16,18 +16,22 @@
 \lstdefinestyle{mystyle}{frame=single} %% remove these two lines to remove border around code
 \lstset{style=mystyle}
 
-\title{Investigating the Near-Far computing model}        %% ... or whatever
+\title{Investigating the Near-Far Computing Model}        %% ... or whatever
 %%\subtitle{Essay}         %% ... if any
 \author{Daniel Johnsen}                      %% ... or whoever 
 
 \addbibresource{references.bib}            %% ... or whatever
+% Remove include and instead use input!
 \includeonly{
+    other/abstract,
+    other/preface,
     chapters/introduction/introduction,
     chapters/background/background,
     chapters/Design_of_experiments/designOfExperiments,
     chapters/architectures/architectures,
     chapters/implementation/implementation,
-    chapters/evaluation/evaluation
+    chapters/evaluation/evaluation,
+    chapters/conclusion/conclusion
     }
 \begin{document}
 \duoforside[dept={Department of Informatics},   %% ... or your department
@@ -36,12 +40,14 @@
 
 \frontmatter{}
 \chapter*{Abstract}
-Cloud computing, Near-Far, Speed of light, investigation
+\include{other/abstract}
+
 \tableofcontents{}
 \listoffigures{}
 \listoftables{}
 
 \chapter*{Preface}
+\include{other/preface}
 
 \mainmatter{}
 
@@ -54,10 +60,7 @@ Cloud computing, Near-Far, Speed of light, investigation
 
 
 \chapter{Design of experiments}\label{chapter:design_of_experiments}
-% how to do the experiments etc
-% methodology
- %% “Plan for empirical studies”,“Design of experiments”
-%% this chapter describes how and why we evaluate this way
+
 \include{chapters/Design_of_experiments/designOfExperiments}
 
 
@@ -76,9 +79,7 @@ Cloud computing, Near-Far, Speed of light, investigation
 
 \chapter{Conclusion}                     %% ... or Konklusjon
 %% future work!!
-\section{Conclusion}
-\section{Limitations}
-\section{Future work}
+\include{chapters/conclusion/conclusion}
 %Developing a real example using Augmented Reality or some other latency-aware application would be a good way to show that our solution work in more than just a simulation. This can hopefully be done when a new Emerald compiler with no memory limitation is available.
 
 \backmatter{}
