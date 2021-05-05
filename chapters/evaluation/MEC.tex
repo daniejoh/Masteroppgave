@@ -1,0 +1,175 @@
+
+
+\section{Multi-Access Edge Computing} \label{section:MEC_evaluation}
+This section will show results of testing with the prototype for MEC, and then discuss these results. Additionally it will point out characteristics for this architecture.
+
+\subsection{Full offloading}
+\begin{table}[h!]
+    \centering
+    \begin{tabular}[c]{|c||p{2cm}|p{2cm}|p{2cm}|}
+        \hline
+        Node type & Local & Near & Far \\
+        \hline
+        Limitation          & 30 & 100 & 300  \\
+        \hline
+        Iterations          & 0 & 8500 & 1500  \\
+        \hline
+        RTT to Local (ms)   & 0 & 30 & 170 \\
+        \hline
+        Frequency           & 1 & 1 & 1 \\
+        \hline
+        \hline
+        \hline
+        \textbf{Time used (s)}       & \textbf{0} & \textbf{279.3} & \textbf{267.9} \\
+        \hline
+    \end{tabular}
+    \caption{Full offloading with high frequency of communication between Local and Near/Far.}
+    \label{tab:MEC_full_offloading_high_frequency}
+\end{table}
+
+Table \ref{tab:MEC_full_offloading_high_frequency} shows the result of high frequency communication between all nodes and for fully offloading all of the work from the Local device.
+
+
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}[c]{|c||p{2cm}|p{2cm}|p{2cm}|}
+        \hline
+        Node type & Local & Near & Far \\
+        \hline
+        Limitation          & 30 & 100 & 300  \\
+        \hline
+        Iterations          & 0 & 900 & 9100  \\
+        \hline
+        RTT to Local (ms)   & 0 & 30 & 170 \\
+        \hline
+        Frequency           & 1 & 1 & 80 \\
+        \hline
+        \hline
+        \hline
+        \textbf{Time used (s)}       & \textbf{0} & \textbf{29.2} & \textbf{30.2} \\
+        \hline
+    \end{tabular}
+    \caption{Full offloading with low frequency of communication between Local and Far.}
+    \label{tab:MEC_full_offloading_low_frequency}
+\end{table}
+
+Table \ref{tab:MEC_full_offloading_low_frequency} shows the result of full offloading with low frequency of communication with the Far-Node.
+
+
+
+
+
+
+\subsection{Partial offloading}
+
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}[c]{|c||p{2cm}|p{2cm}|p{2cm}|}
+        \hline
+        Node type & Local & Near & Far \\
+        \hline
+        Limitation          & 30 & 100 & 300  \\
+        \hline
+        Iterations          & 4550 & 4525 & 925  \\
+        \hline
+        RTT to Local (ms)   & 0 & 30 & 170 \\
+        \hline
+        Frequency           & 1 & 1 & 1 \\
+        \hline
+        \hline
+        \hline
+        \textbf{Time used (s)}       & \textbf{151.3} & \textbf{149.8} & \textbf{163.0} \\
+        \hline
+    \end{tabular}
+    \caption{Partial offloading with high frequency of communication between Local and Near/Far.}
+    \label{tab:MEC_partial_offloading_high_frequency}
+\end{table}
+
+Table \ref{tab:MEC_partial_offloading_high_frequency} shows the result of partial offloading when there is high frequency of communication with the Far node.
+
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}[c]{|c||p{2cm}|p{2cm}|p{2cm}|}
+        \hline
+        Node type & Local & Near & Far \\
+        \hline
+        Limitation          & 30 & 100 & 300  \\
+        \hline
+        Iterations          & 850 & 850 & 8300  \\
+        \hline
+        RTT to Local (ms)   & 0 & 30 & 170 \\
+        \hline
+        Frequency           & 1 & 1 & 80 \\
+        \hline
+        \hline
+        \hline
+        \textbf{Time used (s)}       & \textbf{28.0} & \textbf{29.8} & \textbf{28.0} \\
+        \hline
+    \end{tabular}
+    \caption{Partial offloading with low frequency of communication between Local and Far.}
+    \label{tab:MEC_partial_offloading_low_frequency}
+\end{table}
+
+Table \ref{tab:MEC_partial_offloading_low_frequency} shows the result of with low frequency of communication between Local and Far node. 
+
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[scale=1]{chapters/evaluation/figures/MEC_Partial_bar.png}
+    \caption{Illustration of how much time is spent on waiting for data due to latency when using MEC Server.}
+    \label{fig:MEC_partial_bar}
+\end{figure}
+
+Figure \ref{fig:MEC_partial_bar} shows how latency affect the the total time used when we have to constantly get data from the local device. It uses the same configuration as shown in table \ref{tab:MEC_partial_offloading_low_frequency}.
+
+
+\subsection{Discussion of results} \label{subsection:MEC_comparison}%Discussion of mec?
+We can see that we get speedup compared to only using Local execution by comparing table \ref{tab:local_execution} with table \ref{tab:MEC_full_offloading_high_frequency} and \ref{tab:MEC_full_offloading_low_frequency}. The time used for either compared to Local execution has significant speedup.
+
+By comparing table \ref{tab:MEC_full_offloading_high_frequency} and \ref{tab:MEC_full_offloading_low_frequency} we see that it is preferable to limit interaction between Local/Near and the Far node. We get speedup in both cases, but the less communication with far, the better the result. 
+
+
+%nevn offloading. Vis stolpediagramm hvor en chunk av tiden er offloading. Vis også med N*latency?
+%Bar chart med som viser hvor stor andel av de forskjellige utregningene som består av calulation og latency
+
+
+
+
+
+
+\subsection{Characteristics}
+
+\subsubsection{Control}
+As discussed in section \ref{section:MEC_architecture}, the network architecture of MEC is up to the programmers. They can use NFV and SDN to control how each mobile device will be able to use the architecture. They can in other words use SDN and NFV to tailor the network to the context. Since VMs can be uploaded to surrounding MEC Servers, ensuring good \textit{relocation transparency} should be trivial. Due to SDN and NFV they could quickly redirect packets to new MEC Server when needed. The level of \textit{migration transparency} is therefore also left to developers.
+
+\subsubsection{Offloading}
+Since they use the cellular network to offload work, this architecture is well suited for IoT devices that can afford the latency. The cellular network is ubiquitous in modern society, and therefore it is optimal for IoT devices that move a lot, e.g. self-driving cars. When offloading they have to upload something, e.g. a VM, to the MEC Server. Alternatively they can make the MEC Server download from elsewhere. Since MEC uses VMs on the servers when offloading, the level of \textit{access transparency} is very good. The VMs ensure that the APIs for all the nodes are the same. Since cellular networks cover such a large area, \textit{location transparency} is trivial as the device can move quite a lot of distance before any migration is needed. If a node were to fail, it is up to the developers to ensure that other resources are available to recover from the failure. In other words, the level of \textit{failure transparency} is up to the programmers.
+
+\subsubsection{Deployment}
+MEC is easily horizontally scalable, as more MEC Servers can easily be added to cell towers. The only limit is how much power there is available and how much space there is available. If only a few servers is needed, then the cost is not too high either. It is also easily scalable in the sense that you can add more VMs to the MEC Server to help with offloading if needed. Another benefit of using VMs is that \textit{concurrency transparency} is easy to ensure as long as the MEC Server does not run out of resources. This is because they are in sperate VMs and should not affect each other.
+
+
+
+%offloading
+%    compute 
+%    storage
+%distribution
+%    scaling
+%Control
+
+
+%tabell? subsections? idk
+
+%TODO
+% Gjøre målinger med overføring av filer først. Finn data på bandwidth og pluss det på tiden.
+% Gjøre målinger hvor det kreves mer samhandling mellom nodene. Vi må se latency!
+
+
+%\cite{mach_mobile_2017} for hvor mye som skal offloades.!!!!
+% test med 100% offload, 50% offload osv
+%\begin{itemize}
+ %   \item Easily scalable as we have the common interface. This makes it easy to add more vms to run more apps. So, its horizontally scalable?
+%\end{itemize}

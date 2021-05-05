@@ -147,8 +147,9 @@ When the \verb|FileReader| class reads in the config file, it expects a very sim
 30
 50
 50
+
 \end{lstlisting}
-The \verb|FileReader| reads each line until the newline character. After everything is read, it will convert them to an array of Integers, instead of array of Strings.
+The \verb|FileReader| reads each line until the newline character. The config file is terminated by an emtpy line at the end. After everything is read, it will convert them to an array of Integers, instead of array of Strings.
 
 \subsection{Placing HashWorkers}
 Placement of HashWorkers is prompted in the terminal. When testing you will get information about an HashWorker, and a choice for which node you want to place it on. 
