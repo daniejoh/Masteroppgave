@@ -237,6 +237,22 @@ From the results we can see that if enough funding is available, then Cloudlets 
     \label{tab:total_time_compare}
 \end{table}
 
+
+
+\begin{table}[]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        \multirow{2}{*}{Type} & \multicolumn{2}{c|}{Time used} \\ \cline{2-3}
+         & Low Frequency & High Frequency         \\ \hline
+        Local               &           &  333.6 \\ \hline
+        MEC Full            &   30.2    &  279.3   \\ \hline
+        MEC Partial         &   29.8    &  163.0       \\ \hline
+        Cloudlet Full       &   26.2    &  98.8   \\ \hline
+        Cloudlet Partial    &   24.3    &  x       \\ \hline
+    \end{tabular}
+\end{table}
+
 TODO Table \ref{tab:total_time_compare} shows ... To clarify, since Local, Near and Far work in parallel, the time used in the table is represented by the node who used the longest time. 
 
 TODO Full offloading might for some devices be a requirement. The two most likely causes for this is if the Local device have very limited computational power, or need to save battery....
