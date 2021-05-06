@@ -200,12 +200,18 @@ Setting up the edge servers are easily done through Akamai's console. You set up
 
 
 \section{Discussion of findings}
+In this section we will discuss the results from the previous sections. 
 %introduction
 
 % Adding extra Near Nodes or Far nodes will in our prototype and dividing the work between them will give T/n better time. 
 
 \subsection{Comparing Cloudlets and MEC}
-From the results we can see that if enough funding is available, then Cloudlets gives the best result. We can see that having low latency between Local and Near like the Cloudlet, is preferable for better results. However, one could argue that installation of MEC Servers are significantly easier and cheaper as you only install them at base stations that cover a wide area. When it comes to migration, it is significantly easier for MEC due to how much area is covered with cellular. If the mobile device were to move in the Cloudlet architecture then Cloudlets in the new location should already be ready to offload. This is hard, as with the frequency of Cloudlets it can be difficult to decide which Cloudlet to migrate to before it is too late. Since MEC cover such a large area, it should not be a problem to see when it is needed to migrate to other base stations. However, migration in MEC will likely take a longer time, as Cloudlets often will be on the same LAN and can therefore transfer faster and more reliably.
+From the results we can see that if enough funding is available, then Cloudlets gives the best result. We can see that having low latency between Local and Near like the Cloudlet, is preferable for better results. However, one could argue that installation of MEC Servers are significantly easier and cheaper as you only install them at base stations that cover a wide area. When it comes to migration, it is significantly easier for MEC due to how much area is covered with cellular. If the mobile device were to move in the Cloudlet architecture then Cloudlets in the new location should already be ready to offload. This is hard because it can be difficult to decide which Cloudlet to migrate to before it is too late. Since MEC cover such a large area, it should not be a problem to see when it is needed to migrate to other base stations. However, migration in MEC will likely take a longer time, as Cloudlets often will be on the same LAN and can therefore transfer faster and more reliably.
+
+
+
+
+\subsubsection{Results}
 
 \begin{table}[]
     \centering
@@ -214,77 +220,49 @@ From the results we can see that if enough funding is available, then Cloudlets 
        Type  & Total time used (s)\\
        \hline
        \hline
-       Local                            & 333.6  \\
+       Local execution                         & 333.6  \\
        \hline
-       MEC Full, high frequency         & 279.3 \\
+       MEC Full offloading       & 30.2 \\
        \hline
-       MEC Full, low frequency         & 30.2 \\
+       MEC Partial offloading    & 29.8 \\
        \hline
-       MEC Partial, high frequency      & 163.0 \\
+       Cloudlets Full offloading & 26.2 \\
        \hline
-       MEC Partial, low frequency      & 29.8 \\
-       \hline
-       Cloudlet Full, low frequency    & 98.8 \\
-       \hline
-       Cloudlet Full, high frequency    & 26.2 \\
-       \hline
-       Cloudlet Partial, low frequency    & 98.8 \\
-       \hline
-       Cloudlet Partial, high frequency    & \textbf{24.3} \\
+       Cloudlets Partial offloading  & 24.3 \\
        \hline
     \end{tabular}
-    \caption{TODO}
+    \caption{Summary of time used when offloading, compared to Local execution only}
     \label{tab:total_time_compare}
 \end{table}
+Table \ref{tab:total_time_compare} shows the time used for all the tests. To clarify, since Local, Near and Far work in parallel, the time used in the table is represented by the node who used the longest time. We can see that there is not that much difference in results when comparing Full offloading and Partial offloading. However, Partial offloading unsurprisingly has the best results.
+
+Full offloading might for some devices be a requirement. The two most likely causes for this is if the Local device have very limited computational power, or need to save battery. Therefore, one should not always go for Partial offloading. When deciding on what to use, one should analyze the context. For example, if battery life is the most important factor, then one should use Full offloading. Our tests only shows the result of focusing on performance and least used time. However, one can change most of the parameters to address other needs of the context. For example, if there is more latency-sensitive work, then one can change the parameters to offload more to the Near nodes rather than the Far nodes.
 
 
 
-\begin{table}[]
-    \centering
-    \begin{tabular}{|c|c|c|}
-        \hline
-        \multirow{2}{*}{Type} & \multicolumn{2}{c|}{Time used} \\ \cline{2-3}
-         & Low Frequency & High Frequency         \\ \hline
-        Local               &           &  333.6 \\ \hline
-        MEC Full            &   30.2    &  279.3   \\ \hline
-        MEC Partial         &   29.8    &  163.0       \\ \hline
-        Cloudlet Full       &   26.2    &  98.8   \\ \hline
-        Cloudlet Partial    &   24.3    &  x       \\ \hline
-    \end{tabular}
-\end{table}
-
-TODO Table \ref{tab:total_time_compare} shows ... To clarify, since Local, Near and Far work in parallel, the time used in the table is represented by the node who used the longest time. 
-
-TODO Full offloading might for some devices be a requirement. The two most likely causes for this is if the Local device have very limited computational power, or need to save battery....
+\subsubsection{Decreasing interaction}
+Figure \ref{fig:MEC_partial_bar} and \ref{fig:Cloudlet_latency_bar} illustrates how much time is used on waiting for a response from the Local node. As the Far node communicates less, we can see that it get more computational time compared to the Near node. In this example, the Far node does most of the workload also. 
 
 
 \begin{figure}
     \centering
     \includegraphics{chapters/evaluation/figures/All_latency.png}
-    \caption{Shows how decreasing interaction improves performance.}
+    \caption{Illustration of how decreasing interaction improves performance.}
     \label{fig:all_graph_decrease}
 \end{figure}
 
-Figure \ref{fig:all_graph_decrease} illustrates how decreasing communication with local will yield better results for each type of node. However, both MEC and Cloudlet will stagnate, as limited processing power becomes the bottleneck. We can see that when we reach about 20-30 in frequency, using the Far node is getting better and better. One can add more workers to either Near or Far to get even more speedup, but it is way more cheap and easier to scale up the Far node. Therefore it is preferable to use the Far node or nodes when applicable.
+Figure \ref{fig:all_graph_decrease} illustrates how decreasing communication with Local will yield better results for each type of node. However, both MEC and Cloudlet stagnates, as limited processing power becomes the bottleneck. This means that when frequent communication is needed, one should use the Near node. The Far node is best to take care of work that does not require frequent communication. As we can see in figure \ref{fig:all_graph_decrease}, we get way faster results with the Far node when interaction is high, compared to the Near nodes.
 
 
 
 
 
-\subsection{Discussion of architectures}
-Anthos is able to mimic the Cloudlet architecture by letting you set up on-premises servers. However, the Anthos nodes are confined to the owners environment, which is unlike the vision for Cloudlets. 
+\subsubsection{Horizontal scaling}
+The results shown for MEC and Cloudets have just one HashWorker per node. This is to show the viability of Near-Far Computing in a simple isolated form. However, one can easily horizontally scale the amount of workers and nodes. If the workload is as parallelizable as our hashing setup, then adding nodes or workers, assuming they get the same resources, will give significant better times.
 
-Cloudfront is a good choice as it is backed by a massive company, which has infrastructure in a lot of locations, and will likely expand in the future. It comes with the negative side effect of being confined to their locations, which in many cases might have too much latency.
+\subsubsection{Overhead}
+In the Emerald environment there is very little overhead compared to overheads in a real life context. In Emerald, only a few objects needs to be replicated or transferred, instead of a whole VM or container. We argue that the response time can be affected by this, but can be mitigated by understanding the context and preloading the environment onto the Near nodes. This overhead usually consists of transfer time plus starting time. The transfer time is mostly affected by bandwidth. By looking at table \ref{tab:Bandwidth_latency} we can see that it is preferable to use WiFi rather than cellular. 
 
-Akamai is leading when it comes to content caching as they have the most infrastructure available. However, it is best used as a standard CDN, in the sense that you should offload web pages or other high volume data to their servers. Doing this will significantly improve the response time due to the lower latency, and will most likely give a smoother experience as there is less use of the Wide-area network.
-
-A common thing for all architectures is that a lot of the control is up to the programmers. This allows for high customization of the application, as it is not limited to many constraints. Additionally, all the architectures allow for cooperation between Near nodes and Far nodes. 
-
-
-\subsection{Offloading}
-We can see from table \ref{tab:MEC_partial_offloading_little} and \ref{tab:Cloudlet_partial_offloading_little_far} that we do get a speed-up by using the Near-Far model, on the condition that the Far node does not do much latency-aware work. 
-
-Every architecture that requires transferring of a VM or similar to the offloading node, will have an overhead. This overhead is mainly dependent on the size of the load that need to be transferred, the bandwidth between the Local and Near node, and the time it takes to start the VM or container. Context is required to know when to start offloading these VMs to the other nodes. If context is well known to the nodes, then they can start pre-loading to avoid having to wait for this overhead.
 
 
 
@@ -293,17 +271,19 @@ Every architecture that requires transferring of a VM or similar to the offloadi
 
 
 \section{The Near-Far Computing Model}
-The Near-Far Computing Model is worth it in many cases. However, it is best utilized when you can have a Near node doing latency critical work, and having a Far node doing the latency non-critical work. For example, if the Local device is a smart device that need quick response on their data, it can offload to the Near node. When the Near node is done calculating, it can use the Far server to analyze the result as well as logging it. For storage, Near-Far is great for caching. Having caches that is closer to the client will result in way quicker results.
+In this section we will discuss characteristics of the Near-Far Computing Model, and give an introduction to it. 
+
+The Near-Far Computing Model is best utilized when you can have a Near node doing latency critical work, and a Far node doing other work that does not require a real-time response. For example, if the Local device is a smart device that need quick response on their data, it can offload to the Near node. When the Near node is done calculating, it can use the Far server to analyze the result as well as logging it, while the Local device can use the calculated data for responding to the context. For storage, Near-Far is great for caching. Having caches that is closer to the client will result in way quicker results.
 
 The common thing for all the discussed architectures is that they use a mix of both edge nodes and server nodes. They try as best as possible to use the edge nodes, but the distant strong data centers can aid when needed. 
 
-If the Near node were to fail, then the Far node can take over. However, due to latency the Far node will give the client a worse experience if response time is critical. 
+If the Near node were to fail, then the Far node can take over. However, due to latency the Far node will give the client a worse experience if response time is critical. This is process is the same as discussed in article The Case for VM-Based Cloudlets in Mobile Computing\cite{satyanarayanan_case_2009}.
 
 \subsection{Distribution Transparency}
 In the following subsections we will discuss distribution transparency in Near-Far computing.
 
 \subsubsection{Access Transparency}
-When using the Near-Far model, one should use containerization or VMs to provide common API or middleware for all the nodes in the system. This ensures that developers does not have to deal with very low-level programming, and focus more on providing features and solutions.
+When using the Near-Far model, one should use containerization or VMs to provide common API or middleware for all the nodes in the system. This ensures that developers does not have to deal with very low-level programming, and focus more on providing features and solutions. This solution is one thing that of the discussed architectures have in common.
 
 \subsubsection{Location Transparency}
 Location transparency is up to the programmer, but in most cases one should try to hide where objects are located. Due to the Near node having low latency, there should not be a problem to ensure that the location is hidden.

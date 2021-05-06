@@ -4,30 +4,7 @@
 This section will show results of testing with the prototype for MEC, and then discuss these results. Additionally it will point out characteristics for this architecture.
 
 \subsection{Full offloading}
-\begin{table}[h!]
-    \centering
-    \begin{tabular}[c]{|c||p{2cm}|p{2cm}|p{2cm}|}
-        \hline
-        Node type & Local & Near & Far \\
-        \hline
-        Limitation          & 30 & 100 & 300  \\
-        \hline
-        Iterations          & 0 & 8500 & 1500  \\
-        \hline
-        RTT to Local (ms)   & 0 & 30 & 170 \\
-        \hline
-        Frequency           & 1 & 1 & 1 \\
-        \hline
-        \hline
-        \hline
-        \textbf{Time used (s)}       & \textbf{0} & \textbf{279.3} & \textbf{267.9} \\
-        \hline
-    \end{tabular}
-    \caption{Full offloading with high frequency of communication between Local and Near/Far.}
-    \label{tab:MEC_full_offloading_high_frequency}
-\end{table}
 
-Table \ref{tab:MEC_full_offloading_high_frequency} shows the result of high frequency communication between all nodes and for fully offloading all of the work from the Local device.
 
 
 
@@ -50,7 +27,7 @@ Table \ref{tab:MEC_full_offloading_high_frequency} shows the result of high freq
         \textbf{Time used (s)}       & \textbf{0} & \textbf{29.2} & \textbf{30.2} \\
         \hline
     \end{tabular}
-    \caption{Full offloading with low frequency of communication between Local and Far.}
+    \caption{Full offloading}
     \label{tab:MEC_full_offloading_low_frequency}
 \end{table}
 
@@ -63,31 +40,6 @@ Table \ref{tab:MEC_full_offloading_low_frequency} shows the result of full offlo
 
 \subsection{Partial offloading}
 
-
-\begin{table}[h!]
-    \centering
-    \begin{tabular}[c]{|c||p{2cm}|p{2cm}|p{2cm}|}
-        \hline
-        Node type & Local & Near & Far \\
-        \hline
-        Limitation          & 30 & 100 & 300  \\
-        \hline
-        Iterations          & 4550 & 4525 & 925  \\
-        \hline
-        RTT to Local (ms)   & 0 & 30 & 170 \\
-        \hline
-        Frequency           & 1 & 1 & 1 \\
-        \hline
-        \hline
-        \hline
-        \textbf{Time used (s)}       & \textbf{151.3} & \textbf{149.8} & \textbf{163.0} \\
-        \hline
-    \end{tabular}
-    \caption{Partial offloading with high frequency of communication between Local and Near/Far.}
-    \label{tab:MEC_partial_offloading_high_frequency}
-\end{table}
-
-Table \ref{tab:MEC_partial_offloading_high_frequency} shows the result of partial offloading when there is high frequency of communication with the Far node.
 
 
 \begin{table}[h!]
@@ -109,11 +61,11 @@ Table \ref{tab:MEC_partial_offloading_high_frequency} shows the result of partia
         \textbf{Time used (s)}       & \textbf{28.0} & \textbf{29.8} & \textbf{28.0} \\
         \hline
     \end{tabular}
-    \caption{Partial offloading with low frequency of communication between Local and Far.}
+    \caption{Partial offloading}
     \label{tab:MEC_partial_offloading_low_frequency}
 \end{table}
 
-Table \ref{tab:MEC_partial_offloading_low_frequency} shows the result of with low frequency of communication between Local and Far node. 
+Table \ref{tab:MEC_partial_offloading_low_frequency} shows the result of partial offloading where the Far node is doing most of the work. Frequency of communication between Local or Near node and Far node is low. 
 
 
 \begin{figure}[t]
@@ -124,17 +76,6 @@ Table \ref{tab:MEC_partial_offloading_low_frequency} shows the result of with lo
 \end{figure}
 
 Figure \ref{fig:MEC_partial_bar} shows how latency affect the the total time used when we have to constantly get data from the local device. It uses the same configuration as shown in table \ref{tab:MEC_partial_offloading_low_frequency}.
-
-
-\subsection{Discussion of results} \label{subsection:MEC_comparison}%Discussion of mec?
-We can see that we get speedup compared to only using Local execution by comparing table \ref{tab:local_execution} with table \ref{tab:MEC_full_offloading_high_frequency} and \ref{tab:MEC_full_offloading_low_frequency}. The time used for either compared to Local execution has significant speedup.
-
-By comparing table \ref{tab:MEC_full_offloading_high_frequency} and \ref{tab:MEC_full_offloading_low_frequency} we see that it is preferable to limit interaction between Local/Near and the Far node. We get speedup in both cases, but the less communication with far, the better the result. 
-
-
-%nevn offloading. Vis stolpediagramm hvor en chunk av tiden er offloading. Vis også med N*latency?
-%Bar chart med som viser hvor stor andel av de forskjellige utregningene som består av calulation og latency
-
 
 
 

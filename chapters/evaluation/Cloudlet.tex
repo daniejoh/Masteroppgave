@@ -8,32 +8,6 @@ This section will show results of testing with the prototype for Cloudlets, and 
 \subsection{Full execution}
 
 
-
-\begin{table}[h!]
-    \centering
-    \begin{tabular}[c]{|c||p{2cm}|p{2cm}|p{2cm}|}
-        \hline
-        Node type & Local & Near & Far \\
-        \hline
-        Limitation          & 30 & 100 & 300  \\
-        \hline
-        Iterations          & 0 & 9500 & 500  \\
-        \hline
-        RTT to Local (ms)   & 0 & 3 & 170 \\
-        \hline
-        Frequency           & 1 & 1 & 1 \\
-        \hline
-        \hline
-        \hline
-        \textbf{Time used (s)}       & \textbf{0} & \textbf{98.8} & \textbf{94.6} \\
-        \hline
-    \end{tabular}
-    \caption{Full offloading with high frequency of communication between Local and Near/Far.}
-    \label{tab:MEC_full_offloading_high_frequency}
-\end{table}
-
-Table \ref{tab:Cloudlet_full_offloading_high_frequency} shows the result of Full offloading to a nearby Cloudlet with high frequency of communication with Far node.
-
 \begin{table}[h!]
     \centering
     \begin{tabular}[c]{|c||p{2cm}|p{2cm}|p{2cm}|}
@@ -66,31 +40,6 @@ Table \ref{tab:Cloudlet_full_offloading_low_frequency} shows the result of Full 
 
 
 \subsection{Partial offloading}
-\begin{table}[h!]
-    \centering
-    \begin{tabular}[c]{|c||p{2cm}|p{2cm}|p{2cm}|}
-        \hline
-        Node type & Local & Near & Far \\
-        \hline
-        Limitation          & 30 & 100 & 300  \\
-        \hline
-        Iterations          & 0 & 2500 & 6700  \\
-        \hline
-        RTT to Local (ms)   & 0 & 3 & 170 \\
-        \hline
-        Frequency           & 1 & 1 & 1 \\
-        \hline
-        \hline
-        \hline
-        \textbf{Time used (s)}       & \textbf{0} & \textbf{98.8} & \textbf{94.6} \\
-        \hline
-    \end{tabular}
-    \caption{Full offloading with high frequency of communication between Local and Near/Far.}
-    \label{tab:Cloudlet_full_offloading_high_frequency}
-\end{table}
-
-
-
 
 
 
@@ -128,15 +77,6 @@ Table \ref{tab:Cloudlet_full_offloading_low_frequency} shows the result of Full 
 \end{figure}
 Figure \ref{fig:Cloudlet_latency_bar} shows how much time used on waiting for data from Local, compared to how much time is used on calculating. The configuration used here is the same as shown in table \ref{tab:Cloudlet_partial_offloading_latency_balanced}.
 
-
-
-\subsection{Discussion of results}
-TODO: START HER
-By comparing table \ref{tab:Cloudlet_full_offloading_latency_balanced} and \ref{tab:Cloudlet_partial_offloading_latency_balanced} we can see that we benefit from also using the Local device. However, if the device that is using the Cloudlets require Full offloading, then we still have significant speedup by offloading to the Cloudlet and the Far node compared to Local execution. Table \ref{tab:Cloudlet_partial_offloading_little_far} shows that using Far node as long as interaction is low, is also very beneficial.
-
-Figure \ref{fig:Cloudlet_latency_near_far_comparison} shows that we can get better results by using Far in the situation where interaction between nodes is low. In other words, Cloudlets can benefit from using Far, but only when there is little communication needed. For fast response times we need to use the Cloudlet to do the computation. 
-
-Figure \ref{fig:Cloudlet_latency_bar} shows that having minimal latency to a Near node is very beneficial. Even though almost half of the time is spent waiting, we have offloaded a significant amount of work. Table \ref{tab:Cloudlet_partial_offloading_little_far} 
 
 
 
