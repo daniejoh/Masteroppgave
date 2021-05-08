@@ -2,13 +2,13 @@ This chapter will discuss how we will research and evaluate the architectures.
 
 
 \section{Scope}
-Our goal of these experiments is to show how the Near-Far Computing Model relates to already existing architectures. First we will research them and give an overview of them in the Architectures chapter. Then we will develop several of the architectures in Emerald, and then conduct experiments on them. We will analyze and measure how the architectures perform and how they work. Finally we will discuss how the architectures related to the Near-Far Computing model.
+The goal of these analyses is to show how the Near-Far Computing Model relates to already existing architectures. The goal of the evaluation is to additionally show the viability of Near-Far Computing. First we will research them and give an overview of them in the Architectures chapter. Then we will develop several of the architectures in Emerald, and then conduct experiments on them. We will analyze and point out the characteristics of each architecture. Finally we will discuss how the architectures related to the Near-Far Computing Model.
 
 
 
 
 \section{Simulation}
-We will simulate the different architectures using Emerald and PlanetLab. The Emerald programming language will be used to make a high level version of these architectures. This comes with a bonus, namely that the Emerald VM is working as middleware for these experiments. This makes it easier to show experiments, as the code is easily understood and the architectures will be reduced to something that is easily tested.
+We will simulate the different architectures using Emerald and PlanetLab. The Emerald programming language will be used to make a high-level version of these architectures. Using the Emerald ecosystem comes with a bonus, namely that the Emerald VM is working as middleware for these experiments. This makes it easier to develop and show the implementation, as the code is more easily understood and the architectures will be abstracted to something that is easily tested.
 
 
 
@@ -18,7 +18,7 @@ We will simulate the different architectures using Emerald and PlanetLab. The Em
 
 
 \section{Experiments}
-The experiments done in this thesis will focus on how latency affects offloading work. We will test with two different architectures and compare the results, to see if Near-Far computing is a viable solution for the latency problem. We will test with different amounts of latency for the Near node, while using a Far node that geographically very distant from, and therefore high latency from, Local or Near node. We will create a program that lets us easily change these parameters:
+The experiments done in this thesis will focus on how latency affects offloading. We will test with two different architectures and compare the results to see if Near-Far Computing is a viable solution for the latency problem. We will create a program that lets us easily change these parameters:
 \begin{itemize}
     \item Latency
     \item Workload
@@ -26,7 +26,7 @@ The experiments done in this thesis will focus on how latency affects offloading
     \item Amount of interaction between the nodes
     \item Amount of nodes
 \end{itemize}
-We aim to make it easy to set up these tests with the help of Emeralds built in object mobility.
+We aim to make it easy to set up these tests with the help of Emeralds built in object mobility. 
 
 \subsubsection{Offloading}
 It is not always efficient to offload all the work. According to Mach and Becvar´s survey\cite{mach_mobile_2017}, we can divide offloading into three categories:
@@ -37,6 +37,17 @@ It is not always efficient to offload all the work. According to Mach and Becvar
 \end{itemize}
 We will compare these three ways of offloading for both architectures we test.
 The rest of the architectures have very similar high level architectures, which is what we test with. We therefore assume that the results are very similar, and there is no need to present them in results.
+
+
+
+
+
+
+
+
+
+
+
 
 
 \section{Theoretical analysis}

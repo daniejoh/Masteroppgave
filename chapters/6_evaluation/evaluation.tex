@@ -112,7 +112,7 @@ We argue that due to the high-level nature of our prototype, we will have close 
 
 
 
-\input{chapters/evaluation/MEC}
+\input{chapters/6_evaluation/MEC}
 
 
 
@@ -122,7 +122,7 @@ We argue that due to the high-level nature of our prototype, we will have close 
 
 
 
-\input{chapters/evaluation/Cloudlet}
+\input{chapters/6_evaluation/Cloudlet}
 
 
 
@@ -241,12 +241,12 @@ Full offloading might for some devices be a requirement. The two most likely cau
 
 
 \subsubsection{Decreasing interaction}
-Figure \ref{fig:MEC_partial_bar} and \ref{fig:Cloudlet_latency_bar} illustrates how much time is used on waiting for a response from the Local node. As the Far node communicates less, we can see that it get more computational time compared to the Near node. In this example, the Far node does most of the workload also. 
+Figure \ref{fig:MEC_partial_bar} and \ref{fig:Cloudlet_latency_bar} illustrates how much time is used on waiting for a response from the Local node. As the Far node communicates less, we can see that it get more computational time compared to the Near node. In these examples, the Far node does most of the workload, which is why it has more computation time.
 
 
 \begin{figure}
     \centering
-    \includegraphics{chapters/evaluation/figures/All_latency.png}
+    \includegraphics{chapters/6_evaluation/figures/All_latency.png}
     \caption{Illustration of how decreasing interaction improves performance.}
     \label{fig:all_graph_decrease}
 \end{figure}
@@ -273,53 +273,64 @@ In the Emerald environment there is very little overhead compared to overheads i
 \section{The Near-Far Computing Model}
 In this section we will discuss characteristics of the Near-Far Computing Model, and give an introduction to it. 
 
-The Near-Far Computing Model is best utilized when you can have a Near node doing latency critical work, and a Far node doing other work that does not require a real-time response. For example, if the Local device is a smart device that need quick response on their data, it can offload to the Near node. When the Near node is done calculating, it can use the Far server to analyze the result as well as logging it, while the Local device can use the calculated data for responding to the context. For storage, Near-Far is great for caching. Having caches that is closer to the client will result in way quicker results.
+%The Near-Far Computing Model is best utilized when you can have a Near node doing latency critical work, and a Far node doing other work that does not require a real-time response. For example, if the Local device is a smart device that need quick response on their data, it can offload to the Near node. When the Near node is done calculating, it can use the Far server to analyze the result as well as logging it, while the Local device can use the calculated data for responding to the context. For storage, Near-Far is great for caching. Having caches that is closer to the client will result in way quicker results.
 
-The common thing for all the discussed architectures is that they use a mix of both edge nodes and server nodes. They try as best as possible to use the edge nodes, but the distant strong data centers can aid when needed. 
+%The common thing for all the discussed architectures is that they use a mix of both edge nodes and server nodes. They try as best as possible to use the edge nodes, but the distant strong data centers can aid when needed. 
 
-If the Near node were to fail, then the Far node can take over. However, due to latency the Far node will give the client a worse experience if response time is critical. This is process is the same as discussed in article The Case for VM-Based Cloudlets in Mobile Computing\cite{satyanarayanan_case_2009}.
+%If the Near node were to fail, then the Far node can take over. However, due to latency the Far node will give the client a worse experience if response time is critical. This is process is the same as discussed in article The Case for VM-Based Cloudlets in Mobile Computing\cite{satyanarayanan_case_2009}.
 
 \subsection{Distribution Transparency}
 In the following subsections we will discuss distribution transparency in Near-Far computing.
 
 \subsubsection{Access Transparency}
-When using the Near-Far model, one should use containerization or VMs to provide common API or middleware for all the nodes in the system. This ensures that developers does not have to deal with very low-level programming, and focus more on providing features and solutions. This solution is one thing that of the discussed architectures have in common.
+When using the Near-Far model, one should use containerization or VMs to provide common API or middleware for all the nodes in the system. This ensures that developers does not have to deal with very low-level programming, and focus more on providing features and solutions. This solution is one thing that most of the discussed architectures have in common.
 
 \subsubsection{Location Transparency}
-Location transparency is up to the programmer, but in most cases one should try to hide where objects are located. Due to the Near node having low latency, there should not be a problem to ensure that the location is hidden.
+Location transparency is up to the programmer, but in most cases one should try to hide where objects are located. Due to the Near node having low latency, there should not be a problem to ensure that the location is hidden. Usage of Near nodes will easily let you ensure location transparency, due their low latency and how relatively resource rich they are.
 
 \subsubsection{Relocation Transparency}
-Relocation transparency can be hard if the area where you are connected to the Near device is not big. For example, if you have to connect to a new node each time you enter a new room, ensuring relocation transparency can be hard. However, with good algorithms and enough knowledge about the context, it is possible. 
+Relocation transparency can be hard if the area where you are connected to the Near device is not big. For example, if you have to connect to a new node each time you enter a new room, ensuring relocation transparency can be hard. However, with good algorithms and enough knowledge about the context, it is possible to ensure perfect relocation transparency. 
 
 \subsubsection{Migration Transparency}
-Migration transparency should not be difficult to implement. It is up to the programmer to decide how much level of transparency they want. 
+Most of the discussed architectures do not focus on this. However, control is left to the programmers. This means that if the application needs users to control where objects are located in the system, then it is possible to implement. However, we believe that this is needed in very few cases, and hiding were objects are located is way more important to ensure a good experience.
 
 \subsubsection{Replication Transparency}
-Replication transparency is mostly up to the programmer. With enough Nodes available, the programmer can add or remove nodes as they see fit. It is up to the context if this will be noticed by the client. 
+Replication transparency is up to the programmer. With enough Nodes available, the programmer can add or remove objects as they see fit. However, most of the architectures are about hiding where objects are located, so in most cases one should ensure that replication is not noticed.
 
 \subsubsection{Concurrency Transparency}
-Concurrency transparency is also up to the programmer. In most cases however, it is best to avoid showing that multiple users are using the same resources. For example, one should not notice that several others are watching the same content as you are. 
+Concurrency transparency is also up to the programmer. In most cases however, it is best to avoid showing that multiple users are using the same resources. For example, one should not notice that several others are watching the same content as you are or querying the same database. 
 
 \subsubsection{Failure Transparency}
 If enough nodes are available, then recovering from a failure should have minimal impact on the user. However, if the application in question is latency-aware and is forced to use Far or Local resources to do these time critical operations, then the client will suffer. However, one should quickly be able to recover to the previous state.
 
 \subsection{Introduction to the Near-Far Computing Model}
-The Near-Far Computing Model is a spectrum that covers all models or architectures that focuses on mitigating latency issues by using Near nodes and Far nodes. One can use the Near node to offload time sensitive work, and further aid this offloading with the strong Far nodes. Using the Near-Far Computing model is therefore most applicable when you have work or storage that needs to be offloaded with low latency, as well as having less time sensitive parts that can be done on a stronger node that is geographically distant, but much stronger.
+With the information provided and discussed in the above sections and the above subsection, we can now give an introduction to the Near-Far Computing Model.
 
-Figure \ref{fig:nearFarSimple} illustrates the Near-Far spectrum. We have a Local devices which communicates with a Near device which is typically an edge or fog device, e.g. a Cloudlet. This Near node or Local device will communicate with the Far node to offload less time sensitive work or storage. The Near node should optimally be in close proximity to the Local device to ensure low-latency.
+The Near-Far Computing Model is a spectrum that covers all models or architectures that focuses on mitigating latency issues by using Near nodes and Far nodes. Near nodes are edge or fog nodes that focuses on providing resource rich nodes as close as possible to the user to ensure minimal latency. Far nodes are distant, extremely scalable, and resource rich nodes which usually resides in data centers, that can provide heavy computational power and nearly limitless storage, at the cost of latency.
 
 \begin{figure}[t]
     \centering
     %\textbf{The Near-Far spectrum}\par\medskip
-    \includegraphics[scale=1]{chapters/evaluation/figures/near-far-diagram.png}
+    \includegraphics[scale=1]{chapters/6_evaluation/figures/near-far_diagram.png}
     \caption{The Near-Far spectrum}
     \label{fig:nearFarSimple}
 \end{figure}
 
 
+Figure \ref{fig:nearFarSimple} illustrates the Near-Far spectrum. We have a Local devices that communicates with a Near device which is typically an edge or fog device, e.g. a Cloudlet. This Near node or Local device will communicate with the Far node to offload less time sensitive work or storage. The Near node should optimally be in close proximity to the Local device to ensure low-latency.
+
+\subsubsection{Control}
+Since VMs or containers are preferred for offloading, the programmers have a lot of control. This method restricts access to low-level control, but it would in most cases not be needed, as enough control is given within the VMs or containers. NFV and SDN, can be used to control the network structure when needed. 
+
+\subsubsection{Offloading}
+One can use the Near node to offload time sensitive work, and further aid this offloading with the strong Far nodes. Using the Near-Far Computing model is therefore most applicable when you have work or storage that needs to be offloaded with low latency, as well as having less time sensitive parts that can be done on a stronger node that is geographically distant. 
+
+
+\subsubsection{Deployment}
+The closer the Near node are to the Local device, the more expensive it will become to deploy. When deciding on what the requirement is when it comes to response time, one has to consider that it can become quite costly to deploy. For example, MEC using nodes at the base of cell-towers will be more scaleable and cheaper to deploy, compared to Cloudlets who needs to be ubiquitous and deployed almost everywhere. The trade-off is then latency and scalability versus cost.
 
 \section{Summary}
-In this chapter we have tested MEC and Cloudlets with the program described in implementation. We have also discussed characteristics of all the architectures. We have discussed how these characteristics relate to the Near-Far Computing Model. Finally we have provided a definition for the Near-Far Computing Model
+In this chapter we have tested MEC and Cloudlets with the program described in implementation. We have also discussed characteristics of all the architectures. Then, we discussed how these characteristics relate to the Near-Far Computing Model. Finally, we have provided an introduction for the Near-Far Computing Model.
 
 
 

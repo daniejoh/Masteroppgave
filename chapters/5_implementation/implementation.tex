@@ -14,7 +14,7 @@ For computation offloading we initially wanted to implement Eratosthenes Sieve f
 \subsection{Classes and structure}
 \begin{figure}[t]
     \centering
-    \includegraphics[scale=0.9]{chapters/implementation/figures/HashWorker_class_diagram.png}
+    \includegraphics[scale=0.9]{chapters/5_implementation/figures/HashWorker_class_diagram.png}
     \caption{Illustration of the class structure used for computation offloading}
     \label{fig:HashWorker_class_diagram}
 \end{figure}
@@ -85,7 +85,7 @@ attached const InnerMonitor
   field timeTaken : Time <- nil
 end InnerMonitor
 \end{lstlisting}
-As discussed in section \ref{emerald:field}, fields in Emerald automatically generates getters and setters. Since it is in a monitor class it is guaranteed that invoking them is mutual exclusive. In other words, the getters and setters that are automatically created within the class is safe to use in parallel. Variable \verb|timeTaken| is used to store the time used by the process in class \verb|Worker|. Variable \verb|waiting| is used to ensure that main does not collect \verb|timeTaken| before the worker is done. 
+As discussed in section \ref{emerald:fields}, fields in Emerald automatically generates getters and setters. Since it is in a monitor class it is guaranteed that invoking them is mutual exclusive. In other words, the getters and setters that are automatically created within the class is safe to use in parallel. Variable \verb|timeTaken| is used to store the time used by the process in class \verb|Worker|. Variable \verb|waiting| is used to ensure that main does not collect \verb|timeTaken| before the worker is done. 
 
 
 
@@ -120,7 +120,7 @@ end djb2Hash
 The algorithm takes a string, iterates over it and multiplies itself with 33 and the characters ordinal number. To make it even more compute heacy, we convert the result to string, and then re-insert that into the hash function 10000 times. We see that as one iteration, as shown in figure \ref{fig:Hashing_algorithm_iteration}. In other words, the HashWorker will do what figure \ref{fig:Hashing_algorithm_iteration} shows, parameter \verb|iterations| number of times. Since we just throw out the result after each time, Emeralds garbage compiler will ensure that we have plenty of memory available. 
 \begin{figure}[t]
     \centering
-    \includegraphics[scale=0.9]{chapters/implementation/figures/Iteration.png}
+    \includegraphics[scale=0.9]{chapters/5_implementation/figures/Iteration.png}
     \caption{Illustration of one iteration in the HashWorker}
     \label{fig:Hashing_algorithm_iteration}
 \end{figure}
@@ -173,7 +173,7 @@ Placement of HashWorkers is prompted in the terminal. When testing you will get 
 
 \begin{figure}[t]
     \centering
-    \includegraphics[scale=1]{chapters/implementation/figures/MEC_implementation.png}
+    \includegraphics[scale=1]{chapters/5_implementation/figures/MEC_implementation.png}
     \caption{Illustration of the node structure used for computation offloading in MEC}
     \label{fig:MEC_implementation}
 \end{figure}
@@ -187,7 +187,7 @@ Figure \ref{fig:MEC_implementation} illustrates how three nodes can be set up. T
 \section{Cloudlets}
 \begin{figure}[t]
     \centering
-    \includegraphics[scale=0.9]{chapters/implementation/figures/Cloudlet_implementation.png}
+    \includegraphics[scale=0.9]{chapters/5_implementation/figures/Cloudlet_implementation.png}
     \caption{Illustration of the node structure used for computation offloading with Cloudlets}
     \label{fig:Cloudlet_implementation}
 \end{figure}

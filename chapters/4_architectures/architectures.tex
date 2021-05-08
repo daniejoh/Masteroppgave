@@ -9,7 +9,7 @@ Multi-Access Edge Computing(MEC), also known as Mobile Edge Computing, was origi
 \begin{figure}[t]
     \centering
     %\textbf{Mobile Edge Computing}\par\medskip
-    \includegraphics[scale=0.75]{chapters/architectures/figures/MEC.png}
+    \includegraphics[scale=0.75]{chapters/4_architectures/figures/MEC.png}
     \caption{Diagram of MEC}
     \label{fig:MEC}
 \end{figure}
@@ -20,7 +20,7 @@ Figure \ref{fig:MEC} shows how MEC works on a high level. MEC will utilize the u
 The MEC server architecture is divided into several layers that together forms three systems\cite{patel_mec_nodate}. At the bottom is the hardware layer. Over that is the virtualization layer. These two layers is part of the MEC Hosting Infrastructure Management System. Over that is the MEC Application Platform Management System which consists of a MEC virtualization manager layer and and MEC Application Platform Services layer. The virtualization manager can provide IaaS. The MEC Application Platform Services layer is an interface for the virtual machines that the applications is running on. The VMs and the apps form the Application Management Systems. Figure \ref{fig:MEC_Server} is a simplified version of the server architecture presented in \cite{patel_mec_nodate}. It shows that we can have several applications running simultaneously on the MEC Server. All the Applications run in a VM that is controlled by the MEC Application Platform Services.
 \begin{figure}[t]
     \centering
-    \includegraphics[scale=0.8]{chapters/architectures/figures/MEC_Server.png}
+    \includegraphics[scale=0.8]{chapters/4_architectures/figures/MEC_Server.png}
     \caption{Simplified version of the MEC Server architecture}
     \label{fig:MEC_Server}
 \end{figure}
@@ -60,7 +60,7 @@ In this architecture, they focus on having as much as possible of the computatio
  
 \begin{figure}[t]
     \centering
-    \includegraphics[scale=0.9]{chapters/architectures/figures/Cloudlet.png}
+    \includegraphics[scale=0.9]{chapters/4_architectures/figures/Cloudlet.png}
     \caption{Illustration of a simple Cloudlet connection}
     \label{fig:Cloudlet}
 \end{figure}
@@ -85,7 +85,7 @@ Google Cloud Platform(GCP) has been providing Cloud solutions since 2008. Like m
 Google Anthos uses Kubernetes\cite{noauthor_production-grade_nodate} to easily create distributed systems\cite{noauthor_anthos_nodate}. This means that everything that runs on the Anthos platform uses container software and middleware like Docker(see section \ref{background:docker}), and every program that runs on it is within a Docker container. Due to containerization of programs, we can easily distributed them on this platform. This enables us to easily offload work to edge nodes as well as nodes in the distant data center.
 \begin{figure}[t]
     \centering
-    \includegraphics[scale=0.9]{chapters/architectures/figures/anthos_architecture.png}
+    \includegraphics[scale=0.9]{chapters/4_architectures/figures/anthos_architecture.png}
     \caption{Illustration of a simple two nodes running on Anthos}
     \label{fig:Anthos_architecture}
 \end{figure}
@@ -113,7 +113,7 @@ Akamai is a company which specializes on bringing content closer to the edge by 
 
 \begin{figure}[t]
     \centering
-    \includegraphics[scale=0.8]{chapters/architectures/figures/akamai_dist.png}
+    \includegraphics[scale=0.8]{chapters/4_architectures/figures/akamai_dist.png}
     \caption{Simplified Illustration of replication in Akamai CDN}
     \label{fig:Akamai_cdn}
 \end{figure}

@@ -5,7 +5,7 @@ In this chapter we will provide some background needed for this thesis.
 In the start of their book, Steen and Tanenbaum\cite{steen_distributed_2017} defines distributed systems loosely: 
 \say{A distributed system is a collection of autonomous computing elements that appears to its users as a single coherent system.}
 
-This definition describes two important characteristics of distributed systems. Firstly, we can think of a distributed system as several computers or programs that work independently. They share workload and storage between, but they are independent in the same sense as processes. The different programs or computers are referred to as Nodes. Each node in the system will work concurrently. This is one of the great benefits of a distributed system. This is because you can share heavy computational tasks across the system to make it distribute the load. A computer can have several nodes, but usually we think of different computers as different nodes. The other characteristic it describes, is that the users should only see a single coherent system. That means that the user should not notice that the application is running on a distributed system, unlike an application running on a single computer.
+This definition describes two important characteristics of distributed systems. Firstly, we can think of a distributed system as several computers or programs that work independently. They share workload and storage between them, but they are independent in the same sense as processes. The different programs or computers are referred to as Nodes. Each node in the system will work concurrently. This is one of the great benefits of a distributed system. This is because you can share heavy computational tasks across the system to make it distribute the load. A computer can have several nodes, but usually we think of different computers as different nodes. The other characteristic it describes, is that the users should only see a single coherent system. That means that the user should not notice that the application is running on a distributed system, unlike an application running on a single computer.
 
 Distributed systems have no shared clock. This is because having a shared clock is almost impossible, as even atomic clocks is not accurate enough and other factors will affect the clocks. Therefore, you have to utilize other methods to ensure synchronization. We will discuss synchronization in section \ref{cascading_search}. Each node will therefore have an independent notion of time, and the system as a whole will not have a global clock\cite{steen_distributed_2017}. This is also important because even though the nodes work with each other, they should always be loosely coupled and as independent as possible.
 
@@ -118,7 +118,7 @@ There are several definitions of cloud computing. Many of them are similar, but 
 
 \begin{figure}[t]
     \centering
-    \includegraphics[scale=0.7]{chapters/background/figures/Simplified_cloud.png}
+    \includegraphics[scale=0.7]{chapters/2_background/figures/Simplified_cloud.png}
     \caption{A Simplified diagram of Cloud Computing}
     \label{fig:SimplifiedCloudDiagram}
 \end{figure}
@@ -126,8 +126,6 @@ There are several definitions of cloud computing. Many of them are similar, but 
 At a very high level, Cloud Computing is where you offload your work to the usually distant cloud. As shown on figure~\ref{fig:SimplifiedCloudDiagram}, a laptop or any other device can communicate with the cloud, and let the cloud provide storage and computation. The Cloud is a distributed system which is usually built as a Grid Computing system in a data centre. When working with the cloud, we typically have thin clients and thick clients. For traditional cloud computing the thin client is for example your laptop or cell phone, while the thick client is the server or servers in the distant data centre.
 
 However, in today's society it has of course become much more advanced. You have an increasing number of cloud service providers that offer Infrastructure as a Service(IaaS), Platform as a Service(PaaS) and Software as a Service(SaaS), like Amazon Web Services(AWS), Digital Ocean, Alibaba Cloud, Microsoft Azure and Google Cloud Platform(GCP) just to name a few. The biggest of them all is AWS, which holds almost half of the market share\cite{noauthor_cloud_2019}. The Cloud market made 129 billion dollars in 2020 alone\cite{noauthor_cloud_nodate}.
-
-Big firms will most likely benefit from building their own data centres. However most companies are not in the Fortune 500 with big wallets and millions of clients. Most firms, which have significantly less clients, can save a lot of money and time by outsourcing to cloud providers instead. It makes scaling easy and you can have infrastructure set up in just a few minutes, so you can focus on actually developing your service. You don't need to hire technicians to maintain the servers. If you have clients all over the world, you can choose to set up servers near them, instead of being limited to the office or headquarters. You can easily scale up by requesting stronger hardware, or you can easily scale out by replicating or starting more servers. In other words, it is just really convenient for most modern companies.
 
 Even though the largest cloud providers have established themselves in many places, it still might not be close enough geographically to the client. In latency aware applications you need to minimize the physical distance between the client and the server. Therefore you can use local cloud providers, or firms like Akamai which specializes in having server as close, and as few as possible hops away from the end users.
 
@@ -159,7 +157,7 @@ For comparison, a Traceroute\cite{noauthor_traceroute68_nodate} from Oslo, Norwa
 
 \begin{figure}[t]
     \centering
-    \includegraphics[scale=0.6]{chapters/background/figures/Fog.png}
+    \includegraphics[scale=0.6]{chapters/2_background/figures/Fog.png}
     \caption{Diagram of Fog Computing}
     \label{fig:FogDiagram}
 \end{figure}
@@ -167,7 +165,7 @@ For comparison, a Traceroute\cite{noauthor_traceroute68_nodate} from Oslo, Norwa
 \subsection{Cisco}
 Cisco\cite{bonomi_fog_nodate} and Bonovi was the first to coin the term, and defines Fog Computing as \say{...a highly virtualized platform that provides compute, storage, and networking services between end devices and traditional Cloud Computing Data Centers, typically, but not exclusively located at the edge of network.}  The characteristics of Fog Computing is that it is located at the edge, has location awareness, low latency, easily geographically distributed, heterogeneity, support for mobility and some others. All these as a sum help with providing a service that is needed in some modern applications, for example Augmented Reality, and in general with IoT.
 
-A Fog node is located at the edge in the sense that it is close to the end user or client. Because of this, the Fog node will have \textit{location awareness} and \textit{low latency}. Since they are not big servers, the Fog nodes are also easily \textit{geographically distributed}, in the sense that it should be easy to install and maintain. This also helps them be \textit{mobile}. Most likely the Fog nodes do not have the same hardware or software, which gives us the \textit{heterogeneity} characteristic. 
+A Fog node is located at the edge in the sense that it is close to the end user or client. Because of this, the Fog node will have \textit{location awareness} and \textit{low latency}. Since they are not big servers, the Fog nodes are also easily \textit{geographically distributed}, and should be easy to install and maintain. Most likely the Fog nodes do not have the same hardware or software, which gives us the \textit{heterogeneity} characteristic. 
 
 \subsection{A survey of Fog Computing} % TODO: REWRITE this
 The goal of Fog Computing is to improve Quality of service(QoS) with computation and storage offloading. Yi, Li, and Li, in ‘A Survey of Fog Computing’\cite{yi_survey_2015} argues that QoS can be divided into four aspects: Connectivity, reliability, capacity and delay.
@@ -178,18 +176,10 @@ Reliability is very difficult to provide in Fog computing. The methods used in t
 
 For capacity you need enough storage and good bandwidth. It does not matter how much storage you have, if it is slow to transfer it. To achieve good utilization of storage and bandwidth, it is important to analyse user patterns to know where data is most used. It’s difficult to know where to store data when it may need to be stored across several fog nodes. It is also hard to know when to send storage further to the distant cloud with bigger capacity at the cost of delay. 
 
-Lastly, Fog focuses a lot on delay. It’s a good solution for “latency-sensitive” applications. There are several proposed solutions to minimize delay. We will discuss Cloudlets as a solution later.
-
-
-% DETTE HØRER TIL I ARCHITECTURES
-% \subsection{Fog architectures} %% move this to architectures?
-% Naha et al.\cite{naha_fog_2018}, reviewed a couple of architectures that arguably falls under the Fog computing paradigm. We have focused on the ones that also fall under the Near-Far computing model, in that they have a Near node and a Far node. These architectures focus on offloading from an IoT device, to assist with computation, energy and storage. We will talk about IoT in a later chapter. 
+Lastly, Fog focuses a lot on delay. It’s a good solution for “latency-sensitive” applications. The delay is reduced in fog computing as the nodes are geographically closer to the client.
 
 
 
-% \subsubsection{Fog-Dew Computing (FD)}
-% One drawback of Cloud computing is that you need to be always connected to the internet. 
-% Fog-Dew Computing aims to provide IoT devices with cloud computing without being connected to the internet to reduce this issue. Depending on the application it might not need connection to the internet at all, while others can work temporarily offline but need to eventually connect to the internet. Fog-Dew Computing solves this by having an edge community server providing the needed cloud services. 
 
 
 
@@ -204,7 +194,7 @@ Lastly, Fog focuses a lot on delay. It’s a good solution for “latency-sensit
 
 
 \section{Edge Computing}
-Edge Computing is about utilizing processing power at the edge of the internet, instead of using data centers. The edge of the internet are the devices that are closest to the users and clients. It's very relevant for IoT, because IoT end devices generate a lot of data close to the users but far from the data centres. This makes it very inefficient to send the data all the way to the distant cloud. Since IoT often requires real time processing of data, it is better to move the processing to the edge, closer to the devices, to minimize the latency\cite{shi_edge_2016}.
+Edge Computing is about utilizing processing power at the edge of the internet, instead of using data centers. The edge of the internet are the devices that are closest to the users and clients. IoT devices generate a lot of data close to the users but resides far from the data centres. It is slow and  inefficient to send the data all the way to the distant cloud. Since IoT often requires real time processing of data, it is better to move the processing to the edge, closer to the devices, to minimize the latency\cite{shi_edge_2016}.
 A router, switch or Cloudlet are examples of an edge device. They can be utilized by the IoT devices to offload their computation to save time and energy.
 
 
@@ -215,7 +205,7 @@ A router, switch or Cloudlet are examples of an edge device. They can be utilize
 
 \section{Ubiquitous computing and Internet Of Things}
 %TODO
-Internet of Things(IoT) is a system of ubiquitous devices that is connected to the Internet\cite{noauthor_what_nodate}. These devices are now everywhere in modern society. Things with a wide array of sensors are placed everywhere to solve problems or give us information. An example of this is smart watches. Smart watches has several to measure things like heart beat, geographical location, speed and so on. These devices give information to and takes information from the internet. These devices are often very small, have energy constraints because of small battery, and very limited storage. They there often offload computation and storage via its connection to the internet.
+Internet of Things(IoT) is a system of ubiquitous devices that is connected to the Internet\cite{noauthor_what_nodate}. These devices are now everywhere in modern society. Things with a wide array of sensors are placed everywhere to solve problems or give us information. An example of this is smart watches. Smart watches has several to measure things like heart beat, geographical location, speed and so on. These devices give information to and takes information from the internet. These devices are often very small, have energy constraints because of small battery, and very limited storage. They usually offload computation and storage via its connection to the internet.
 
 
 
@@ -414,7 +404,7 @@ In the above code example, you will get an object similar to the one shown in No
 \begin{figure}[t]
     \centering
     \textbf{Not attached vs Attached}\par\medskip
-    \includegraphics[scale=0.8]{chapters/background/figures/emerald_attached.png}
+    \includegraphics[scale=0.8]{chapters/2_background/figures/emerald_attached.png}
     \caption{Showing a move executed without and with attached objects}
     \label{fig:emerald_attached_figure}
 \end{figure}

@@ -17,21 +17,21 @@
 \lstset{style=mystyle}
 
 \title{Investigating the Near-Far Computing Model}        %% ... or whatever
-%%\subtitle{Essay}         %% ... if any
+         %% ... if any
 \author{Daniel Johnsen}                      %% ... or whoever 
 
 \addbibresource{references.bib}            %% ... or whatever
 % Remove include and instead use input!
 \includeonly{
     %other/abstract,
-    %other/preface,
-    %chapters/introduction/introduction,
-    %chapters/background/background,
-    %chapters/Design_of_experiments/designOfExperiments,
-    %chapters/architectures/architectures,
-    %chapters/implementation/implementation,
-    chapters/evaluation/evaluation,
-    chapters/conclusion/conclusion
+    %other/acknowledgements,
+    chapters/1_introduction/introduction,
+    chapters/2_background/background,
+    chapters/3_Design_of_experiments/designOfExperiments,
+    chapters/4_architectures/architectures,
+    chapters/5_implementation/implementation,
+    chapters/6_evaluation/evaluation,
+    chapters/7_conclusion/conclusion
     }
 \begin{document}
 \duoforside[dept={Department of Informatics},   %% ... or your department
@@ -46,40 +46,40 @@
 \listoffigures{}
 \listoftables{}
 
-\chapter*{Preface}
-\include{other/preface}
+\chapter*{Acknowledgements}
+\include{other/acknowledgements}
 
 \mainmatter{}
 
 
 \chapter{Introduction}
-\include{chapters/introduction/introduction}
+\include{chapters/1_introduction/introduction}
 
 \chapter{Background}
-\include{chapters/background/background} 
+\include{chapters/2_background/background}
 
 
 \chapter{Design of experiments}\label{chapter:design_of_experiments}
 
-\include{chapters/Design_of_experiments/designOfExperiments}
+\include{chapters/3_Design_of_experiments/designOfExperiments}
 
 
 
 \chapter{Architectures}\label{chapter:architectures} %% implementation and design
-\include{chapters/architectures/architectures}
+\include{chapters/4_architectures/architectures}
 
 \chapter{Implementation}\label{chapter:implementation}
-\include{chapters/implementation/implementation}
+\include{chapters/5_implementation/implementation}
 
 
 \chapter{Evaluation}\label{chapter:evaluation}
-\include{chapters/evaluation/evaluation}
+\include{chapters/6_evaluation/evaluation}
 %evaluation of architecture using the method described in "Design of experiments" chapter
 
 
 \chapter{Conclusion}                     %% ... or Konklusjon
 %% future work!!
-\include{chapters/conclusion/conclusion}
+\include{chapters/7_conclusion/conclusion}
 %Developing a real example using Augmented Reality or some other latency-aware application would be a good way to show that our solution work in more than just a simulation. This can hopefully be done when a new Emerald compiler with no memory limitation is available.
 
 \backmatter{}
