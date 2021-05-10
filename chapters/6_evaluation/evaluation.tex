@@ -320,14 +320,18 @@ The Near-Far Computing Model is a spectrum that covers all models or architectur
 Figure \ref{fig:nearFarSimple} illustrates the Near-Far spectrum. We have a Local devices that communicates with a Near device which is typically an edge or fog device, e.g. a Cloudlet. This Near node or Local device will communicate with the Far node to offload less time sensitive work or storage. The Near node should optimally be in close proximity to the Local device to ensure low-latency.
 
 \subsubsection{Control}
-Since VMs or containers are preferred for offloading, the programmers have a lot of control. This method restricts access to low-level control, but it would in most cases not be needed, as enough control is given within the VMs or containers. NFV and SDN, can be used to control the network structure when needed. 
+Since VMs or containers are preferred for offloading, the programmers have a lot of control. This method restricts access to low-level control, but it would in most cases not be needed, as enough control is given within the VMs or containers. NFV and SDN, can be used to control the network structure when needed.
 
 \subsubsection{Offloading}
 One can use the Near node to offload time sensitive work, and further aid this offloading with the strong Far nodes. Using the Near-Far Computing model is therefore most applicable when you have work or storage that needs to be offloaded with low latency, as well as having less time sensitive parts that can be done on a stronger node that is geographically distant. 
 
+After each use, the nodes should return to their original state by cleaning up the VM or container.
+
 
 \subsubsection{Deployment}
-The closer the Near node are to the Local device, the more expensive it will become to deploy. When deciding on what the requirement is when it comes to response time, one has to consider that it can become quite costly to deploy. For example, MEC using nodes at the base of cell-towers will be more scaleable and cheaper to deploy, compared to Cloudlets who needs to be ubiquitous and deployed almost everywhere. The trade-off is then latency and scalability versus cost.
+The closer the Near node are to the Local device, the more expensive it will become to deploy. When deciding on what the requirement is when it comes to response time, one has to consider that it can become quite costly to deploy. For example, MEC using nodes at the base of cell-towers will be more scaleable and cheaper to deploy, compared to Cloudlets who needs to be ubiquitous and deployed almost everywhere. The trade-off is then latency and scalability versus cost. 
+
+
 
 \section{Summary}
 In this chapter we have tested MEC and Cloudlets with the program described in implementation. We have also discussed characteristics of all the architectures. Then, we discussed how these characteristics relate to the Near-Far Computing Model. Finally, we have provided an introduction for the Near-Far Computing Model.

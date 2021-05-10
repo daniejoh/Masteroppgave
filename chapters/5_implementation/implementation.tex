@@ -3,6 +3,8 @@ In this chapter we will show how we have implemented the architectures presented
 \section{Testing Programs}
 We have developed an application for testing computation offloading. It is easily configurable and flexible for testing. The next two subsections will show how it is implemented.
 
+
+
 \subsection{Computation offloading}
 For computation offloading we initially wanted to implement Eratosthenes Sieve for finding primes. This is because it has an interesting way parallelizing, and therefore distributing the work. However, due to an limitation from the Emerald VM, memory runs out when trying to find primes higher than a million. Memory use of the algorithm can be optimized, but it does not change the fact that Eratosthenes Sieve is a memory intensive algorithm. Therefore we are doing hashing instead. Hashing is a low memory, compute intensive task. This is excellent for our simulation as we primarily want to focus on computational use and latency.
 
@@ -196,6 +198,10 @@ Figure \ref{fig:Cloudlet_implementation} illustrates how we can set up an exampl
 
 
 
+
+
+\section{Source code}
+Source code for the implementation and configuration files can be found in the following git repository that is being cited\cite{johnsen_daniejohmasterprograms_nodate}.
 
 
 

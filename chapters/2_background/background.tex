@@ -46,7 +46,7 @@ Some of the advantages of distributed systems are scalability, reliability, faul
 \subsubsection{Scalability}
 Scalability is about being able to scale up to meet demand. As more and more computation and storage move to the cloud, this is very important. Scalability can be measures in three different dimensions, namely \textbf{Size, Geographical and Administrative scalability}.
 
-\textbf{Size scalability} is about being able to add more resources and clients to the system without loss of performance \cite{steen_distributed_2017}. Scaling is challenging as there is many factors that can act as a bottleneck. For instance, it does not matter how big you data centre is, if the bandwidth  is too small to handle all the users. Another example is that the hardware might not be fast enough. To ensure that the system is able to handle a continuously increasing amount of users and requests, you have to handle these kind of bottlenecks. Most of the problems does come from lack of resources on the servers. To fix this you can upgrade the hardware, which is referred to as scaling up, or deploy more servers, which is referred to as scaling out.
+\textbf{Size scalability} is about being able to add more resources and clients to the system without loss of performance \cite{steen_distributed_2017}. Scaling is challenging as there is many factors that can act as a bottleneck. For instance, it does not matter how big the data center is, if the bandwidth is too small to handle all the users. Another example is that the hardware might not be fast enough. To ensure that the system is able to handle a continuously increasing amount of users and requests, you have to handle these kind of bottlenecks. Most of the problems does come from lack of resources on the servers. To fix this you can upgrade the hardware, which is referred to as scaling up, or deploy more servers, which is referred to as scaling out.
 
 \textbf{Geographical Scalability} is about having nodes (most likely servers) that are far from the client, but the delay from communicating with them is hardly noticed. In a wide-area system, we might have nodes on different continents. The delay of sending messages between them is then too high to not be noticed in some situation. Also, because the packets are traveling through so many switches and routers, it is much less reliable. Some stretches might also have limited bandwidth, which might be a bottleneck for the system. You also cant just put a distributed system designed for a local-area network(LAN) on a wide-area network(WAN). For example, if your system relies on broadcasting. Broadcasting will work fine on a LAN but will probably work pretty terrible on a WAN. To mitigate latency issues, you can try to minimize waiting for a result. You do this by using asynchronous communication, which means that you avoid waiting for a result from others as much as possible. In applications where this is not possible, for example with Augmented Reality, we have to either reduce the amount of communication or move the server closer to the client.
 
@@ -98,7 +98,7 @@ To ease the development process in distributed systems we need middleware. Middl
 Distributed systems can generally be divided into two types: \textbf{Cluster computing and Grid computing}.
 
 \subsubsection{Cluster computing}
-Cluster computing is a collection of computers that usually has homogeneous architecture and hardware, as well as being in about the same place geographically. These computers usually run the same OS and are used to effectively distribute (and therefore parallelize) heavy computational tasks. They are able to easily communicate because of the small latency and high reliability of LAN's. Data centres are an example of Cluster computing. 
+Cluster computing is a collection of computers that usually has homogeneous architecture and hardware, as well as being in about the same place geographically. These computers usually run the same OS and are used to effectively distribute (and therefore parallelize) heavy computational tasks. They are able to easily communicate because of the small latency and high reliability of LAN's. Data centers are an example of Cluster computing. 
 
 \subsubsection{Grid computing}
 Grid computing is when you have several nodes spread across different domains, and usually not geographically close. In Grid computing there is more heterogeneity. Each node might have different hardware and different OS. Grid computing networks are often brought together in a virtual organization. An example of this is PlanetLab, which we will discuss later. 
@@ -123,11 +123,11 @@ There are several definitions of cloud computing. Many of them are similar, but 
     \label{fig:SimplifiedCloudDiagram}
 \end{figure}
 
-At a very high level, Cloud Computing is where you offload your work to the usually distant cloud. As shown on figure~\ref{fig:SimplifiedCloudDiagram}, a laptop or any other device can communicate with the cloud, and let the cloud provide storage and computation. The Cloud is a distributed system which is usually built as a Grid Computing system in a data centre. When working with the cloud, we typically have thin clients and thick clients. For traditional cloud computing the thin client is for example your laptop or cell phone, while the thick client is the server or servers in the distant data centre.
+At a very high level, Cloud Computing is where you offload your work to the usually distant cloud. As shown on figure~\ref{fig:SimplifiedCloudDiagram}, a laptop or any other device can communicate with the cloud, and let it provide storage and computation. The Cloud is a distributed system which is usually built as a Grid Computing system in a data center. When working with the cloud, we typically have thin clients and thick clients. For traditional cloud computing the thin client is for example your laptop or cell phone, while the thick client is the server or servers in the distant data center.
 
-However, in today's society it has of course become much more advanced. You have an increasing number of cloud service providers that offer Infrastructure as a Service(IaaS), Platform as a Service(PaaS) and Software as a Service(SaaS), like Amazon Web Services(AWS), Digital Ocean, Alibaba Cloud, Microsoft Azure and Google Cloud Platform(GCP) just to name a few. The biggest of them all is AWS, which holds almost half of the market share\cite{noauthor_cloud_2019}. The Cloud market made 129 billion dollars in 2020 alone\cite{noauthor_cloud_nodate}.
+However, in today's society it has of course become much more advanced than traditional Cloud Computing. You have an increasing number of cloud service providers that offer Infrastructure as a Service(IaaS), Platform as a Service(PaaS) and Software as a Service(SaaS), instead of just IaaS, like Amazon Web Services(AWS), Digital Ocean, Alibaba Cloud, Microsoft Azure and Google Cloud Platform(GCP) just to name a few. The biggest of them all is AWS, which holds almost half of the market share\cite{noauthor_cloud_2019}. The Cloud market made 129 billion dollars in 2020 alone\cite{noauthor_cloud_nodate}.
 
-Even though the largest cloud providers have established themselves in many places, it still might not be close enough geographically to the client. In latency aware applications you need to minimize the physical distance between the client and the server. Therefore you can use local cloud providers, or firms like Akamai which specializes in having server as close, and as few as possible hops away from the end users.
+Even though the largest cloud providers have established themselves in many places, it still might not be close enough geographically to the client. In latency-aware applications you need to minimize the physical distance between the client and the server. Therefore you can use local cloud providers, or firms like Akamai which specializes in having server as geographically close, and as few as possible hops away from the end users.
 
 
 
@@ -144,14 +144,11 @@ Even though the largest cloud providers have established themselves in many plac
 Vaquero and Rodero-Merino\cite{vaquero_finding_2014}, defines fog computing like this: 
 \say{Fog computing is a scenario where a huge number of heterogeneous (wireless and sometimes autonomous) ubiquitous and decentralised devices communicate and potentially cooperate among them and with the network to perform storage and processing tasks without the intervention of third parties. These tasks can be for supporting basic network functions or new services and applications that run in a sandboxed environment. Users leasing part of their devices to host these services get incentives for doing so.}
 
-As in other fields, there is no de-facto definition and is debatable. Since Fog Computing is a relatively new concept, different definitions will be used depending on the field they are in.
+As in other fields, there is no de-facto definition and the above definition is debatable. Since Fog Computing is a relatively new concept, different definitions will be used depending on the field they are in.
 
-Fog computing is an extension of the Cloud Computing paradigm. You have some nodes, like servers or desktops, that you offload the computation and storage to. The difference is that in Fog computing the fog nodes are located close in proximity to the user\cite{msftadmin_concept_2020}, as shown in figure~\ref{fig:FogDiagram}. The distant cloud has way more resources that the nodes in the fog layer, but since the fog nodes are closer, they are great at doing latency sensitive work. The Fog nodes is usually defined as being on the same LAN, but some argue that you can put them further away to, at least geographically speaking. 
+Fog computing is an extension of the Cloud Computing paradigm. You have some nodes, like servers or desktops, that you offload the computation and storage to. The difference is that in Fog computing the fog nodes are located close in proximity to the user\cite{msftadmin_concept_2020}, as shown in figure~\ref{fig:FogDiagram}. The distant cloud has way more resources than the nodes in the fog layer, but since the fog nodes are closer, they are great at doing latency sensitive work. The Fog nodes is usually defined as being on the same LAN, but some argue that you can put them further away to, at least geographically speaking. 
 
-An example is if an ISP has some Fog nodes at the base of cell towers. This will enable cell phones, or other SIM-card enabled devices, to offload storage and computation easily through the cell network. The introduction of 5G for the mainstream could benefit a lot from this. The latency for 5g will most likely be the same, but since the devices using it are so close to the 5G tower, it does not matter that much. The increased bandwidth of 5G is what will help a lot, as you can offload bigger workloads. We will discuss this in the Mobile Edge Computing chapter later. 
-
-In Fog computing you would like as few jumps as possible to the node. A jump is when you move from one network node to another, for example from a cellphone to an Access Point. If the nodes are on the same LAN, the number of jumps are predictable and low in frequency, at least compared to the number of jumps to a distant data centre. 
-
+In Fog computing you would like as few jumps as possible to the node. A jump is when you move from one network node to another, for example from a cellphone to an Access Point. If the nodes are on the same LAN, the number of jumps are predictable and low.
 
 For comparison, a Traceroute\cite{noauthor_traceroute68_nodate} from Oslo, Norway to a PlanetLab server in Rostock, Germany had at least 11 hops. With each hop adding latency because of processing, it’s easy to conclude that it is beneficial to keep hops at a minimum.
 
@@ -176,7 +173,7 @@ Reliability is very difficult to provide in Fog computing. The methods used in t
 
 For capacity you need enough storage and good bandwidth. It does not matter how much storage you have, if it is slow to transfer it. To achieve good utilization of storage and bandwidth, it is important to analyse user patterns to know where data is most used. It’s difficult to know where to store data when it may need to be stored across several fog nodes. It is also hard to know when to send storage further to the distant cloud with bigger capacity at the cost of delay. 
 
-Lastly, Fog focuses a lot on delay. It’s a good solution for “latency-sensitive” applications. The delay is reduced in fog computing as the nodes are geographically closer to the client.
+Lastly, Fog focuses a lot on delay. It’s a good solution for “latency-sensitive” applications. The delay is reduced when using fog computing as the nodes are geographically closer to the client.
 
 
 
@@ -194,7 +191,7 @@ Lastly, Fog focuses a lot on delay. It’s a good solution for “latency-sensit
 
 
 \section{Edge Computing}
-Edge Computing is about utilizing processing power at the edge of the internet, instead of using data centers. The edge of the internet are the devices that are closest to the users and clients. IoT devices generate a lot of data close to the users but resides far from the data centres. It is slow and  inefficient to send the data all the way to the distant cloud. Since IoT often requires real time processing of data, it is better to move the processing to the edge, closer to the devices, to minimize the latency\cite{shi_edge_2016}.
+Edge Computing is about utilizing processing power at the edge of the internet, instead of using data centers. The edge of the internet are the devices that are closest to the users and clients. IoT devices generate a lot of data close to the users but resides far from the data centers. It is slow and  inefficient to send the data all the way to the distant cloud. Since IoT often requires real time processing of data, it is better to move the processing to the edge, closer to the devices, to minimize the latency\cite{shi_edge_2016}.
 A router, switch or Cloudlet are examples of an edge device. They can be utilized by the IoT devices to offload their computation to save time and energy.
 
 
@@ -205,7 +202,7 @@ A router, switch or Cloudlet are examples of an edge device. They can be utilize
 
 \section{Ubiquitous computing and Internet Of Things}
 %TODO
-Internet of Things(IoT) is a system of ubiquitous devices that is connected to the Internet\cite{noauthor_what_nodate}. These devices are now everywhere in modern society. Things with a wide array of sensors are placed everywhere to solve problems or give us information. An example of this is smart watches. Smart watches has several to measure things like heart beat, geographical location, speed and so on. These devices give information to and takes information from the internet. These devices are often very small, have energy constraints because of small battery, and very limited storage. They usually offload computation and storage via its connection to the internet.
+Internet of Things(IoT) is a system of ubiquitous devices that is connected to the Internet\cite{noauthor_what_nodate}. These devices are now everywhere in modern society. Things with a wide array of sensors are placed everywhere to solve problems or give us information. An example of this is smart watches. Smart watches has several sensors to measure things like heartbeat, geographical location, speed and so on. These devices give information to, and takes information from, the internet. These devices are often very small, have energy constraints because of limited battery capacity, and limited storage. They usually offload computation and storage via its connection to the internet, which is often a WiFi or cellular connection.
 
 
 
@@ -214,7 +211,7 @@ Internet of Things(IoT) is a system of ubiquitous devices that is connected to t
 %% ----------------------------------------------------------------------
 
 \section{The Near-Far Computing Model}
-A definition of the Near-Far Computing Model will be discussed in a later chapter. However, a brief introduction is needed to understand what we are testing. The Near-Far Computing Model is a way to mitigate latency issues by having Near nodes and Far nodes. Near nodes are nodes that are geographically close by the client. This is beneficial, as the closer you are to the server, the lower the latency. Far nodes are  very strong servers that typically resides in distant data centers. The Near node is closer but not as powerful as the Far node. This lets us create a balance where the Near node can do low response time work, while the Far node provides more resources for heavier computations and storage that can afford the higher latency.
+A proper introduction to The Near-Far Computing Model will be discussed in a later chapter. However, a brief introduction is needed to understand what we are testing. The Near-Far Computing Model is a way to mitigate latency issues by having Near nodes and Far nodes. Near nodes are nodes that are geographically close to the client. This is beneficial, as the closer you are to the server, the lower the latency. Far nodes are very strong servers that typically resides in distant data centers. The Near node is closer, but not as powerful as the Far node. This lets us create a balance where the Near node can do low response time work, while the Far node provides more resources for heavier computations and storage that can afford the higher latency.
 
 
 
@@ -231,7 +228,7 @@ The speed of light in a vacuum is 299,792 458 kilometers a second. This is the u
 \section{Why high latency and low bandwidth hurts}
 
 
-Humans will easily detect delay and jitter when using applications\cite{satyanarayanan_case_2009}. Delay is almost impossible to fight when using hardware that is physically a long distance away. Jitter is impossible to prevent when using WAN. As a consequence, user experience of applications using WAN might suffer. Applications where crispness and high response time is important is called \textit{latency-aware applications}. Niraj Tolia et al.\cite{tolia_quantifying_2006} showed that we can divide user perceived responsiveness into several bins:
+Humans will easily detect delay and jitter when using applications\cite{satyanarayanan_case_2009}. Delay is almost impossible to fight when using hardware that is physically a long distance away. Jitter is impossible to prevent when using WAN. As a consequence, user experience of applications using the WAN might suffer. Applications where crispness and high response time is important is called \textit{latency-aware applications}. Niraj Tolia et al.\cite{tolia_quantifying_2006} showed that we can divide user perceived responsiveness into several bins:
 \begin{center}
 \begin{tabular}{ | p{3cm} | p{5cm} | } 
     \hline
@@ -245,8 +242,9 @@ Humans will easily detect delay and jitter when using applications\cite{satyanar
     \hline
 \end{tabular}
 \end{center}
-The response time of applications is the sum of the time taken for packets to be sent between nodes, plus the processing time. Latency is not the only factor for how slow data transferring can be. Bandwidth is also a really important factor\cite{cerqueira_interactive_2007}. Some applications require very high bandwidth, that is not necessarily available everywhere. When bandwidth is too low, the transferring time will take longer, which then affects the response time. 
-For latency-aware applications, keeping the application crisp is important. There of course exists applications that needs way lower response time than 150ms. Some applications require response time down to a few milliseconds. An example of this is when surgeons use a remote controlled robot to perform surgery. In this situation responsiveness need real-time to ensure safety. 
+The response time of applications is the sum of the time taken for packets to be sent between nodes, plus the processing time. Latency is not the only factor for how slow data transferring can be. Bandwidth is also a really important factor\cite{cerqueira_interactive_2007}. Some applications require very high bandwidth, that is not necessarily available everywhere. When bandwidth is too low, the transferring time will take longer, which then affects the response time.
+
+Some applications require response time down to a few milliseconds. An example of this is when surgeons use a remote controlled robot to perform surgery. In this situation responsiveness need real-time to ensure safety. 
 
 
 
@@ -260,7 +258,7 @@ For latency-aware applications, keeping the application crisp is important. Ther
 Emerald is a programming language created in the period of 1984-1986 by Eric B. Jul, Norm Hutchinson, Hank Levy and Andrew Black. It has several features that is important in distributed programming, like object mobility and type conformity. These features helps easing the development process of distributed systems. Emerald is an example that you can have object orientation in distributed systems that have similar performance as C++ in many aspects. This section will give an introduction to Emerald, and are mainly based on the Emerald Language Report\cite{hutchinson_emerald_nodate}
 
 \subsection{Types and Conformity}
-When programming distributed systems, each node has to agree on how to handle data. Emerald does this with types and conformity. Each node does not need to transfer or have a copy of the whole object. It only needs to know what that object has available, which can be described with types. When calling a remote node, we just need to get a copy of the object type to be able to know what to call, and what to send. Having strong compile-time typing ensures that we will always get the expected data, which reduces errors and failures.
+When programming distributed systems, each node has to agree on how to handle data. Emerald solves this with types and conformity. Each node does not need to transfer or replicate the whole object. It only needs to know what that object has available, which can be described with types. When calling an object the resides on a remote node, we just need to get a copy of the object type to be able to know what to invoke, and what to send. 
 
 Everything is an object in Emerald. Even types are just first-class objects. 
 Emerald is a compile-time strongly typed language. This means that the compiler will check that all objects conforms to the types at compile time, except for a few cases. An object conforms to a type if
@@ -282,7 +280,7 @@ const ObjectA <- class ObjectA
     end multiplyByTwo
 end ObjectA
 \end{lstlisting}
-Here, the ObjectA conforms to TypeA because we have the \textit{multiplyByTwo} operation, the type of the parameter and the type of the return is the same as described in the type.
+Here, the ObjectA conforms to TypeA because we have the \textit{multiplyByTwo} operation, the type of the parameter and the type of the return is the same as described in the type. Having strong compile-time typing ensures that we will always get the expected data, which reduces errors and failures.
 
 To enable generic types and polymorphism, Emerald lets you also check types during runtime with an operator: \verb|*>|. You can essentially read \verb|a *> b| as "\textit{a} conforms to \textit{b}". You also have \verb|view a as b| to help change the type of an object during runtime.
 
@@ -290,7 +288,7 @@ To enable generic types and polymorphism, Emerald lets you also check types duri
 
 
 \subsubsection{Classes}
-Emerald does not really have classes as everything is an object. We still have the concept of classes, and Emerald has the keyword \verb|class| to help us easily create it. Emerald will automatically create a type, a \textit{getSignature} operation, which returns the type, and finally a \textit{create} operation. These two objects are therefore semantically equivalent:
+Emerald does not have classes, but provides the \verb|class| keyword as syntactic sugar for creating the concept of classes. Emerald will automatically create a type, a \textit{getSignature} operation, which returns the type, and finally a \textit{create} operation. These two objects are therefore semantically equivalent:
 \begin{lstlisting}[language=emerald]
 const A <- class A[x: Integer]
     export operation multiplyByTwo[n: Integer]
@@ -409,8 +407,7 @@ In the above code example, you will get an object similar to the one shown in No
     \label{fig:emerald_attached_figure}
 \end{figure}
 
-\subsubsection{Call-by-visit and call-by-move}
-Call-by-visit and call-by-move are very similar concepts as attached. In Emerald you can use them to specify when you want to move the objects you send as parameters when invoking a function on a remote node. When using call-by-visit you move the parameters over, then move then back when finished with the function. When using call-by-move, you do the same, except the object stay on the remote node.
+
 
 \subsubsection{How the Emerald VM finds the location of objects}\label{cascading_search}
 Emerald has a system for keeping track of and finding objects. To get the location of an object you can use the \verb|locate| keyword. For example:
@@ -590,7 +587,7 @@ When logged in on the server, we run the makefile with \verb|make| to start the 
 
 
 \section{Summary}
-In this chapter we have made a theoretical foundation to help understanding this thesis. We have described what a distributed system is, what it consists of, and some key features about it. We have given a short introduction to Edge, Fog and Cloud computing. We have also made a short description of Near-Far computing, explained what speed of light have to do with latency, and showed how the Emerald eco-system works. Finally we have given a description of the environment the experiments will be conducted on, with Docker and PlanetLab.
+In this chapter we have presented a theoretical foundation to help understanding this thesis. We have described what a distributed system is, what it consists of, and some key features about it. We have given a short introduction to Edge, Fog and Cloud computing. We have also made a short description of Near-Far computing, explained what speed of light have to do with latency, and showed how the Emerald eco-system works. Finally we have given a description of the environment the experiments will be conducted on, with Docker and PlanetLab.
 
 %% TODO:
 
