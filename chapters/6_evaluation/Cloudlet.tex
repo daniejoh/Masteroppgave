@@ -10,22 +10,21 @@ This section will show results of testing with the prototype for Cloudlets, and 
 
 \begin{table}[h!]
     \centering
-    \begin{tabular}[c]{|c||p{2cm}|p{2cm}|p{2cm}|}
-        \hline
+    \begin{tabular}[c]{c|p{2cm}p{2cm}p{2cm}}
+
         Node type & Local & Near & Far \\
-        \hline
+
         Limitation          & 30 & 100 & 300  \\
-        \hline
+
         Iterations          & 0 & 2500 & 7500  \\
-        \hline
+
         RTT to Local (ms)   & 0 & 3 & 170 \\
-        \hline
+
         Frequency           & 1 & 1 & 80 \\
-        \hline
-        \hline
+
         \hline
         \textbf{Time used (s)}       & \textbf{0} & \textbf{26.2} & \textbf{25.4} \\
-        \hline
+
     \end{tabular}
     \caption{Full offloading with low frequency of communication between Local and Near/Far.}
     \label{tab:Cloudlet_full_offloading_low_frequency}
@@ -45,22 +44,21 @@ Table \ref{tab:Cloudlet_full_offloading_low_frequency} shows the result of Full 
 
 \begin{table}[h!]
     \centering
-    \begin{tabular}[c]{|c||p{2cm}|p{2cm}|p{2cm}|}
-        \hline
+    \begin{tabular}[c]{c|p{2cm}p{2cm}p{2cm}}
+
         Node type & Local & Near & Far \\
-        \hline
+
         Limitation          & 30 & 100 & 300  \\
-        \hline
+
         Iterations          & 700 & 2500 & 6800 \\
-        \hline
+
         RTT to Local (ms)   & 0 & 3 & 170 \\
-        \hline
+
         Frequency           & 1 & 1 & 80 \\
-        \hline
-        \hline
+
         \hline
         \textbf{Time used (s)}       & \textbf{23.0} & \textbf{24.3} & \textbf{22.5} \\
-        \hline
+
     \end{tabular}
     \caption{Partial offloading with low frequency of communication between Local and Near/Far.}
     \label{tab:Cloudlet_partial_offloading_low_frequency}
@@ -83,7 +81,9 @@ Figure \ref{fig:Cloudlet_latency_bar} shows how much time used on waiting for da
 \subsection{Characteristics}
 \subsubsection{Control}
 Controlling Cloudlets is done by the owner of each Cloudlet. Since Cloudlets are to be placed on locations, e.g. a coffee shop, then the owner of that location is able to configure the Cloudlet. The location owner can then limit usage and limit what kinds of applications are used on the Cloudlet. Handling failure and having good \textit{failure transparency} is mostly up to the programmer in Cloudlets. Should the Cloudlet fail, then a different near Cloudlet should take over, or in the worst case let the Local device handle it. 
+
 \subsubsection{Offloading}
-Cloudlets use \textit{dynamic VM synthesis} \cite{satyanarayanan_case_2009} to offload work. Essentially it means that we have to give the Cloudlet a VM to run the application. This makes \textit{access transparency} for Cloudlets quite good in theory. However, it gives an overhead which they reported to be quite high. This has likely been improved since 2009 as technology has improved. Bandwitdth, storage and computational power have significantly improved, which mitigates many of the issues they raised.
+Cloudlets use \textit{dynamic VM synthesis} \cite{satyanarayanan_case_2009} to offload work. Essentially it means that we have to give the Cloudlet a VM to run the application. This makes \textit{access transparency} for Cloudlets quite good in theory. However, it gives an overhead which they reported to be quite high. This has likely been improved since 2009 as technology has improved. Bandwidth, storage and computational power have significantly improved, which mitigates many of the issues they raised.
+
 \subsubsection{Deployment}
 Distribution is expensive for Cloudlets. Satyanarayanan et al\cite{satyanarayanan_case_2009} purposes different payment models, but each owner of a location has to decide if it is worth the investment. Since they are supposed to be ubiquitous, the total cost of having these readily available everywhere in society will be significant. If the Cloudlets are ubuiquitus, then the level of \textit{location and relocation transparency} is quite high. In their paper, they purpose a way of seamlessly migrating to other Cloudlets when needed. If this is accomplished, then the users of the local devices will not notice any drop in performance. Due to the ubiquitous nature of Cloudlets, having \textit{concurrency transparency} should not be a problem. Overloading all of the nearby Cloudlets will be a rare occurrence due to their ubiquitous nature.

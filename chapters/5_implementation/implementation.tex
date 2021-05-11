@@ -1,12 +1,12 @@
-In this chapter we will show how we have implemented the architectures presented in chapter \ref{chapter:architectures}.
+In this chapter we will show how we have implemented the prototype for testing in Emerald.
 
-\section{Testing Programs}
-We have developed an application for testing computation offloading. It is easily configurable and flexible for testing. The next two subsections will show how it is implemented.
+\section{Testing Program}
+We have developed a prototype for testing computation offloading. It is easily configurable and flexible for testing. The next two subsections will show how it is implemented.
 
 
 
 \subsection{Computation offloading}
-For computation offloading we initially wanted to implement Eratosthenes Sieve for finding primes. This is because it has an interesting way parallelizing, and therefore distributing the work. However, due to an limitation from the Emerald VM, memory runs out when trying to find primes higher than a million. Memory use of the algorithm can be optimized, but it does not change the fact that Eratosthenes Sieve is a memory intensive algorithm. Therefore we are doing hashing instead. Hashing is a low memory, compute intensive task. This is excellent for our simulation as we primarily want to focus on computational use and latency.
+For computation offloading we have used a hashing algorithm. Distributing how much each node should hash, makes everything measurable and configurable. Hashing is a low memory, compute intensive task. This is excellent for our simulation as we primarily want to focus on computational use and latency.
 
 
 
@@ -20,7 +20,7 @@ For computation offloading we initially wanted to implement Eratosthenes Sieve f
     \caption{Illustration of the class structure used for computation offloading}
     \label{fig:HashWorker_class_diagram}
 \end{figure}
-Figure \ref{fig:HashWorker_class_diagram} shows the class structure. We have four classes and one object. We will now go through each of them and briefly explain what they do.
+Figure \ref{fig:HashWorker_class_diagram} shows the class structure. We have four classes and one object. We will briefly explain each of them.
 
 
 %Mention that since InternalMonitor has fields, getters and setters are automatically created at compile time, and since it is in a monitor, it is guaranteed that only one thread at a time can call those functions. 
@@ -49,8 +49,6 @@ Below is the interface of class HashWorker:
 \begin{lstlisting}[language=emerald]
 const HashWorker <- class HashWorker
                                 [limitation: Integer]
-  
-  attached const workload %String
 
   attached const mon <- InnerMonitor.create
 
@@ -71,7 +69,7 @@ const HashWorker <- class HashWorker
   export op collectTimeUsed -> [res: Time]
 end HashWorker
 \end{lstlisting}
-HashWorker is an object that is distributed to all machines. The role of HashWorker is to provide an interface for main to start and control work. The constant \verb|mon| is used to store an instance of the \verb|InnerMonitor| class. Then we have the definitions for \verb|InnerMontor| and \verb|Worker|. They are defined inside the HashWorker class and are therefore inner classes. Then we have the \verb|initially| section. Here we ensure that the class parameter \verb|limitation| is equal to or higher than zero. This is because the limitation is used to make a time constraint, and we don´t want negative time. Operation \verb|setLimitation| is there to be able to change the limitation during runtime. Operation \verb|doWork| will create an instance of the \verb|Worker| class. It takes a parameter \verb|iterations| which is how many iterations we want the node to do, \verb|work| which is the workload that the worker will hash, and \verb|frequencyOfGet| which is how often we retrieve information from Local (the mobile device). Operation \verb|collectTimeUsed| is used to collect the time used after process is done. When called, it will wait for the process in Worker to be done, then return the time used.
+HashWorker is an object that is distributed to all machines. The role of HashWorker is to provide an interface for \verb|Main| to start and control work. The constant \verb|mon| is used to store an instance of the \verb|InnerMonitor| class. Then we have the definitions for \verb|InnerMontor| and \verb|Worker|. They are defined inside the HashWorker class and are therefore inner classes. Then we have the \verb|initially| section. Here we ensure that the class parameter \verb|limitation| is equal to or higher than zero. This is because the limitation is used to make a time constraint, and we don´t want negative time. Operation \verb|setLimitation| is there to be able to change the limitation during runtime. Operation \verb|doWork| will create an instance of the \verb|Worker| class. It takes a parameter \verb|iterations| which is how many iterations we want the node to do, \verb|work| which is the workload that the worker will hash, and \verb|frequencyOfGet| which is how often we retrieve information from Local (the mobile device). Operation \verb|collectTimeUsed| is used to collect the time used after process is done. When called, it will wait for the process in Worker to be done, then return the time used.
 Notice that all of the constants are attached. This is because we want to ensure that all of them are on the same node as the HashWorker instance. This reduces the amount of costly remote reads.
 
 
@@ -109,7 +107,7 @@ attached const Worker
 end Worker
 \end{lstlisting}
 \end{minipage}
-The \verb|initially| section will assert that iterations are higher than zero, because we should avoid doing negative amount of work. The \verb|process| section is where the actual work of the node happens. When \verb|doWork| is called in class \verb|HashWorker|, it creates an instance of the Worker class by invoking operation \verb|create|. The process is then started. In the process, it will run parameter \verb|iterations| number of iterations. The hashing algorithm we use is called \textit{Djb2}. Our implementation is a converted version from a C implementation found here\cite{noauthor_hash_nodate}. 
+The \verb|initially| section will assert that \verb|iterations| are higher than zero, because we should avoid doing negative amount of work. The \verb|process| section is where the actual work of the node happens. When \verb|doWork| is called in class \verb|HashWorker|, it creates an instance of the Worker class by invoking operation \verb|create|. The process is then started. In the process, it will run parameter \verb|iterations| number of iterations. The hashing algorithm we use is called \textit{Djb2}. Our implementation is a converted version from a C implementation found here\cite{noauthor_hash_nodate}. 
 \begin{lstlisting}[language=emerald]
 function djb2Hash[str: String] -> [res: Integer]
   res <- 5381
@@ -119,19 +117,19 @@ function djb2Hash[str: String] -> [res: Integer]
   end for
 end djb2Hash
 \end{lstlisting}
-The algorithm takes a string, iterates over it and multiplies itself with 33 and the characters ordinal number. To make it even more compute heacy, we convert the result to string, and then re-insert that into the hash function 10000 times. We see that as one iteration, as shown in figure \ref{fig:Hashing_algorithm_iteration}. In other words, the HashWorker will do what figure \ref{fig:Hashing_algorithm_iteration} shows, parameter \verb|iterations| number of times. Since we just throw out the result after each time, Emeralds garbage compiler will ensure that we have plenty of memory available. 
+The algorithm takes a string, iterates over it and multiplies itself with 33 and the characters ordinal number. To make it even more compute heavy, we convert the result to string, and then re-insert that into the hash function 10000 times. We see that as one iteration, as illustrated in figure \ref{fig:Hashing_algorithm_iteration}. In other words, the HashWorker will do what figure \ref{fig:Hashing_algorithm_iteration} shows, \verb|iterations| number of times. Since we just throw out the result after each time, Emeralds garbage compiler will ensure that we have plenty of memory available. 
 \begin{figure}[t]
     \centering
     \includegraphics[scale=0.9]{chapters/5_implementation/figures/Iteration.png}
     \caption{Illustration of one iteration in the HashWorker}
     \label{fig:Hashing_algorithm_iteration}
 \end{figure}
-In each iteration it will also check if we have to get information from Local, as well as taking the time on how long we do calculations and how long we wait for response.
+In each iteration it will also check if we have to get information from Local, as well as taking the time on how long we do calculations and how long we wait for a response, in total.
 
 
 
 \subsubsection{Main}
-Main only has an initially section that will do a number of steps. First it will move through all nodes and print some information on each node. This is mainly for debugging, and to ensure that things are running correctly. Further it will invoke the create an instance of the \verb|FileReader| class and read config file that you have specified. Config files are discussed in subsection \ref{subsection:configfiles}. Further, it will use this config to initilize \verb|HashWorker| instances and move them to a node decided by user input. Then, it will iterate through all \verb|HashWorker| instances and invoke operation \verb|doWork|. All processes should then have started. Finally, it will collect and print the results.
+Main only has an initially section that will do a number of steps. First it will move through all nodes and print some information on each node. This is mainly for debugging, and to ensure that things are running correctly. Further it will invoke the create method to create an instance of the \verb|FileReader| class and further read the configuration file that you have specified. Configurations files are discussed in subsection \ref{subsection:configfiles}. Further, it will use this configuration to initialize \verb|HashWorker| instances and move them to a node decided by user input. Then, it will iterate through all \verb|HashWorker| instances and invoke operation \verb|doWork|. All processes should then have started. Finally, after all workers have finished, it will collect and print the results.
 
 
 
@@ -141,7 +139,7 @@ To simulate CPU restrictions, we place a limitation on each HashWorker. To be ab
 
 
 \subsection{Config files}\label{subsection:configfiles}
-When the \verb|FileReader| class reads in the config file, it expects a very simple syntax. Each line should be a positive integer. For example a file that for two HashWorkers will set their limitations to 0 and 100 and make them both do 50 iterations, and make them get from Local with a frequency of 1 and 30 iterations, will look like this:
+When the \verb|FileReader| class reads in the config file, it expects a very simple syntax. Each line should be a positive integer. For example, a file that for two HashWorkers will set their limitations to 0 and 100 and make them both do 50 iterations, and make them get from Local with a frequency of 1 and 30 iterations, will look like this:
 \begin{lstlisting}
 0
 100
@@ -176,7 +174,7 @@ Placement of HashWorkers is prompted in the terminal. When testing you will get 
 \begin{figure}[t]
     \centering
     \includegraphics[scale=1]{chapters/5_implementation/figures/MEC_implementation.png}
-    \caption{Illustration of the node structure used for computation offloading in MEC}
+    \caption{Illustration of example node structure used for computation offloading in MEC}
     \label{fig:MEC_implementation}
 \end{figure}
 Figure \ref{fig:MEC_implementation} illustrates how three nodes can be set up. The \verb|Main| object will reside on the mobile device, as that is where we want the result. We can create several HashWorkers to place them on servers. However, the Cloud Data Center will have enough resources to have significantly more HashWorkers than the MEC Servers, and the MEC Servers can have significantly more HashWorkers than the mobile client. The MEC Servers can consist of one or more machines that hosts one to many HashWorker instances. The Cloud Data Center consists of many machines that can host one to many HashWorker instances.
@@ -190,10 +188,10 @@ Figure \ref{fig:MEC_implementation} illustrates how three nodes can be set up. T
 \begin{figure}[t]
     \centering
     \includegraphics[scale=0.9]{chapters/5_implementation/figures/Cloudlet_implementation.png}
-    \caption{Illustration of the node structure used for computation offloading with Cloudlets}
+    \caption{Illustration of example node structure used for computation offloading with Cloudlets}
     \label{fig:Cloudlet_implementation}
 \end{figure}
-Figure \ref{fig:Cloudlet_implementation} illustrates how we can set up an example implementation of Cloudlets. The mobile device will be in very short distance of the Cloudlets and therefore use WiFi to connect with them. In our tests, the Cloudlets are not access points themselves, and therefore there is a WiFi accesspoint hop between the mobile device and the Cloudlets.
+Figure \ref{fig:Cloudlet_implementation} illustrates how we can set up an example implementation of Cloudlets. The mobile device will be in very short distance of the Cloudlets and therefore use WiFi to connect with them.
 
 
 
