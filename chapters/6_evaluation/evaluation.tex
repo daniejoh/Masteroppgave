@@ -9,7 +9,7 @@ In this chapter we will evaluate the architectures described in chapter \ref{cha
 
 \section{Assumptions and Clarifications}
 \subsection{Bandwidth}
-When evaluating we are making some assumptions about bandwidth. Table \ref{tab:Bandwidth_latency} shows latency and bandwidth for different technologies. The WiFi bandwidths are based on data from CenturyLink\cite{noauthor_24_nodate}. The 4G and 5G bandwidths are real-world examples from 4g.co.uk\cite{noauthor_how_nodate}. The 4G latency are from ping tests, while the 5G latency are from Verizon\cite{noauthor_what_2020}.
+When evaluating, we are making some assumptions about bandwidth. Table \ref{tab:Bandwidth_latency} shows latency and bandwidth for different technologies. The WiFi bandwidths are based on data from CenturyLink\cite{noauthor_24_nodate}. The 4G and 5G bandwidths are real-world examples from 4g.co.uk\cite{noauthor_how_nodate}. The 4G latency is from ping tests, while the 5G latency is from Verizon\cite{noauthor_what_2020}.
 \renewcommand{\arraystretch}{1.2}
 \begin{table}[h!]
     \centering
@@ -43,7 +43,7 @@ When doing calculations about overhead in this chapter, we will be using numbers
 
 
 \subsection{Hardware}
-According to cpubenchmark\cite{noauthor_passmark_nodate}, flagship phones is about half as fast as a standard desktop CPU. We assume that we are dealing with below average CPU's cellphones, as most people do not have the flagship phone. We will test different strengths of the MEC Server. We assume that the data center will have plenty of resources. 
+According to cpubenchmark\cite{noauthor_passmark_nodate}, flagship phones are about half as fast as a standard desktop CPU. We assume that we are dealing with below-average cellphone CPUs, as most people do not have the flagship phone. We will test the different strengths of the MEC Server. We assume that the data center will have plenty of resources. 
 
 
 \subsection{Parameters}
@@ -102,7 +102,7 @@ Table \ref{tab:parameter_explanation} describes what each of the parameters and 
 Table \ref{tab:local_execution} shows the time used for local execution only. We show this to be able to compare with offloading results, and to see if there is significant speedup.
 
 \subsection{Redundant measurements}
-We argue that due to the high-level nature of our prototype, we will have close to the same parameters for Google Anthos, Amazon Cloudfront and Akamai as with either MEC or Cloudlets. Therefore we do not present prototype results for these architectures, as they are redundant.
+We argue that due to the high-level nature of our prototype, we will have close to the same parameters for Google Anthos, Amazon Cloudfront, and Akamai as with either MEC or Cloudlets. Therefore we do not present prototype results for these architectures, as they are redundant.
 
 \subsection{Iterations}
 To best show how each node performs, we have divided a workload over each type of node. This workload will consist of 10000 iterations.
@@ -136,14 +136,13 @@ To best show how each node performs, we have divided a workload over each type o
 \section{Google Anthos}
 \subsection{Characteristics}
 \subsubsection{Control}
-Controlling the Anthos architecture is relatively easy as GCP will take care of all the difficult parts. You can control all the nodes in the Anthos control panel. This means that the one who owns the GCP account has full control over the nodes. The level of \textit{access  transparency} is quit high, as Anthos will take care of all the low-level problems. It is up to the programmer to decide how containers running on the platform will communicate. It also up to the programmer if they want users to be able to relocate objects. In other words \textit{migration transparency} is up to the programmers.
+Controlling the Anthos architecture is relatively easy as GCP will take care of all the difficult parts. A client can control all the nodes in the Anthos control panel. This means that the one who owns the GCP account has full control over the nodes. The level of \textit{access transparency} is quite high, as Anthos will take care of all the low-level problems. It is up to the programmer to decide how containers running on the platform will communicate. It also up to the programmer if they want users to be able to relocate objects. In other words \textit{migration transparency} is up to the programmers.
 
 \subsubsection{Offloading}
-Since Anthos uses containers, offloading can be quite easy. It is up to the programmers to decide how offloading will work. Essentially, the Local device only needs to somehow contact the on-premises machines, for example through WiFi and LAN connections, to be able to offload. The level of \textit{location transparency} is up to the programmers. It is dependent on how the containers are set up. Kubernetes is easily set up to manage \textit{replication and concurrency transparency}, as it lets you configure where the containers should reside, and how many of them should be there, as well as many other parameters.
+Since Anthos uses containers, offloading can be pretty straightforward. It is up to the programmers to decide how offloading will work. Essentially, the Local device only needs to somehow contact the on-premises machines, for example, through WiFi and LAN connections, to offload. The level of \textit{location transparency} is up to the programmers. It is dependent on how the containers are set up. Kubernetes is easily set up to manage \textit{replication and concurrency transparency}, as it lets you configure where the containers should reside and how many of them should be there, as well as many other parameters.
 
 \subsubsection{Deployment}
-Deploying is relatively easy. As discussed earlier, you only need to install Anthos software on on-premises hardware and then configure Kubernetes to use it. Ensuring \textit{failure transparency} can be hard, but Kubernetes is configureable to handle failures. Essentially, it is up to the programmer to decide what happens if there is one.
-
+Deploying is relatively easy. As discussed earlier, a client only needs to install Anthos software on on-premises hardware and then configure Kubernetes to use it. Ensuring \textit{failure transparency} can be challenging, but Kubernetes is configurable to handle failures. Essentially, it is up to the programmer to decide what happens if there is one.
 
 
 
@@ -160,15 +159,15 @@ Deploying is relatively easy. As discussed earlier, you only need to install Ant
 \section{Amazon Cloudfront}
 \subsection{Characteristics}
 \subsubsection{Control}
-Controlling Cloudfront is done in the Cloudfront control panel in the AWS console. Cloudfront lets you set up a wide array of features for your architecture. They provide DNS, NFV, Lambda@edge, Security, Sertificates, etc. All of this is controlled by the programmers in the AWS console.  
+Controlling Cloudfront is done in the Cloudfront control panel in the AWS console. Cloudfront lets clients set up a wide array of features for their architecture. They provide DNS, NFV, Lambda@edge, security, certificates, et cetera. All of this is controlled by the programmers in the AWS console.  
 
 
 \subsubsection{Offloading}
-AWS lets you set up servers, container software or Lambda@edge on Cloudfront. This lets gives a lot of freedom to the programmers on how they will set up the architecture. A downside of using AWS Lambda is that there is something called warm up time. It is pretty small, but can be noticed in extreme latency-aware contexts. The warm up time depends on the programming language used, but it comes in addition to the latency towards the edge location. When it comes to \textit{concurrency, location and replication transparency}, it is up to the programmer, but they are very easily adjustable. For example, for AWS Lambda, a single parameter can be change to let it scale more. AWS will handle scaling, the programmer just have to set the limit. When using servers however, you have to add more servers to scale, it is not automatically done. The level of \textit{access transparency} is high, due to containerization and AWS Lambda. However, if servers are used, then the programmer have control of the access transparency level. \textit{Relocation and migration transparency} can be ensured by Cloudfront, unless you use the servers. Then it is up to the programmer to control it. 
+AWS lets clients set up servers, container software, or Lambda@edge on Cloudfront. This gives much freedom to the programmers on how they will set up the architecture. A downside of using AWS Lambda is that there is something called warm-up time. It is pretty small, but can be noticed in extreme latency-aware contexts. The warm-up time depends on the programming language used, but it comes in addition to the latency towards the edge location. When it comes to \textit{concurrency, location, and replication transparency}, it is up to the programmer, but they are very easily adjustable. For example, for AWS Lambda, a single parameter can be changed to let it scale more. AWS will handle scaling, and the programmer just has to set the limit. When using servers, however, clients have to add more servers to scale. It is not automatically done. The level of \textit{access transparency} is high due to containerization and AWS Lambda. However, if servers are used, then the programmer has control of the access transparency level. \textit{Relocation and migration transparency} can be ensured by Cloudfront, unless you use the servers. Then it is up to the programmer to control it. 
 
 
 \subsubsection{Deployment}
-When setting up Cloudfront you do it trough the AWS control panel. You are restricted to use the edge servers that AWS provide. These servers are deployed all over the world. However, in some places there might be a long distance to the nearest server. Ensuring \textit{failure transparency} is handled by Cloudfront in this architecture. The programmer can focus more on what the program should do rather than focusing on what happens if it were to fail. 
+When setting up Cloudfront, clients do it through the AWS control panel. They are limited to use the edge servers that AWS provides. These servers are deployed all over the world. However, in some places, there might be a long distance to the nearest server. Ensuring \textit{failure transparency} is handled by Cloudfront in this architecture. The programmer can focus more on what the program should do rather than focus on what happens if it fails. 
 
 
 
@@ -185,10 +184,10 @@ When setting up Cloudfront you do it trough the AWS control panel. You are restr
 Akamai features are controlled through Akamai's console. The level of \textit{access and migration transparency} is up to the programmer in this architecture.
 
 \subsubsection{Offloading}
-Akamai does offer ways of offloading, but they focus more on bringing content to the edge rather than just computation. Caching is the main purpose of Akamai edge servers, and using their edge servers for this ensures \textit{location, relocation, replication and concurrency transparency}. The level of \textit{replication transparency} is also somewhat up to the programmer, as they can choose the locations of where they cache the content.
+Akamai does offer ways of offloading, but they focus more on bringing content to the edge rather than just computation. Caching is the primary purpose of Akamai edge servers, and using their edge servers for this ensures \textit{location, relocation, replication, and concurrency transparency}. The level of \textit{replication transparency} is also somewhat up to the programmer, as they can choose the locations of where they cache the content.
 
 \subsubsection{Deployment}
-Setting up the edge servers are easily done through Akamai's console. You set up the edge server where you want it, and then push your content to that server. Akamai will take care of failures and will route requests to the original server if needed. This ensures \textit{failure transparency}. However, if the original server is very distant, then the client will most likely notice a drop in performance or response time.
+Setting up the edge servers is easily done through Akamai's console. Clients will set up the edge server where they want it and then push their content to that server. Akamai will take care of failures and will route requests to the original server if needed. This ensures \textit{failure transparency}. However, if the original server is very distant, the client will most likely notice a drop in performance or response time.
 
 
 % -------------------------------------------------------------------------------------------
@@ -197,13 +196,13 @@ Setting up the edge servers are easily done through Akamai's console. You set up
 
 
 \section{Discussion of findings}
-In this section we will discuss the results from the previous sections. 
+In this section, we will discuss the results from the previous sections. 
 %introduction
 
 % Adding extra Near Nodes or Far nodes will in our prototype and dividing the work between them will give T/n better time. 
 
 \subsection{Comparing Cloudlets and MEC}
-From the results we can see that if enough funding is available, then Cloudlets gives the best result. We can see that having low latency between Local and Near like the Cloudlet, is preferable for better results. However, one could argue that installation of MEC Servers are significantly easier and cheaper as you only install them at base stations that cover a wide area. When it comes to migration, it is significantly easier for MEC due to how much area is covered with cellular. If the mobile device were to move in the Cloudlet architecture then Cloudlets in the new location should already be ready to offload. This is hard because it can be difficult to decide which Cloudlet to migrate to before it is too late. Since MEC cover such a large area, it should not be a problem to see when it is needed to migrate to other base stations. However, migration in MEC will likely take a longer time, as Cloudlets often will be on the same LAN and can therefore transfer faster and more reliably.
+From the results, we can see that if enough funding is available, then Cloudlets gives the best result. We can see that having low latency between Local and Near, like the Cloudlet, is preferable for better results. However, one could argue that installing MEC Servers is significantly easier and cheaper as clients only have to install them at base stations that cover a wide area. It is significantly easier for MEC when it comes to migration due to how much area is covered with cellular. If the mobile device were to move in the Cloudlet architecture, then Cloudlets should already be ready to offload in the new location. This is hard because it can be difficult to decide which Cloudlet to migrate to before it is too late. Since MEC covers such a large area, it should not be a problem to see when it is needed to migrate to other base stations. However, migration in MEC will likely take a longer time, as Cloudlets often will be on the same LAN and can therefore transfer faster and more reliably.
 
 
 
@@ -233,12 +232,12 @@ From the results we can see that if enough funding is available, then Cloudlets 
 \end{table}
 Table \ref{tab:total_time_compare} shows the time used for all the tests. To clarify, since Local, Near and Far work in parallel, the time used in the table is represented by the node who used the longest time. We can see that there is not that much difference in results when comparing Full offloading and Partial offloading. However, Partial offloading unsurprisingly has the best results.
 
-Full offloading might for some devices be a requirement. The two most likely causes for this is if the Local device have very limited computational power, or need to save battery. Therefore, one should not always go for Partial offloading. When deciding on what to use, one should consider the context. For example, if battery life is the most important factor, then one should use Full offloading. Our tests only shows the result of focusing on performance and least used time. However, one can change most of the parameters to address other needs of the context. For example, if there is more latency-sensitive work, then one can change the parameters to offload more to the Near nodes rather than the Far nodes.
+Full offloading might, for some devices, be a requirement. The two most likely causes for this is if the Local device has minimal computational power or needs to save battery. Therefore, one should not always go for Partial offloading. When deciding on what to use, one should consider the context. For example, if battery life is the most crucial factor, then one should use Full offloading. Our tests only show the result of focusing on performance and the least used time. However, one can change most of the parameters to address other needs of the context. For example, if there is very latency-sensitive work, one can change the parameters to offload more to the Near nodes than the Far nodes if more Near nodes are available.
 
 
 
 \subsubsection{Decreasing interaction}
-Figure \ref{fig:MEC_partial_bar} and \ref{fig:Cloudlet_latency_bar} illustrates how much time is used on waiting for a response from the Local node. As the Far node communicates less, we can see that it get more computational time compared to the Near node. In these examples, the Far node does most of the workload, which is why it has more computation time.
+Figure \ref{fig:MEC_partial_bar} and \ref{fig:Cloudlet_latency_bar} illustrates how much time is used on waiting for a response from the Local node. As the Far node communicates less, we can see that it gets more computational time than the Near node. In these examples, the Far node does most of the workload, which is why it has more computation time.
 
 
 \begin{figure}
@@ -248,17 +247,18 @@ Figure \ref{fig:MEC_partial_bar} and \ref{fig:Cloudlet_latency_bar} illustrates 
     \label{fig:all_graph_decrease}
 \end{figure}
 
-Figure \ref{fig:all_graph_decrease} illustrates how decreasing communication with Local will yield better results for each type of node. However, both MEC and Cloudlet stagnates, as limited processing power becomes the bottleneck. This means that when frequent communication is needed, one should use the Near node. The Far node is best to take care of work that does not require frequent communication. As we can see in figure \ref{fig:all_graph_decrease}, we get way faster results with the Far node when interaction is high, compared to the Near nodes.
+Figure \ref{fig:all_graph_decrease} illustrates how decreasing communication with Local will yield better results for each type of node. However, both MEC and Cloudlet stagnate as limited processing power becomes the bottleneck. This means that when frequent communication is needed, one should use the Near node. The Far node is best to take care of work that does not require frequent communication. As we can see in figure \ref{fig:all_graph_decrease}, we get way faster results with the Far node when the frequency of interaction is high, compared to the Near nodes.
 
 
 
 
 
 \subsubsection{Horizontal scaling}
-The results shown for MEC and Cloudets have just one HashWorker per node. This is to show the viability of Near-Far Computing in a simple isolated form. However, one can easily horizontally scale the amount of workers and nodes. If the workload is as parallelizable as our hashing setup, then adding nodes or workers, assuming they get the same resources, will give significant better times.
+The results shown for MEC and Cloudlets have just one HashWorker per node. This is to show the viability of Near-Far Computing in a simple isolated form. However, one can easily horizontally scale the amount of workers and nodes. If the workload is as parallelizable as our hashing setup, then adding nodes or workers, assuming they get the same resources, will give significantly better times.
+
 
 \subsubsection{Overhead}
-In the Emerald environment there is very little overhead compared to overheads in a real life context. When running Emerald, only a few objects needs to be replicated or transferred, instead of a whole VM or container. In other more real-life environments, we argue that the response time can be affected by such replications or transferals, but can be mitigated by understanding the context and pre-loading the environment onto the Near nodes. This overhead usually consists of transfer time plus starting time. The transfer time is mostly affected by bandwidth. By looking at table \ref{tab:Bandwidth_latency} we can see that it is preferable to use WiFi rather than cellular, as WiFi has higher bandwidth.
+In the Emerald environment, there is very little overhead compared to overheads in a real-life context. When running Emerald, only a few objects need to be replicated or transferred instead of a whole VM or container. In other more real-life environments, we argue that the response time can be affected by such replications or transferals but can be mitigated by understanding the context and pre-loading the environment onto the Near nodes. This overhead usually consists of transfer time plus starting time. The transfer time is mainly affected by bandwidth. By looking at table \ref{tab:Bandwidth_latency} we can see that it is preferable to use WiFi rather than cellular, as WiFi has higher bandwidth.
 
 
 
@@ -268,7 +268,8 @@ In the Emerald environment there is very little overhead compared to overheads i
 
 
 \section{The Near-Far Computing Model}
-In this section we will discuss characteristics of The Near-Far Computing Model, and give an introduction to it. 
+In this section, we will discuss the characteristics of The Near-Far Computing Model and give an introduction to it. 
+
 
 %The Near-Far Computing Model is best utilized when you can have a Near node doing latency critical work, and a Far node doing other work that does not require a real-time response. For example, if the Local device is a smart device that need quick response on their data, it can offload to the Near node. When the Near node is done calculating, it can use the Far server to analyze the result as well as logging it, while the Local device can use the calculated data for responding to the context. For storage, Near-Far is great for caching. Having caches that is closer to the client will result in way quicker results.
 
@@ -277,33 +278,33 @@ In this section we will discuss characteristics of The Near-Far Computing Model,
 %If the Near node were to fail, then the Far node can take over. However, due to latency the Far node will give the client a worse experience if response time is critical. This is process is the same as discussed in article The Case for VM-Based Cloudlets in Mobile Computing\cite{satyanarayanan_case_2009}.
 
 \subsection{Distribution Transparency}
-In the following subsections we will discuss distribution transparency in Near-Far Computing.
+In the following subsections, we will discuss distribution transparency in Near-Far Computing.
 
 \subsubsection{Access Transparency}
-When using The Near-Far model, one should use containerization or VMs to provide common API or middleware for all the nodes in the system. This ensures that developers does not have to deal with very low-level programming, and focus more on providing features and solutions. This solution is one thing that most of the discussed architectures have in common.
+When using The Near-Far Computing Model, one should use containerization or VMs to provide common API or middleware for all the nodes in the system. This ensures that developers do not have to deal with very low-level programming and focus more on providing features and solutions. This solution is one thing that most of the discussed architectures have in common.
 
 \subsubsection{Location Transparency}
-Location transparency is up to the programmer, but in most cases one should try to hide where objects are located. Usage of Near nodes will easily let you ensure location transparency, due their low latency and how relatively resource rich they are.
+Location transparency is up to the programmer, but one should try to hide where objects are located in most cases. Usage of Near nodes will easily let programmers ensure location transparency due to their low latency and how relatively resource-rich they are.
 
 \subsubsection{Relocation Transparency}
-Relocation transparency can be hard if the area where you are connected to the Near device is not wide. For example, if you have to connect to a new node each time you enter a new room, ensuring relocation transparency can be hard. However, with good algorithms and enough knowledge about the context, it is possible to ensure perfect relocation transparency. If the connection covers a wide are, like cellular, then relocation is easier as it is less frequent.
+Relocation transparency can be tricky if the area where the device are connected to the Near node is not wide. For example, if the device has to connect to a new node each time its owner enters a new room, ensuring relocation transparency can be challenging. However, with good algorithms and enough knowledge about the context, it is possible to ensure perfect relocation transparency. If the connection covers a wide area, like cellular, then relocation is easier as it is less frequent.
 
 \subsubsection{Migration Transparency}
-Most of the discussed architectures do not focus on this. However, control is left to the programmers. This means that if the application needs users to control where objects are located in the system, then it is possible to implement. However, we believe that this is needed in very few cases, and hiding where objects are located is way more important to ensure a good experience.
+Most of the discussed architectures do not focus on this. However, control is left to the programmers. This means that if the application needs users to control where objects are located in the system, it can be implemented. However, we believe that this is needed in very few cases, and hiding where objects are located is way more important to ensure a good experience.
 
 \subsubsection{Replication Transparency}
-Replication transparency is up to the programmer. With enough Nodes available, the programmer can add or remove objects as they see fit. However, most of the architectures are about hiding where objects are located, so in most cases one should ensure that replication is not noticed.
+Replication transparency is up to the programmer. With enough Nodes available, the programmer can add or remove objects as they see fit. However, most of the architectures are about hiding where objects are located, so one should ensure that replication is not noticed in most cases.
 
 \subsubsection{Concurrency Transparency}
-Concurrency transparency is also up to the programmer. In most cases however, it is best to avoid showing that multiple users are using the same resources. For example, one should not notice that several others are retrieving the same content as you are or querying the same database. 
+Concurrency transparency is also up to the programmer. In most cases, however, it is best to avoid showing that multiple users are using the same resources. For example, users should not notice that several others are retrieving the same content or querying the same database. 
 
 \subsubsection{Failure Transparency}
-If enough nodes are available, then recovering from a failure should have minimal impact on the user. If the application in question is latency-aware and is forced to use Far or Local resources to do these time critical operations, then the client will suffer. However, one should quickly be able to recover to the previous state, for example by using checkpoints, like available in Emerald.
+If enough nodes are available, then recovering from a failure should have minimal impact on the user. If the application in question is latency-aware and is forced to use Far or Local resources to do these time critical operations, then the client will suffer. However, one should quickly recover to the optimal state, for example, by using checkpoints, like available in Emerald.
 
 \subsection{Introduction to The Near-Far Computing Model}
 With the information provided and discussed in the above sections and the above subsection, we can now give an introduction to The Near-Far Computing Model.
 
-The Near-Far Computing Model is a spectrum that covers all models or architectures that focuses on mitigating latency issues by using Near nodes and Far nodes. Near nodes are edge or fog nodes that focuses on providing resource rich nodes as close as possible to the user to ensure minimal latency. Far nodes are distant, extremely scalable, and generally resource rich nodes which usually resides in data centers, that can provide heavy computational power and nearly limitless storage, at the cost of latency.
+The Near-Far Computing Model is a spectrum that covers all models or architectures that focuses on mitigating latency issues by using Near nodes and Far nodes. \textit{Near nodes} are edge or fog nodes that provide resource-rich nodes as close as possible to the user to ensure minimal latency. \textit{Far nodes} are distant, extremely scalable, and generally resource-rich nodes that usually reside in data centers that can provide heavy computational power and nearly limitless storage at the cost of latency.
 
 \begin{figure}[t]
     \centering
@@ -314,23 +315,23 @@ The Near-Far Computing Model is a spectrum that covers all models or architectur
 \end{figure}
 
 
-Figure \ref{fig:nearFarSimple} illustrates the Near-Far spectrum. We have a Local devices that communicates with a Near device which is typically an edge or fog device, e.g. a Cloudlet. This Near node or Local device will communicate with the Far node to offload less time sensitive work or storage. The Near node should optimally be in close proximity to the Local device to ensure low-latency.
+Figure \ref{fig:nearFarSimple} illustrates the Near-Far spectrum. We have a Local device that communicates with a Near device, typically an edge or fog device, e.g., a Cloudlet. This Near node or Local device will communicate with the Far node to offload less time-sensitive work or storage. The Near node should optimally be in close proximity to the Local device to ensure low latency.
 
 \subsubsection{Control}
-Since VMs or containers are preferred for offloading, the programmers have a lot of control. This method restricts access to low-level control, but it would in most cases not be needed, as enough control is given within the VMs or containers. NFV and SDN, can be used to control the network structure when needed.
+Since VMs or containers are preferred for offloading, the programmers have much control. This method restricts access to low-level control, but it would, in most cases, not be needed, as enough control is given within the VMs or containers. NFV and SDN can be used to control the network structure when needed.
 
 \subsubsection{Offloading}
-One can use the Near node to offload time sensitive work, and further aid this offloading with the strong Far nodes. Using The Near-Far Computing model is therefore most applicable when you have work or storage that needs to be offloaded with low latency, as well as having less time sensitive parts that can be done on a stronger node that is geographically distant. 
+One can use the Near node to offload time-sensitive work and further aid this offloading with the strong Far nodes. Therefore, using The Near-Far Computing model is most applicable when having work or storage that needs to be offloaded with low latency and have less time-sensitive parts that can be done on a stronger node that is geographically distant. 
 
 After each use, the nodes should return to their original state by cleaning up the VM or container.
 
 
 \subsubsection{Deployment}
-The closer the Near node are to the Local device, the more expensive it will become to deploy. When deciding on what the requirement is when it comes to response time, one has to consider that it can become quite costly to deploy. For example, MEC using nodes at the base of cell-towers will be more scaleable and cheaper to deploy, compared to Cloudlets who needs to be ubiquitous and deployed almost everywhere. The trade-off is then latency and scalability versus cost. 
+The closer the Near node is to the Local device, the more expensive it will become to deploy. When deciding on what the requirement is for response time, one has to consider that it can become quite costly to deploy. For example, MEC using nodes at the base of cell towers/base stations will be more scalable and cheaper to deploy than Cloudlets who need to be ubiquitous and deployed almost everywhere. The trade-off is then latency and scalability versus cost. 
 
 
 \section{Summary}
-In this chapter we have tested MEC and Cloudlets with the program described in implementation. We have also discussed characteristics of all the architectures. Then, we discussed how these characteristics relate to The Near-Far Computing Model. Finally, we have provided an introduction for The Near-Far Computing Model.
+In this chapter, we have tested MEC and Cloudlets with the program described in implementation. We have also discussed the characteristics of all the architectures. Then, we discussed how these characteristics relate to The Near-Far Computing Model. Finally, we have provided an introduction to The Near-Far Computing Model.
 
 
 

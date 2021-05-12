@@ -1,12 +1,12 @@
 
 
 \section{Multi-Access Edge Computing} \label{section:MEC_evaluation}
-This section will show results of testing with the prototype for MEC, and then discuss these results. Additionally it will point out characteristics for this architecture.
+This section will show the results of testing with the prototype for MEC and then discuss these results. Additionally, it will point out characteristics for this architecture.
+
+
+
 
 \subsection{Full offloading}
-
-
-
 
 \begin{table}[h!]
     \centering
@@ -82,13 +82,13 @@ Figure \ref{fig:MEC_partial_bar} shows how latency affect the the total time use
 \subsection{Characteristics}
 
 \subsubsection{Control}
-As discussed in section \ref{section:MEC_architecture}, the network architecture of MEC is up to the programmers. They can use NFV and SDN to control how each mobile device will be able to use the architecture. They can in other words use SDN and NFV to tailor the network to the context. Since VMs can be uploaded to surrounding MEC Servers, ensuring good \textit{relocation transparency} should be trivial. Due to SDN and NFV they could quickly redirect packets to new MEC Server when needed. The level of \textit{migration transparency} is therefore also left to developers.
+As discussed in section \ref{section:MEC_architecture}, the network architecture of MEC is up to the programmers. They can use NFV and SDN to control how each mobile device will use the architecture. They can, in other words, use SDN and NFV to tailor the network to the context. Since VMs can be uploaded to surrounding MEC Servers, ensuring good \textit{relocation transparency} should be trivial. Due to SDN and NFV, they could quickly redirect packets to the new MEC Server when needed. The level of \textit{migration transparency} is therefore also left to developers.
 
 \subsubsection{Offloading}
-Since MEC uses the cellular network to offload work, this architecture is well suited for IoT devices that can afford the latency. The cellular network is ubiquitous in modern society, and therefore it is optimal for IoT devices that move a lot, e.g. self-driving cars. When offloading they have to upload something, e.g. a VM, to the MEC Server. Alternatively they can make the MEC Server download from elsewhere. Since MEC uses VMs on the servers when offloading, the level of \textit{access transparency} is very good. The VMs ensure that the APIs for all the nodes are the same. Since cellular networks cover such a large area, \textit{location transparency} is trivial as the device can move quite a lot of distance before any migration is needed. If a node were to fail, it is up to the developers to ensure that other resources are available to recover from the failure. In other words, the level of \textit{failure transparency} is up to the programmers.
+Since MEC uses the cellular network to offload work, this architecture is well suited for IoT devices that can afford the 30ms latency. The cellular network is ubiquitous in modern society, and therefore it is optimal for IoT devices that move a lot, e.g., self-driving cars. When offloading, they have to upload something, e.g., a VM, to the MEC Server. Alternatively, they can make the MEC Server download from elsewhere. Since MEC uses VMs on the servers when offloading, the level of \textit{access transparency} is excellent. The VMs ensure that the APIs for all the nodes are the same. Since cellular networks cover such a large area, \textit{location transparency} is trivial as the device can move quite a lot of distance before any migration is needed. If a node were to fail, it is up to the developers to ensure that other resources are available to recover from the failure. In other words, the level of \textit{failure transparency} is up to the programmers.
 
 \subsubsection{Deployment}
-MEC is easily horizontally scalable, as more MEC Servers can easily be added to base stations. The only limit is how much power there is available and how much space there is available. If only a few servers is needed, then the cost is not too high either. It is also easily scalable in the sense that you can add more VMs to the MEC Server to help with offloading if needed. Another benefit of using VMs is that \textit{concurrency transparency} is easy to ensure as long as the MEC Server does not run out of resources. This is because they are in sperate VMs and should not affect each other.
+MEC is easily horizontally scalable, as more MEC Servers can easily be added to base stations. The only limit is how much power there is available and how much space there is available. If only a few servers are needed, then the cost is not too high either. It is also easily scalable because more VMs can be added to the MEC Server to help with offloading if needed. Another benefit of using VMs is that \textit{concurrency transparency} is easy to ensure as long as the MEC Server does not run out of resources. This is because they are in separate VMs and should not affect each other.
 
 
 

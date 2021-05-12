@@ -2,7 +2,7 @@
 
 \section{Cloudlets}
 
-This section will show results of testing with the prototype for Cloudlets, and then discuss these results. Additionally it will point out characteristics for this architecture.
+This section will show the results of testing with the prototype for Cloudlets and then discuss these results. Additionally, it will point out characteristics for this architecture.
 
 
 \subsection{Full execution}
@@ -80,10 +80,10 @@ Figure \ref{fig:Cloudlet_latency_bar} shows how much time used on waiting for da
 
 \subsection{Characteristics}
 \subsubsection{Control}
-Controlling Cloudlets is done by the owner of each Cloudlet. Since Cloudlets are to be placed on locations, e.g. a coffee shop, then the owner of that location is able to configure the Cloudlet. The location owner can then limit usage and limit what kinds of applications are used on the Cloudlet. Handling failure and having good \textit{failure transparency} is mostly up to the programmer in Cloudlets. Should the Cloudlet fail, then a different near Cloudlet should take over, or in the worst case let the Local device handle it. 
+Controlling Cloudlets is done by the owner of each Cloudlet. Since Cloudlets are to be placed on locations, e.g., a coffee shop, then the owner of that location can configure the Cloudlet. The location owner can then limit usage and limit what kinds of applications are used on the Cloudlet. Handling failure and having good \textit{failure transparency} is primarily up to the programmer in Cloudlets. Should the Cloudlet fail, then a different near Cloudlet should take over, or in the worst case, let the Local device handle it. 
 
 \subsubsection{Offloading}
-Cloudlets use \textit{dynamic VM synthesis} \cite{satyanarayanan_case_2009} to offload work. Essentially it means that we have to give the Cloudlet a VM to run the application. This makes \textit{access transparency} for Cloudlets quite good in theory. However, it gives an overhead which they reported to be quite high. This has likely been improved since 2009 as technology has improved. Bandwidth, storage and computational power have significantly improved, which mitigates many of the issues they raised.
+Cloudlets use \textit{dynamic VM synthesis} \cite{satyanarayanan_case_2009} to offload work. Essentially it means that we have to give the Cloudlet a VM to run the application. This makes \textit{access transparency} for Cloudlets quite good in theory. However, it gives an overhead which they reported to be quite high. This has likely been improved since 2009 as technology has improved. Bandwidth, storage, and computational power have significantly improved, which mitigates many of the issues they raised.
 
 \subsubsection{Deployment}
-Distribution is expensive for Cloudlets. Satyanarayanan et al\cite{satyanarayanan_case_2009} purposes different payment models, but each owner of a location has to decide if it is worth the investment. Since they are supposed to be ubiquitous, the total cost of having these readily available everywhere in society will be significant. If the Cloudlets are ubuiquitus, then the level of \textit{location and relocation transparency} is quite high. In their paper, they purpose a way of seamlessly migrating to other Cloudlets when needed. If this is accomplished, then the users of the local devices will not notice any drop in performance. Due to the ubiquitous nature of Cloudlets, having \textit{concurrency transparency} should not be a problem. Overloading all of the nearby Cloudlets will be a rare occurrence due to their ubiquitous nature.
+Distribution is expensive for Cloudlets. Satyanarayanan et al. \cite{satyanarayanan_case_2009} purpose different payment models, but each owner of a location has to decide if it is worth the investment. Since they are supposed to be ubiquitous, the total cost of having these readily available everywhere in society will be significant. If the Cloudlets are ubiquitous, then the level of \textit{location and relocation transparency} is relatively high. In their paper, they purpose a way of seamlessly migrating to other Cloudlets when needed. If this is accomplished, then the users of the local devices will not notice any drop in performance. Due to the ubiquitous nature of Cloudlets, having \textit{concurrency transparency} should not be a problem. Overloading all of the nearby Cloudlets will be a rare occurrence due to their ubiquitous nature.
