@@ -1,16 +1,16 @@
-\chapter{Design of experiments}\label{chapter:design_of_experiments}
+\chapter{Design of Experiments}\label{chapter:design_of_experiments}
 
 This chapter will discuss how we will research and evaluate the architectures.
 
 
 \section{Scope}
-The goal of these analyses is to show how The Near-Far Computing Model relates to already existing architectures. The goal of the experiments is to show the viability of Near-Far Computing. First, we will research them and give an overview of them in the Architectures chapter. Then we will develop several of the architectures in Emerald and then conduct experiments on them. We will analyze and point out the characteristics of each architecture. Finally, we will discuss how the architectures are related to the Near-Far Computing Model.
+The goal of these analyses is to show how The Near-Far Computing Model relates to already existing architectures. The goal of the experiments is to show the viability of Near-Far Computing. First, we will research and give an overview of them in the Architectures chapter. Then we will develop several of the architectures in Emerald and then conduct experiments on them. We will analyze and point out the characteristics of each architecture. Finally, we will discuss how the architectures are related to the Near-Far Computing Model.
 
 
 
 
 \section{Simulation}
-We will simulate the different architectures using Emerald and PlanetLab. The Emerald programming language will be used to make a high-level version of these architectures. Using the Emerald ecosystem comes with a bonus, namely that the Emerald VM is working as middleware for these experiments. This makes it easier to develop and show the implementation, as the code is more easily understood, and the architectures will be abstracted to something that is easily tested.
+We will simulate the different architectures using Emerald and PlanetLab. The Emerald programming language will be used to make a high-level version of these architectures. Using the Emerald ecosystem comes with a bonus, namely that the Emerald VM is working as middleware for these experiments. This makes it easier to develop and show the implementation, as the code is more understandable, and the architectures will be abstracted to something that is more suitable for the high-level tests.
 
 
 
@@ -20,7 +20,7 @@ We will simulate the different architectures using Emerald and PlanetLab. The Em
 
 
 \section{Experiments}
-The experiments done in this thesis will focus on how latency affects offloading. We will test with two different architectures and compare the results to see if Near-Far Computing is a viable solution for the latency problem. We will create a program that lets us easily change these parameters:
+The experiments done in this thesis will focus on how latency affects offloading. Due to the high-level nature of our implementation, we argue that showing results for all of the architectures are redundant. Therefore, we limit the experiments to two architectures: Cloudlets and Multi-Access Edge Computing. We will create a program that lets us easily change these parameters:
 \begin{itemize}
     \item Latency
     \item Workload
@@ -38,7 +38,6 @@ It is not always efficient to offload all the work. According to Mach and Becvar
     \item \textit{Partial offloading}, where we offload some of the work, and do some local.
 \end{itemize}
 We will compare these three ways of offloading for both architectures.
-Due to the high-level nature of our implementation, we argue that showing results for all the architectures are redundant. With this level of abstraction, some of the architectures will have very similar parameters. We therefore only do experiments on Cloudlets and Multi-Access Edge Computing.
 
 
 
@@ -53,7 +52,8 @@ Due to the high-level nature of our implementation, we argue that showing result
 
 
 
-\section{Theoretical analysis}
+
+\section{Theoretical Analysis}
 When evaluating, we will also have a theoretical part where we compare the characteristics of the different architectures. This is to find what characteristics are typical for Near-Far Computing.
 
 \subsection{Transparency}
@@ -62,7 +62,7 @@ Since transparency is more about characteristics, it makes little sense to measu
 
 
 
-\section{How it relates to the Near-Far model}
+\section{How It Relates To The Near-Far Computing Model}
 When we have the characteristics and data laid out, we will discuss how it relates to The Near-Far Computing Model. We will compare all the data and characteristics to show what is best related.
 
 

@@ -16,7 +16,7 @@ For computation offloading, we have used a hashing algorithm. Distributing how m
 
 
 
-\subsection{Classes and structure}
+\subsection{Classes and Structure}
 \begin{figure}[t]
     \centering
     \includegraphics[scale=0.9]{chapters/5_implementation/figures/HashWorker_class_diagram.png}
@@ -73,7 +73,16 @@ const HashWorker <- class HashWorker
   export op collectTimeUsed -> [res: Time]
 end HashWorker
 \end{lstlisting}
-HashWorker is an object that is distributed to all machines. The role of HashWorker is to provide an interface for \verb|Main| to start and control work. The constant \verb|mon| is used to store an instance of the \verb|InnerMonitor| class. Then we have the definitions for \verb|InnerMontor| and \verb|Worker|. They are defined inside the HashWorker class and are therefore inner classes. Then we have the \verb|initially| section. Here we ensure that the class parameter \verb|limitation| is equal to or higher than zero. This is because the limitation is used to make a time constraint, and we do not want negative time. Operation \verb|setLimitation| is there to be able to change the limitation during runtime. Operation \verb|doWork| will create an instance of the \verb|Worker| class. It takes a parameter \verb|iterations| which is how many iterations we want the node to do, \verb|work| which is the workload that the worker will hash, and \verb|frequencyOfGet| which is how often we retrieve information from Local (the mobile device). Operation \verb|collectTimeUsed| is used to collect the time used after the process is done. When called, it will wait for the process in Worker to be done, then return the time used.
+HashWorker is an object that is distributed to all machines. The role of HashWorker is to provide an interface for \verb|Main| to start and control work. The constant \verb|mon| is used to store an instance of the \verb|InnerMonitor| class. We then have the definitions for \verb|InnerMontor| and \verb|Worker|. They are defined inside the HashWorker class and are therefore inner classes.
+
+The \verb|initially| section ensures that the class parameter \verb|limitation| is equal to or higher than zero. This is because the limitation is used to make a time constraint, and we do not want negative time.
+
+The operation \verb|setLimitation| is there to be able to change the limitation during runtime.
+
+The operation \verb|doWork| will create an instance of the \verb|Worker| class. It takes a parameter \verb|iterations| which is how many iterations we want the node to do, \verb|work| which is the workload that the worker will hash, and \verb|frequencyOfGet| which is how often we retrieve information from Local (the mobile device). 
+
+The operation \verb|collectTimeUsed| is used to collect the time used after the process is done. When called, it will wait for the process in Worker to be done, then return the time used.
+
 Notice that all of the constants are attached, as we want to ensure that they are on the same node as the HashWorker instance. This reduces the amount of costly remote reads.
 
 
@@ -96,7 +105,7 @@ As discussed in section \ref{emerald:fields}, fields in Emerald automatically ge
 
 
 \subsubsection{Worker}
-Below is the skeleton of class Worker.
+Below is the outline of class Worker.
 
 \begin{minipage}{\linewidth}
 \begin{lstlisting}[language=emerald]
@@ -121,7 +130,7 @@ function djb2Hash[str: String] -> [res: Integer]
   end for
 end djb2Hash
 \end{lstlisting}
-The algorithm takes a string, iterates over it, and multiplies itself with 33 and the character's ordinal number. To make it even more compute-heavy, we convert the result to string and then re-insert that into the hash function 10000 times. We see that as one iteration, as illustrated in figure \ref{fig:Hashing_algorithm_iteration}. In other words, the HashWorker will do what figure \ref{fig:Hashing_algorithm_iteration} shows, \verb|iterations| number of times. Since we throw out the result after each time, Emeralds garbage compiler will ensure that we have plenty of memory available. 
+The algorithm takes a string, iterates over it, and multiplies itself with 33 and the ordinal numbers of the characters. To make it even more compute-heavy, we convert the result to string and then re-insert that into the hash function 10000 times. We see that as one iteration, as illustrated in figure \ref{fig:Hashing_algorithm_iteration}. In other words, the HashWorker will do what figure \ref{fig:Hashing_algorithm_iteration} shows, \verb|iterations| number of times. Since we throw out the result after each time, Emeralds garbage compiler will ensure that we have plenty of memory available. 
 \begin{figure}[t]
     \centering
     \includegraphics[scale=0.9]{chapters/5_implementation/figures/Iteration.png}
@@ -132,17 +141,17 @@ In each iteration, it will also check if we have to get information from Local a
 
 
 \subsubsection{Main}
-Main only has an \verbinitially section that will do several steps. First, it will move through all nodes and print some information on each node. This is mainly for debugging and to ensure that things are running correctly. Further, it will invoke the create method to create an instance of the \verb|FileReader| class and further read the configuration file that the user has specified. Configurations files are discussed in subsection \ref{subsection:configfiles}. Further, it will use this configuration to initialize \verb|HashWorker| instances and move them to a node decided by user input. Then, it will iterate through all \verb|HashWorker| instances and invoke operation \verb|doWork|. All processes should then have started. Finally, after all workers have finished, it will collect and print the results.
+Main only has an \verb|initially| section that will do several steps. First, it will move through all nodes and print some information on each node. This is mainly for debugging and to ensure that things are running correctly. Further, it will invoke the \verb|create| method to create an instance of the \verb|FileReader| class and further read the configuration file that the user has specified. Configurations files are discussed in subsection \ref{subsection:configfiles}. Further, it will use this configuration to initialize \verb|HashWorker| instances and move them to a node decided by user input. Then, it will iterate through all \verb|HashWorker| instances and invoke operation \verb|doWork|. All processes should then have started. Finally, after all workers have finished, it will collect and print the results.
 
 
 
-\subsection{Simulating CPU restrictions}
+\subsection{Simulating CPU Restrictions}
 To simulate CPU restrictions, we place a limitation on each HashWorker. To accurately control how much work is done on each HashWorker, we have implemented a way of specifying how many iterations (see figure \ref{fig:Hashing_algorithm_iteration}) each node can do per second.
 
 
 
-\subsection{Config files}\label{subsection:configfiles}
-When the \verb|FileReader| class reads in the config file, it expects a very simple syntax. Each line should be a positive integer. For example, a file that for two HashWorkers will set their limitations to 0 and 100 and make them both do 50 iterations, and make them get from Local with a frequency of 1 and 30 iterations, will look like this:
+\subsection{Configuration Files}\label{subsection:configfiles}
+Main will make the \verb|FileReader| class read a specified configuration file where each line is a positive integer. For example, consider a file and two HashWorkers. Main will set the limitation of the HashWorkers to 0 and 100, and make them both do 50 iterations. Then, it will make them get from Local with a frequency of every 1 and 30 iterations respectively. Below is an example of a file that will create this set-up:
 \begin{lstlisting}
 0
 100
@@ -152,10 +161,11 @@ When the \verb|FileReader| class reads in the config file, it expects a very sim
 50
 
 \end{lstlisting}
-The \verb|FileReader| reads each line until the newline character. The config file is terminated by an emtpy line at the end. After everything is read, it will convert them to an array of Integers, instead of array of Strings.
+
+The \verb|FileReader| reads each line until the newline character. The configuration file is terminated by an emtpy line at the end. After everything is read, it will convert them to an array of integers, instead of array of strings. 
 
 \subsection{Placing HashWorkers}
-Placement of HashWorkers is prompted in the terminal. When testing, you will get information about an HashWorker, and a choice for which node you want to place it on. 
+Placement of HashWorkers is prompted in the terminal. When testing, you will get information about a HashWorker, and a choice for which node you want to place it on. 
 
 
 
@@ -201,7 +211,7 @@ Figure \ref{fig:Cloudlet_implementation} illustrates how we can set up an exampl
 
 
 
-\section{Source code}
+\section{Source Code}
 Source code for the implementation and configuration files can be found in the following git repository that is being cited\cite{johnsen_daniejohmasterprograms_nodate}.
 
 
@@ -210,4 +220,4 @@ Source code for the implementation and configuration files can be found in the f
 
 
 \section{Summary}
-In this chapter, we have described the prototype we have created. The prototype can easily be set up with configuration files to control different parameters for each worker on each node. This lets us easily set up high-level simulations of Near-Far architectures and models. Additionally, we have provided some examples of how it can be used to model Cloudlets and Multi-Access Edge Computing.
+In this chapter, we have described the prototype we have created. The prototype can be set up with configuration files to control different parameters for each worker on each node. This allows us quickly set up high-level simulations of Near-Far architectures and models. Additionally, we have provided some examples of how it can be used to model Cloudlets and Multi-Access Edge Computing.
